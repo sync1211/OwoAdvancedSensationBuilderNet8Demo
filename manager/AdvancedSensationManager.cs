@@ -84,7 +84,7 @@ namespace OwoAdvancedSensationBuilderNet8.manager {
                     // Update Playing Sensation
                     oldInstance = playSensations[instance.name];
                 } else {
-                    foreach (var processInstance in processSensation) {
+                    foreach (KeyValuePair<AdvancedSensationStreamInstance, ProcessState> processInstance in processSensation.ToArray()) {
                         if (processInstance.Value == ProcessState.ADD && processInstance.Key.name == instance.name) {
                             // Update to be Added Sensation
                             oldInstance = processInstance.Key;
@@ -98,7 +98,6 @@ namespace OwoAdvancedSensationBuilderNet8.manager {
                 }
 
                 processSensation.Remove(process.Key);
-
             }
         }
 
