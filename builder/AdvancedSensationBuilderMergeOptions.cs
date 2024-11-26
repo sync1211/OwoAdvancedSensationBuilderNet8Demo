@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace OwoAdvancedSensationBuilderNet8.builder {
-    internal class AdvancedSensationBuilderMergeOptions {
+    public class AdvancedSensationBuilderMergeOptions {
         public enum MuscleMergeMode { MAX, KEEP, OVERRIDE, MIN };
 
         public MuscleMergeMode mode { get; set; }

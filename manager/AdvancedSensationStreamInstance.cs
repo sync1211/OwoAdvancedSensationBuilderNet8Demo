@@ -7,7 +7,7 @@ using OwoAdvancedSensationBuilderNet8.builder;
 using OWOGame;
 
 namespace OwoAdvancedSensationBuilderNet8.manager {
-    internal class AdvancedSensationStreamInstance {
+    public class AdvancedSensationStreamInstance {
 
         public delegate void SensationStreamInstanceEvent(AdvancedSensationStreamInstance instance);
 

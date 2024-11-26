@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace OwoAdvancedSensationBuilderNet8.builder {
-    internal class AdvancedStreamingSensation : SensationsSequence {
+    public class AdvancedStreamingSensation : SensationsSequence {
 
         public static AdvancedStreamingSensation createByAdvancedMicro(SensationWithMuscles advancedMicro) {
             if (advancedMicro.Duration > 0.3f) {

@@ -10,7 +10,7 @@ using OwoAdvancedSensationBuilderNet8.builder;
 using OWOGame;
 
 namespace OwoAdvancedSensationBuilderNet8.manager {
-    internal class AdvancedSensationManager {
+    public class AdvancedSensationManager {
 
         private enum ProcessState { ADD, REMOVE, UPDATE }
 
