@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using static OwoAdvancedSensationBuilderNet8.builder.AdvancedSensationBuilderMergeOptions;
 
 namespace OwoAdvancedSensationBuilderNet8.builder {
-    internal class AdvancedSensationService {
+    public class AdvancedSensationService {
 
 
         public static AdvancedStreamingSensation splitSensation(MicroSensation micro, Muscle[] muscles) {

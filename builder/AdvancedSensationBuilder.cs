@@ -7,7 +7,7 @@ using OwoAdvancedSensationBuilderNet8.builder;
 using OWOGame;
 
 namespace OwoAdvancedSensationBuilderNet8.builder {
-    internal class AdvancedSensationBuilder {
+    public class AdvancedSensationBuilder {
 
         AdvancedStreamingSensation advanced = null;
         Muscle[] muscles = null;
