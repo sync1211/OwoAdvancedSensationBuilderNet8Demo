@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <StartupObject>OwoAdvancedSensationBuilderNet8.Program</StartupObject>
+    <StartupObject>OwoAdvancedSensationBuilder.Demo.Program</StartupObject>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
