@@ -1,10 +1,5 @@
 ﻿using OwoAdvancedSensationBuilder.builder;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using OWOGame;
 using OwoAdvancedSensationBuilderNet8.manager;
@@ -15,7 +10,7 @@ namespace OwoAdvancedSensationBuilder.manager
 
         private enum ProcessState { ADD, REMOVE, UPDATE }
 
-        private static AdvancedSensationManager managerInstance;
+        private static AdvancedSensationManager? managerInstance;
 
         private System.Timers.Timer timer;
 
@@ -24,12 +19,11 @@ namespace OwoAdvancedSensationBuilder.manager
         private List<string> _priorityList;
         public List<string> priorityList { get { return _priorityList; } }
 
-        private int tick = 0;
-        private bool calculating = false;
-        private Sensation calculatedSensation = null;
+        private int tick;
+        private bool calculating;
+        private Sensation? calculatedSensation;
 
-
-        Stopwatch watch;
+        Stopwatch watch = new();
 
         private AdvancedSensationManager() {
             timer = new System.Timers.Timer(100);
@@ -50,13 +44,13 @@ namespace OwoAdvancedSensationBuilder.manager
             return managerInstance;
         }
 
-        private void streamSensation(Object source, ElapsedEventArgs e) {
+        private void streamSensation(object? source, ElapsedEventArgs e) {
             OWO.Send(calculatedSensation);
             tick++;
-            Debug.WriteLine(tick + " / " + watch.ElapsedMilliseconds);
+            Debug.WriteLine($"{tick} / {watch.ElapsedMilliseconds}");
         }
 
-        private void calcManagerTick(Object source, ElapsedEventArgs e) {
+        private void calcManagerTick(object? source, EventArgs e) {
             if (calculating) {
                 return;
             }
@@ -79,9 +73,9 @@ namespace OwoAdvancedSensationBuilder.manager
                     continue;
                 }
                 AdvancedSensationStreamInstance instance = process.Key;
-                AdvancedSensationStreamInstance oldInstance = null;
+                AdvancedSensationStreamInstance? oldInstance = null;
 
-                if (playSensations.Keys.Contains(instance.name)) {
+                if (playSensations.ContainsKey(instance.name)) {
                     // Update Playing Sensation
                     oldInstance = playSensations[instance.name];
                 } else {
@@ -151,7 +145,7 @@ namespace OwoAdvancedSensationBuilder.manager
 
         private void calcSensation() {
             int calcTick = tick;
-            AdvancedSensationBuilder builder = null;
+            AdvancedSensationBuilder? builder = null;
 
             AdvancedSensationBuilderMergeOptions mergeOptions = new AdvancedSensationBuilderMergeOptions();
             mergeOptions.mode = AdvancedSensationBuilderMergeOptions.MuscleMergeMode.MAX;
@@ -169,7 +163,7 @@ namespace OwoAdvancedSensationBuilder.manager
 
                 AdvancedSensationStreamInstance sensationInstance = snapshot[priority];
 
-                Sensation sensationTick = sensationInstance.getSensationAtTick(calcTick);
+                Sensation? sensationTick = sensationInstance.getSensationAtTick(calcTick);
                 if (sensationTick == null) {
                     continue;
                 }
@@ -192,7 +186,7 @@ namespace OwoAdvancedSensationBuilder.manager
                 }
                 AdvancedSensationStreamInstance sensationInstance = entry.Value;
 
-                Sensation sensationTick = sensationInstance.getSensationAtTick(calcTick);
+                Sensation? sensationTick = sensationInstance.getSensationAtTick(calcTick);
                 if (sensationTick == null) {
                     continue;
                 }
@@ -225,9 +219,9 @@ namespace OwoAdvancedSensationBuilder.manager
             addSensationInstance(instance);
         }
 
-        public void updateSensation(Sensation sensation, String name = null) {
+        public void updateSensation(Sensation sensation, string? name = null) {
             if (name == null) {
-                name = analyzeSensation(sensation).name;
+                name = analyzeSensation(sensation)?.name;
             }
             processSensation[new AdvancedSensationStreamInstance(name, sensation)] = ProcessState.UPDATE;
         }
@@ -250,7 +244,7 @@ namespace OwoAdvancedSensationBuilder.manager
             }
 
             if (!timer.Enabled) {
-                calcManagerTick(null, null);
+                calcManagerTick(null, EventArgs.Empty);
                 watch = Stopwatch.StartNew();
                 timer.Start();
             }
@@ -284,22 +278,23 @@ namespace OwoAdvancedSensationBuilder.manager
             return returnInstances;
         }
 
-        private MicroSensation analyzeSensation(Sensation sensation) {
-            if (sensation is MicroSensation) {
-                return sensation as MicroSensation;
-            } else if (sensation is SensationWithMuscles) {
-                SensationWithMuscles withMuscles = sensation as SensationWithMuscles;
+        private MicroSensation? analyzeSensation(Sensation sensation) {
+            if (sensation is MicroSensation microSensation) {
+                return microSensation;
+            } else if (sensation is SensationWithMuscles withMuscles) {
                 return analyzeSensation(withMuscles.reference);
-            } else if (sensation is SensationsSequence) {
-                SensationsSequence sequence = sensation as SensationsSequence;
-                foreach (Sensation s in sequence.sensations) {
-                    // just take first
-                    return analyzeSensation(s);
+            } else if (sensation is SensationsSequence sequence) {
+                // just take first
+                if (sequence.sensations.FirstOrDefault() is Sensation first)
+                {
+                    return analyzeSensation(first);
                 }
-            } else if (sensation is BakedSensation) {
-                BakedSensation baked = sensation as BakedSensation;
+
+                return null;
+            } else if (sensation is BakedSensation baked) {
                 return analyzeSensation(baked.reference);
             }
+
             return null;
         }
 

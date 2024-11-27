@@ -1,16 +1,11 @@
 ﻿using OWOGame;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OwoAdvancedSensationBuilder.builder
 {
     public class AdvancedSensationService {
 
 
-        public static AdvancedStreamingSensation splitSensation(MicroSensation micro, Muscle[] muscles) {
+        public static AdvancedStreamingSensation splitSensation(MicroSensation? micro, Muscle[] muscles) {
 
             AdvancedStreamingSensation advanced = new AdvancedStreamingSensation();
             if (micro == null) {
@@ -45,7 +40,7 @@ namespace OwoAdvancedSensationBuilder.builder
             return (int)(firstFloat * (1 - by) + secondFloat * by);
         }
 
-        private static AdvancedStreamingSensation createAdvancedMicro(int frequency, int intensity, bool isShortSensation, Muscle[] muscles) {
+        private static AdvancedStreamingSensation createAdvancedMicro(int frequency, int intensity, bool isShortSensation, Muscle[]? muscles) {
 
             if (muscles == null || muscles.Length == 0) {
                 muscles = Muscle.All;
@@ -72,7 +67,7 @@ namespace OwoAdvancedSensationBuilder.builder
             return AdvancedStreamingSensation.createByAdvancedMicro(new SensationWithMuscles(s, modifiedMuscle));
         }
 
-        public static AdvancedStreamingSensation createSensationCurve(int frequency, List<int> intensities, Muscle[] muscles = null) {
+        public static AdvancedStreamingSensation createSensationCurve(int frequency, List<int> intensities, Muscle[]? muscles = null) {
             AdvancedStreamingSensation curve = new AdvancedStreamingSensation();
             if (intensities == null) {
                 return curve;
@@ -85,7 +80,7 @@ namespace OwoAdvancedSensationBuilder.builder
             return curve;
         }
 
-        public static AdvancedStreamingSensation createSensationCurve(List<int> frequencies, int intensity, Muscle[] muscles = null) {
+        public static AdvancedStreamingSensation createSensationCurve(List<int> frequencies, int intensity, Muscle[]? muscles = null) {
             AdvancedStreamingSensation curve = new AdvancedStreamingSensation();
             if (frequencies == null) {
                 return curve;
@@ -99,7 +94,7 @@ namespace OwoAdvancedSensationBuilder.builder
         }
 
         public static AdvancedStreamingSensation createSensationRamp(int frequencyStart, int frequencyEnd, int intensityStart, int intensityEnd,
-                float duration, Muscle[] muscles = null) {
+                float duration, Muscle[]? muscles = null) {
 
             AdvancedStreamingSensation ramp = new AdvancedStreamingSensation();
             float time = 0.1f;
@@ -123,7 +118,7 @@ namespace OwoAdvancedSensationBuilder.builder
             AdvancedSensationBuilderMergeOptions mergeOptions) {
 
             List<SensationWithMuscles> origSnippets = origAdvanced.getSnippets();
-            List<SensationWithMuscles> newSnippets = newAdvanced.getSnippets();
+            List<SensationWithMuscles?> newSnippets = [.. newAdvanced.getSnippets()];
 
             AdvancedStreamingSensation mergedSensation = new AdvancedStreamingSensation();
 
@@ -138,11 +133,11 @@ namespace OwoAdvancedSensationBuilder.builder
             }
 
             for (int i = 0; i < newSnippets.Count; i++) {
-                SensationWithMuscles origSensation = null;
+                SensationWithMuscles? origSensation = null;
                 if (origSnippets.Count > i) {
                     origSensation = origSnippets[i];
                 }
-                SensationWithMuscles newSensation = newSnippets[i];
+                SensationWithMuscles? newSensation = newSnippets[i];
 
                 if (origSensation == null && newSensation == null) {
                     mergedSensation.addSensation(createAdvancedMicro(0, 0, false, Muscle.All));
