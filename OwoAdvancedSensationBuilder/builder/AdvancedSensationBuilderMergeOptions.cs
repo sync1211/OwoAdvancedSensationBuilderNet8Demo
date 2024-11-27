@@ -1,7 +1,6 @@
 ﻿using OWOGame;
 
-namespace OwoAdvancedSensationBuilder.builder
-{
+namespace OwoAdvancedSensationBuilder.builder {
     public class AdvancedSensationBuilderMergeOptions {
         public enum MuscleMergeMode { MAX, KEEP, OVERRIDE, MIN };
 
