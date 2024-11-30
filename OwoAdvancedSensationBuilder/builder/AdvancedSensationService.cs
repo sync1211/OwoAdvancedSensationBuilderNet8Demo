@@ -162,15 +162,15 @@ namespace OwoAdvancedSensationBuilder.builder
             return mergedSensation;
         }
 
-        private static Muscle[] actualMuscleMerge(Muscle[] newMuscles, Muscle[] origMuscles, AdvancedSensationBuilderMergeOptions.MuscleMergeMode mode) {
+        private static Muscle[] actualMuscleMerge(Muscle[] newMuscles, Muscle[] origMuscles, MuscleMergeMode mode) {
             switch (mode) {
-                case AdvancedSensationBuilderMergeOptions.MuscleMergeMode.MAX:
+                case MuscleMergeMode.MAX:
                     return actualMuscleMergeMax(newMuscles, origMuscles);
-                case AdvancedSensationBuilderMergeOptions.MuscleMergeMode.MIN:
+                case MuscleMergeMode.MIN:
                     return actualMuscleMergeMin(newMuscles, origMuscles);
-                case AdvancedSensationBuilderMergeOptions.MuscleMergeMode.KEEP:
+                case MuscleMergeMode.KEEP:
                     return actualMuscleMergeKeep(newMuscles, origMuscles);
-                case AdvancedSensationBuilderMergeOptions.MuscleMergeMode.OVERRIDE:
+                case MuscleMergeMode.OVERRIDE:
                     return actualMuscleMergeOverride(newMuscles, origMuscles);
                 default:
                     throw new Exception("Unknown Merge Type");
