@@ -1,6 +1,5 @@
 ﻿using OwoAdvancedSensationBuilder.builder;
 using OwoAdvancedSensationBuilder.manager;
-using OwoAdvancedSensationBuilderNet8.manager;
 using OWOGame;
 
 namespace OwoAdvancedSensationBuilder.Demo.experience
