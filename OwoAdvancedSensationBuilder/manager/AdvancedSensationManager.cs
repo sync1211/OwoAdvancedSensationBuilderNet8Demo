@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using OWOGame;
+using static OwoAdvancedSensationBuilder.builder.AdvancedSensationBuilderMergeOptions;
 
 namespace OwoAdvancedSensationBuilder.manager
 {
@@ -153,7 +154,7 @@ namespace OwoAdvancedSensationBuilder.manager
             AdvancedSensationBuilder builder = null;
 
             AdvancedSensationBuilderMergeOptions mergeOptions = new AdvancedSensationBuilderMergeOptions();
-            mergeOptions.mode = AdvancedSensationBuilderMergeOptions.MuscleMergeMode.MAX;
+            mergeOptions.mode = MuscleMergeMode.MAX;
             mergeOptions.overwriteBaseSensation = true;
 
 
