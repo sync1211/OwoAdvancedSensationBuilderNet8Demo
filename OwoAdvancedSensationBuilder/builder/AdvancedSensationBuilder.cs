@@ -5,11 +5,11 @@ namespace OwoAdvancedSensationBuilder.builder
     public class AdvancedSensationBuilder {
 
         private AdvancedStreamingSensation advanced;
-        private Muscle[] muscles;
+        private Muscle[]? muscles;
 
         public AdvancedSensationBuilder(Sensation sensation, Muscle[]? muscles = null) {
 
-            this.muscles = muscles ?? [];
+            this.muscles = muscles;
 
             MicroSensation? micro = analyzeSensation(sensation);
             if (advanced == null) {
@@ -19,7 +19,7 @@ namespace OwoAdvancedSensationBuilder.builder
         }
 
         public AdvancedSensationBuilder(List<int> intensities, Muscle[]? muscles = null) {
-            this.muscles = muscles ?? [];
+            this.muscles = muscles;
             advanced = AdvancedSensationService.createSensationCurve(100, intensities, this.muscles);
         }
 
