@@ -1,4 +1,3 @@
-using OwoAdvancedSensationBuilderNet8;
 
 namespace OwoAdvancedSensationBuilder.Demo {
     internal static class Program {
