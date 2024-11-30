@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OWOGame;
 
-namespace OwoAdvancedSensationBuilderNet8.manager {
+namespace OwoAdvancedSensationBuilder.manager {
     public class AdvancedSensationStreamInstance {
 
         public delegate void SensationStreamInstanceEvent(AdvancedSensationStreamInstance instance);

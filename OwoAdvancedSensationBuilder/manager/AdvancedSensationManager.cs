@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using OWOGame;
-using OwoAdvancedSensationBuilderNet8.manager;
 
 namespace OwoAdvancedSensationBuilder.manager
 {
