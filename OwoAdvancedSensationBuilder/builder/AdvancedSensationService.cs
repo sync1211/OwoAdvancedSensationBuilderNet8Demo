@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static OwoAdvancedSensationBuilderNet8.builder.AdvancedSensationBuilderMergeOptions;
+using static OwoAdvancedSensationBuilder.builder.AdvancedSensationBuilderMergeOptions;
 
-namespace OwoAdvancedSensationBuilderNet8.builder {
+namespace OwoAdvancedSensationBuilder.builder
+{
     public class AdvancedSensationService {
 
 

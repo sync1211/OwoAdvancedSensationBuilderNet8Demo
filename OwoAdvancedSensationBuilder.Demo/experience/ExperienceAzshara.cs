@@ -1,5 +1,5 @@
-﻿using OwoAdvancedSensationBuilderNet8.builder;
-using OwoAdvancedSensationBuilderNet8.manager;
+﻿using OwoAdvancedSensationBuilder.builder;
+using OwoAdvancedSensationBuilder.manager;
 using OWOGame;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OwoAdvancedSensationBuilderNet8.experience {
+namespace OwoAdvancedSensationBuilder.Demo.experience
+{
     internal class ExperienceAzshara {
 
         Dictionary<double, List<AdvancedSensationStreamInstance>> queue = new Dictionary<double, List<AdvancedSensationStreamInstance>>();
