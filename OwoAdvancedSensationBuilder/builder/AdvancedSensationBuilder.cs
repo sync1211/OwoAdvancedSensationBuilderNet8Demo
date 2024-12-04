@@ -9,7 +9,7 @@ namespace OwoAdvancedSensationBuilder.builder
 
         public AdvancedSensationBuilder(Sensation sensation, Muscle[]? muscles = null) {
 
-            this.muscles = muscles ?? [];
+            this.muscles = muscles;
 
             MicroSensation? micro = analyzeSensation(sensation);
             if (advanced == null) {
