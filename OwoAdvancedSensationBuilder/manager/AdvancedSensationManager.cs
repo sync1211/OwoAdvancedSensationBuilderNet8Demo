@@ -67,7 +67,19 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         private void processUpdate() {
-            foreach (var process in processSensation.ToArray()) {
+            KeyValuePair<AdvancedSensationStreamInstance, ProcessState>[] processSensationList = processSensation.ToArray();
+
+            // Create a dictionary of instances with the status ADD to speed up the lookup of instances int the next loop
+            Dictionary<string, AdvancedSensationStreamInstance> instancesToAdd = new();
+            foreach (var process in processSensationList) {
+                if (process.Value != ProcessState.ADD) {
+                    continue;
+                }
+
+                instancesToAdd.Add(process.Key.name, process.Key);
+            }
+
+            foreach (var process in processSensationList) {
 
                 if (process.Value != ProcessState.UPDATE) {
                     continue;
@@ -79,11 +91,7 @@ namespace OwoAdvancedSensationBuilder.manager
                     // Update Playing Sensation
                     oldInstance = playSensations[instance.name];
                 } else {
-                    KeyValuePair<AdvancedSensationStreamInstance, ProcessState> oldInstanceItem = processSensation.FirstOrDefault(
-                        processInstance => processInstance.Value == ProcessState.ADD && processInstance.Key.name == instance.name
-                    );
-
-                    oldInstance = oldInstanceItem.Key;
+                    oldInstance = instancesToAdd.GetValueOrDefault(instance.name);
                 }
 
                 oldInstance?.updateSensation(instance.sensation);
