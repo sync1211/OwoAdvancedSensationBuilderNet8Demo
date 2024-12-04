@@ -5,7 +5,6 @@ namespace OwoAdvancedSensationBuilder.builder
 {
     public class AdvancedSensationService {
 
-
         public static AdvancedStreamingSensation splitSensation(MicroSensation? micro, Muscle[] muscles) {
 
             AdvancedStreamingSensation advanced = new AdvancedStreamingSensation();
@@ -178,7 +177,7 @@ namespace OwoAdvancedSensationBuilder.builder
             }
         }
 
-        private static Muscle[] actualMuscleMergeMin(Muscle[] newMuscles, Muscle[] origMuscles)
+        public static Muscle[] actualMuscleMergeMin(Muscle[] newMuscles, Muscle[] origMuscles)
         {
             Dictionary<int, Muscle> mergedMuscles = new();
             foreach (Muscle muscle in origMuscles) {
@@ -197,7 +196,7 @@ namespace OwoAdvancedSensationBuilder.builder
             return mergedMuscles.Values.ToArray();
         }
 
-        private static Muscle[] actualMuscleMergeMax(Muscle[] newMuscles, Muscle[] origMuscles)
+        public static Muscle[] actualMuscleMergeMax(Muscle[] newMuscles, Muscle[] origMuscles)
         {
             Dictionary<int, Muscle> mergedMuscles = new();
             foreach (Muscle muscle in origMuscles) {
@@ -216,7 +215,7 @@ namespace OwoAdvancedSensationBuilder.builder
             return mergedMuscles.Values.ToArray();
         }
 
-        private static Muscle[] actualMuscleMergeKeep(Muscle[] newMuscles, Muscle[] origMuscles) {
+        public static Muscle[] actualMuscleMergeKeep(Muscle[] newMuscles, Muscle[] origMuscles) {
             Dictionary<int, Muscle> mergedMuscles = new();
             foreach (Muscle muscle in origMuscles) {
                 mergedMuscles.Add(muscle.id, muscle);
@@ -228,7 +227,7 @@ namespace OwoAdvancedSensationBuilder.builder
             return mergedMuscles.Values.ToArray();
         }
 
-        private static Muscle[] actualMuscleMergeOverride(Muscle[] newMuscles, Muscle[] origMuscles) {
+        public static Muscle[] actualMuscleMergeOverride(Muscle[] newMuscles, Muscle[] origMuscles) {
             Dictionary<int, Muscle> mergedMuscles = new();
             foreach (Muscle muscle in origMuscles) {
                 mergedMuscles.Add(muscle.id, muscle);
