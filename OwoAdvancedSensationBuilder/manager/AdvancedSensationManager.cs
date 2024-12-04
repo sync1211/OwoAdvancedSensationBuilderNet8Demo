@@ -135,12 +135,11 @@ namespace OwoAdvancedSensationBuilder.manager
             mergeOptions.mode = MuscleMergeMode.MAX;
             mergeOptions.overwriteBaseSensation = true;
 
-
-            List<string> reversPrio = new List<string>(priorityList);
-            reversPrio.Reverse();
             Dictionary<string, AdvancedSensationStreamInstance> snapshot = new Dictionary<string, AdvancedSensationStreamInstance>(playSensations);
 
-            foreach (var priority in reversPrio) {
+            IEnumerable<string> reversePrio = priorityList.ToArray().Reverse();
+
+            foreach (var priority in reversePrio) {
                 if (!snapshot.ContainsKey(priority)) {
                     continue;
                 }
@@ -165,7 +164,7 @@ namespace OwoAdvancedSensationBuilder.manager
 
             mergeOptions.overwriteBaseSensation = false;
             foreach (var entry in snapshot) {
-                if (reversPrio.Contains(entry.Key)) {
+                if (reversePrio.Contains(entry.Key)) {
                     continue;
                 }
                 AdvancedSensationStreamInstance sensationInstance = entry.Value;
@@ -185,6 +184,7 @@ namespace OwoAdvancedSensationBuilder.manager
                     playSensations.Remove(entry.Key);
                 }
             }
+
             if (builder != null) {
                 // May be null due to racetime condition, on last Sensation remove
                 calculatedSensation = builder.getSensationForStream();
