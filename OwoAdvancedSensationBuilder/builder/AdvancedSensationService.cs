@@ -1,8 +1,4 @@
 ﻿using OWOGame;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static OwoAdvancedSensationBuilder.builder.AdvancedSensationBuilderMergeOptions;
 
 namespace OwoAdvancedSensationBuilder.builder
@@ -182,60 +178,66 @@ namespace OwoAdvancedSensationBuilder.builder
             }
         }
 
-        private static Muscle[] actualMuscleMergeMax(Muscle[] newMuscles, Muscle[] origMuscles) {
-            List<Muscle> mergedMuscles = new List<Muscle>();
-            mergedMuscles.AddRange(origMuscles);
+        private static Muscle[] actualMuscleMergeMin(Muscle[] newMuscles, Muscle[] origMuscles)
+        {
+            Dictionary<int, Muscle> mergedMuscles = new();
+            foreach (Muscle muscle in origMuscles) {
+                mergedMuscles.Add(muscle.id, muscle);
+            }
+
             foreach (Muscle m in newMuscles) {
-                if (!mergedMuscles.Any(origM => origM.id == m.id)) {
-                    mergedMuscles.Add(m);
-                } else {
-                    Muscle existing = mergedMuscles.Find(origM => origM.id == m.id);
-                    if (existing.intensity < m.intensity) {
-                        mergedMuscles.Remove(existing);
-                        mergedMuscles.Add(m);
+                if (!mergedMuscles.TryAdd(m.id, m)) {
+                    Muscle existing = mergedMuscles[m.id];
+
+                    if (existing.intensity > m.intensity) {
+                        mergedMuscles[m.id] = m;
                     }
                 }
             }
-            return mergedMuscles.ToArray();
+            return mergedMuscles.Values.ToArray();
         }
 
-        private static Muscle[] actualMuscleMergeMin(Muscle[] newMuscles, Muscle[] origMuscles) {
-            List<Muscle> mergedMuscles = new List<Muscle>();
-            mergedMuscles.AddRange(origMuscles);
+        private static Muscle[] actualMuscleMergeMax(Muscle[] newMuscles, Muscle[] origMuscles)
+        {
+            Dictionary<int, Muscle> mergedMuscles = new();
+            foreach (Muscle muscle in origMuscles) {
+                mergedMuscles.Add(muscle.id, muscle);
+            }
+
             foreach (Muscle m in newMuscles) {
-                if (!mergedMuscles.Any(origM => origM.id == m.id)) {
-                    mergedMuscles.Add(m);
-                } else {
-                    Muscle existing = mergedMuscles.Find(origM => origM.id == m.id);
-                    if (existing.intensity > m.intensity) {
-                        mergedMuscles.Remove(existing);
-                        mergedMuscles.Add(m);
+                if (!mergedMuscles.TryAdd(m.id, m)) {
+                    Muscle existing = mergedMuscles[m.id];
+
+                    if (existing.intensity < m.intensity) {
+                        mergedMuscles[m.id] = m;
                     }
                 }
             }
-            return mergedMuscles.ToArray();
+            return mergedMuscles.Values.ToArray();
         }
 
         private static Muscle[] actualMuscleMergeKeep(Muscle[] newMuscles, Muscle[] origMuscles) {
-            List<Muscle> mergedMuscles = new List<Muscle>();
-            mergedMuscles.AddRange(origMuscles);
-            foreach (Muscle m in newMuscles) {
-                if (!mergedMuscles.Any(origM => origM.id == m.id)) {
-                    mergedMuscles.Add(m);
-                }
+            Dictionary<int, Muscle> mergedMuscles = new();
+            foreach (Muscle muscle in origMuscles) {
+                mergedMuscles.Add(muscle.id, muscle);
             }
-            return mergedMuscles.ToArray();
+
+            foreach (Muscle m in newMuscles) {
+                mergedMuscles.TryAdd(m.id, m);
+            }
+            return mergedMuscles.Values.ToArray();
         }
 
         private static Muscle[] actualMuscleMergeOverride(Muscle[] newMuscles, Muscle[] origMuscles) {
-            List<Muscle> mergedMuscles = new List<Muscle>();
-            mergedMuscles.AddRange(newMuscles);
-            foreach (Muscle m in origMuscles) {
-                if (!mergedMuscles.Any(newM => newM.id == m.id)) {
-                    mergedMuscles.Add(m);
-                }
+            Dictionary<int, Muscle> mergedMuscles = new();
+            foreach (Muscle muscle in origMuscles) {
+                mergedMuscles.Add(muscle.id, muscle);
             }
-            return mergedMuscles.ToArray();
+
+            foreach (Muscle m in newMuscles) {
+                mergedMuscles[m.id] = m;
+            }
+            return mergedMuscles.Values.ToArray();
         }
 
         public static AdvancedStreamingSensation cutSensation(AdvancedStreamingSensation origSensation, int from, int till) {
