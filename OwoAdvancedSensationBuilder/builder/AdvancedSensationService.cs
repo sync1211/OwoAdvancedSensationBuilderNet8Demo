@@ -36,7 +36,7 @@ namespace OwoAdvancedSensationBuilder.builder
             return advanced;
         }
 
-        private static int lerp(float firstFloat, float secondFloat, float by) {
+        public static int lerp(float firstFloat, float secondFloat, float by) {
             return (int)(firstFloat * (1 - by) + secondFloat * by);
         }
 

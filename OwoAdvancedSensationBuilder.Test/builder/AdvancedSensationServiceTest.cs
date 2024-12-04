@@ -14,6 +14,7 @@ namespace OwoAdvancedSensationBuilder.Test.builder
          * * actualMuscleMergeMin
          * * actualMuscleMergeKeep
          * * actualMuscleMergeOverride
+         * * lerp
          */
 
         [TestMethod]
@@ -166,6 +167,39 @@ namespace OwoAdvancedSensationBuilder.Test.builder
                 Assert.AreEqual(expectedMuscles[i].id, actualMuscles[i].id);
                 Assert.AreEqual(expectedMuscles[i].intensity, actualMuscles[i].intensity, $"Muscle at index {i} has an intensity of {actualMuscles[i].intensity}, expected: {expectedMuscles[i].intensity}");
             }
+        }
+
+        [TestMethod]
+        public void float2snippetsTest_RoundUp()
+        {
+            const float seconds = 0.46f;
+            const int expected = 5;
+
+            int actual = AdvancedSensationService.float2snippets(seconds);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void float2snippetsTest_RoundDown()
+        {
+            const float seconds = 0.44f;
+            const int expected = 4;
+
+            int actual = AdvancedSensationService.float2snippets(seconds);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void lerpTest()
+        {
+            const float firstFloat = 10;
+            const float secondFloat = 110;
+            const float by = 0.5f;
+
+            const int expected = 60;
+
+            int actual = AdvancedSensationService.lerp(firstFloat, secondFloat, by);
+            Assert.AreEqual(expected, actual);
         }
     }
 }
