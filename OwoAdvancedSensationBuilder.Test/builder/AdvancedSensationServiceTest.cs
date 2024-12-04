@@ -1,11 +1,10 @@
 ﻿using OwoAdvancedSensationBuilder.builder;
 using OWOGame;
 
-namespace OwoAdvancedSensationBuilder.Test.builder
-{
+namespace OwoAdvancedSensationBuilder.Test.builder {
+
     [TestClass]
-    public class AdvancedSensationServiceTest
-    {
+    public class AdvancedSensationServiceTest {
         /*
          * /!\ NOTE IF YOU SEE COMPILER ERRORS /!\
          * 
@@ -18,18 +17,15 @@ namespace OwoAdvancedSensationBuilder.Test.builder
          */
 
         [TestMethod]
-        public void actualMuscleMergeMaxTest()
-        {
-            Muscle[] oldMuscles =
-            [
+        public void actualMuscleMergeMaxTest() {
+            Muscle[] oldMuscles = [
                 Muscle.Abdominal_R.WithIntensity(10),
                 Muscle.Abdominal_L.WithIntensity(50),
                 Muscle.Arm_R.WithIntensity(25),
                 Muscle.Arm_L.WithIntensity(40)
             ];
 
-            Muscle[] newMuscles =
-            [
+            Muscle[] newMuscles = [
                 Muscle.Abdominal_R.WithIntensity(10),
                 Muscle.Abdominal_L.WithIntensity(40),
                 Muscle.Lumbar_L.WithIntensity(20),
@@ -37,8 +33,7 @@ namespace OwoAdvancedSensationBuilder.Test.builder
             ];
 
             //NOTE: Expected muscles are sorted by their ID
-            Muscle[] expectedMuscles =
-            [
+            Muscle[] expectedMuscles = [
                 Muscle.Abdominal_R.WithIntensity(10), // ID = 2
                 Muscle.Abdominal_L.WithIntensity(50), // ID = 3
                 Muscle.Arm_R.WithIntensity(35),       // ID = 4
@@ -47,31 +42,27 @@ namespace OwoAdvancedSensationBuilder.Test.builder
             ];
 
             Muscle[] actualMuscles = AdvancedSensationService.actualMuscleMergeMax(newMuscles, oldMuscles);
-            
+
             // Sort by ID as we only care about the intensity values
             Muscle[] actualMusclesSorted = actualMuscles.OrderBy(m => m.id).ToArray();
 
             Assert.AreEqual(expectedMuscles.Length, actualMuscles.Length);
-            for (int i = 0; i < expectedMuscles.Length; i++)
-            {
+            for (int i = 0; i < expectedMuscles.Length; i++) {
                 Assert.AreEqual(expectedMuscles[i].id, actualMusclesSorted[i].id);
                 Assert.AreEqual(expectedMuscles[i].intensity, actualMusclesSorted[i].intensity, $"Muscle at index {i} has an intensity of {actualMuscles[i].intensity}, expected: {expectedMuscles[i].intensity}");
             }
         }
 
         [TestMethod]
-        public void actualMuscleMergeMinTest()
-        {
-            Muscle[] oldMuscles =
-            [
+        public void actualMuscleMergeMinTest() {
+            Muscle[] oldMuscles = [
                 Muscle.Abdominal_R.WithIntensity(10),
                 Muscle.Abdominal_L.WithIntensity(50),
                 Muscle.Arm_L.WithIntensity(40),
                 Muscle.Arm_R.WithIntensity(25)
             ];
 
-            Muscle[] newMuscles =
-            [
+            Muscle[] newMuscles = [
                 Muscle.Abdominal_R.WithIntensity(10),
                 Muscle.Abdominal_L.WithIntensity(40),
                 Muscle.Lumbar_L.WithIntensity(20),
@@ -79,8 +70,7 @@ namespace OwoAdvancedSensationBuilder.Test.builder
             ];
 
             //NOTE: Expected muscles are sorted by their ID, see comments in actualMuscleMergeMaxTest for reference
-            Muscle[] expectedMuscles =
-            [
+            Muscle[] expectedMuscles = [
                 Muscle.Abdominal_R.WithIntensity(10),
                 Muscle.Abdominal_L.WithIntensity(40),
                 Muscle.Arm_R.WithIntensity(25),
@@ -94,26 +84,22 @@ namespace OwoAdvancedSensationBuilder.Test.builder
             Muscle[] actualMusclesSorted = actualMuscles.OrderBy(m => m.id).ToArray();
 
             Assert.AreEqual(expectedMuscles.Length, actualMuscles.Length);
-            for (int i = 0; i < expectedMuscles.Length; i++)
-            {
+            for (int i = 0; i < expectedMuscles.Length; i++) {
                 Assert.AreEqual(expectedMuscles[i].id, actualMusclesSorted[i].id);
                 Assert.AreEqual(expectedMuscles[i].intensity, actualMusclesSorted[i].intensity, $"Muscle at index {i} has an intensity of {actualMuscles[i].intensity}, expected: {expectedMuscles[i].intensity}");
             }
         }
 
         [TestMethod]
-        public void actualMuscleMergeOverrideTest()
-        {
-            Muscle[] oldMuscles =
-            [
+        public void actualMuscleMergeOverrideTest() {
+            Muscle[] oldMuscles = [
                 Muscle.Abdominal_R.WithIntensity(10),
                 Muscle.Abdominal_L.WithIntensity(50),
                 Muscle.Arm_L.WithIntensity(40),
                 Muscle.Arm_R.WithIntensity(25)
             ];
 
-            Muscle[] newMuscles =
-            [
+            Muscle[] newMuscles = [
                 Muscle.Abdominal_R.WithIntensity(10),
                 Muscle.Abdominal_L.WithIntensity(40),
                 Muscle.Lumbar_L.WithIntensity(20),
@@ -121,8 +107,7 @@ namespace OwoAdvancedSensationBuilder.Test.builder
             ];
 
             //NOTE: Expected muscles are sorted by their ID, see comments in actualMuscleMergeMaxTest for reference
-            Muscle[] expectedMuscles =
-            [
+            Muscle[] expectedMuscles = [
                 Muscle.Abdominal_R.WithIntensity(10),
                 Muscle.Abdominal_L.WithIntensity(40),
                 Muscle.Arm_R.WithIntensity(35),
@@ -136,26 +121,22 @@ namespace OwoAdvancedSensationBuilder.Test.builder
             Muscle[] actualMusclesSorted = actualMuscles.OrderBy(m => m.id).ToArray();
 
             Assert.AreEqual(expectedMuscles.Length, actualMuscles.Length);
-            for (int i = 0; i < expectedMuscles.Length; i++)
-            {
+            for (int i = 0; i < expectedMuscles.Length; i++) {
                 Assert.AreEqual(expectedMuscles[i].id, actualMusclesSorted[i].id);
                 Assert.AreEqual(expectedMuscles[i].intensity, actualMusclesSorted[i].intensity, $"Muscle at index {i} has an intensity of {actualMuscles[i].intensity}, expected: {expectedMuscles[i].intensity}");
             }
         }
 
         [TestMethod]
-        public void actualMuscleMergeKeepTest()
-        {
-            Muscle[] oldMuscles =
-            [
+        public void actualMuscleMergeKeepTest() {
+            Muscle[] oldMuscles = [
                 Muscle.Abdominal_R.WithIntensity(10),
                 Muscle.Abdominal_L.WithIntensity(50),
                 Muscle.Arm_L.WithIntensity(40),
                 Muscle.Arm_R.WithIntensity(25)
             ];
 
-            Muscle[] newMuscles =
-            [
+            Muscle[] newMuscles = [
                 Muscle.Abdominal_R.WithIntensity(10),
                 Muscle.Abdominal_L.WithIntensity(40),
                 Muscle.Lumbar_L.WithIntensity(20),
@@ -163,8 +144,7 @@ namespace OwoAdvancedSensationBuilder.Test.builder
             ];
 
             //NOTE: Expected muscles are sorted by their ID, see comments in actualMuscleMergeMaxTest for reference
-            Muscle[] expectedMuscles =
-            [
+            Muscle[] expectedMuscles = [
                 Muscle.Abdominal_R.WithIntensity(10),
                 Muscle.Abdominal_L.WithIntensity(50),
                 Muscle.Arm_R.WithIntensity(25),
@@ -178,16 +158,14 @@ namespace OwoAdvancedSensationBuilder.Test.builder
             Muscle[] actualMusclesSorted = actualMuscles.OrderBy(m => m.id).ToArray();
 
             Assert.AreEqual(expectedMuscles.Length, actualMuscles.Length);
-            for (int i = 0; i < expectedMuscles.Length; i++)
-            {
+            for (int i = 0; i < expectedMuscles.Length; i++) {
                 Assert.AreEqual(expectedMuscles[i].id, actualMusclesSorted[i].id);
                 Assert.AreEqual(expectedMuscles[i].intensity, actualMusclesSorted[i].intensity, $"Muscle at index {i} has an intensity of {actualMuscles[i].intensity}, expected: {expectedMuscles[i].intensity}");
             }
         }
 
         [TestMethod]
-        public void float2snippetsTest_RoundUp()
-        {
+        public void float2snippetsTest_RoundUp() {
             const float seconds = 0.46f;
             const int expected = 5;
 
@@ -196,8 +174,7 @@ namespace OwoAdvancedSensationBuilder.Test.builder
         }
 
         [TestMethod]
-        public void float2snippetsTest_RoundDown()
-        {
+        public void float2snippetsTest_RoundDown() {
             const float seconds = 0.44f;
             const int expected = 4;
 
@@ -206,8 +183,7 @@ namespace OwoAdvancedSensationBuilder.Test.builder
         }
 
         [TestMethod]
-        public void lerpTest()
-        {
+        public void lerpTest() {
             const float firstFloat = 10;
             const float secondFloat = 110;
             const float by = 0.5f;
