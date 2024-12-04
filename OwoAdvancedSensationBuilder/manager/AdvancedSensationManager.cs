@@ -67,7 +67,7 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         private void processUpdate() {
-            foreach (var process in new Dictionary<AdvancedSensationStreamInstance, ProcessState>(processSensation)) {
+            foreach (var process in processSensation.ToArray()) {
 
                 if (process.Value != ProcessState.UPDATE) {
                     continue;
@@ -79,25 +79,21 @@ namespace OwoAdvancedSensationBuilder.manager
                     // Update Playing Sensation
                     oldInstance = playSensations[instance.name];
                 } else {
-                    foreach (KeyValuePair<AdvancedSensationStreamInstance, ProcessState> processInstance in processSensation.ToArray()) {
-                        if (processInstance.Value == ProcessState.ADD && processInstance.Key.name == instance.name) {
-                            // Update to be Added Sensation
-                            oldInstance = processInstance.Key;
-                            break;
-                        }
-                    }
+                    KeyValuePair<AdvancedSensationStreamInstance, ProcessState> oldInstanceItem = processSensation.FirstOrDefault(
+                        processInstance => processInstance.Value == ProcessState.ADD && processInstance.Key.name == instance.name
+                    );
+
+                    oldInstance = oldInstanceItem.Key;
                 }
 
-                if (oldInstance != null) {
-                    oldInstance.updateSensation(instance.sensation);
-                }
+                oldInstance?.updateSensation(instance.sensation);
 
                 processSensation.Remove(process.Key);
             }
         }
 
         private void processAdd() {
-            foreach (var process in new Dictionary<AdvancedSensationStreamInstance, ProcessState>(processSensation)) {
+            foreach (var process in processSensation.ToArray()) {
 
                 if (process.Value != ProcessState.ADD) {
                     continue;
@@ -112,7 +108,7 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         private void processRemove(bool endOfCylce) {
-            foreach (var process in new Dictionary<AdvancedSensationStreamInstance, ProcessState>(processSensation)) {
+            foreach (var process in processSensation.ToArray()) {
 
                 if (process.Value != ProcessState.REMOVE) {
                     continue;
