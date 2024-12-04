@@ -71,19 +71,13 @@ namespace OwoAdvancedSensationBuilder.manager
 
             // Create a dictionary of instances with the status ADD to speed up the lookup of instances int the next loop
             Dictionary<string, AdvancedSensationStreamInstance> instancesToAdd = new();
-            foreach (var process in processSensationList) {
-                if (process.Value != ProcessState.ADD) {
-                    continue;
-                }
-
+            foreach (var process in processSensationList.Where(entry => entry.Value == ProcessState.ADD))
+            {
                 instancesToAdd.Add(process.Key.name, process.Key);
             }
 
-            foreach (var process in processSensationList) {
-
-                if (process.Value != ProcessState.UPDATE) {
-                    continue;
-                }
+            foreach (var process in processSensationList.Where(entry => entry.Value == ProcessState.UPDATE))
+            {
                 AdvancedSensationStreamInstance instance = process.Key;
                 AdvancedSensationStreamInstance? oldInstance = null;
 
@@ -101,11 +95,7 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         private void processAdd() {
-            foreach (var process in processSensation.ToArray()) {
-
-                if (process.Value != ProcessState.ADD) {
-                    continue;
-                }
+            foreach (var process in processSensation.ToArray().Where(entry => entry.Value == ProcessState.ADD)) {
                 AdvancedSensationStreamInstance instance = process.Key;
                 instance.firstTick = tick;
 
@@ -116,12 +106,7 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         private void processRemove(bool endOfCylce) {
-            foreach (var process in processSensation.ToArray()) {
-
-                if (process.Value != ProcessState.REMOVE) {
-                    continue;
-                }
-
+            foreach (var process in processSensation.ToArray().Where(entry => entry.Value == ProcessState.REMOVE)) {
                 AdvancedSensationStreamInstance instance = process.Key;
 
                 if (playSensations.ContainsKey(instance.name)) {
