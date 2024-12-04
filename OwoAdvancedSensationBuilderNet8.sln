@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder", "OwoAdvancedSensationBuilder\OwoAdvancedSensationBuilder.csproj", "{C03B35E9-819A-4424-9C47-0B9564216BCC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwoAdvancedSensationBuilder.Test", "OwoAdvancedSensationBuilder.Test\OwoAdvancedSensationBuilder.Test.csproj", "{9E52C92D-7897-45B4-8E5D-675B6A2A72CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C03B35E9-819A-4424-9C47-0B9564216BCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C03B35E9-819A-4424-9C47-0B9564216BCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C03B35E9-819A-4424-9C47-0B9564216BCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E52C92D-7897-45B4-8E5D-675B6A2A72CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E52C92D-7897-45B4-8E5D-675B6A2A72CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E52C92D-7897-45B4-8E5D-675B6A2A72CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E52C92D-7897-45B4-8E5D-675B6A2A72CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
