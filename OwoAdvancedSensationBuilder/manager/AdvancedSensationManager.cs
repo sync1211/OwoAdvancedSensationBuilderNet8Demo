@@ -119,13 +119,8 @@ namespace OwoAdvancedSensationBuilder.manager
             if (playSensations.Count == 0 && endOfCylce) {
                 // Only allow to stop manager at end of cycle.
                 // Else race time conditions might stop manager while something to add just got inserted.
-                bool toAdd = false;
-                foreach (var processInstance in processSensation) {
-                    if (processInstance.Value == ProcessState.ADD) {
-                        toAdd = true;
-                        break;
-                    }
-                }
+                bool toAdd = processSensation.Any(entry => entry.Value == ProcessState.ADD);
+
                 if (!toAdd) {
                     resetManagerState();
                 }
