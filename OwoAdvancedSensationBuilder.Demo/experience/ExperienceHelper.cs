@@ -1,5 +1,4 @@
 ﻿using OwoAdvancedSensationBuilder.manager;
-using OwoAdvancedSensationBuilderNet8.manager;
 using System.Timers;
 
 namespace OwoAdvancedSensationBuilder.Demo.experience
