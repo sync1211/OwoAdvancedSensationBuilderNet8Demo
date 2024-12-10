@@ -1,22 +1,17 @@
 ﻿using OwoAdvancedSensationBuilder.manager;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace OwoAdvancedSensationBuilder.Demo.experience
 {
     internal class ExperienceHelper {
 
-        private static ExperienceHelper managerInstance;
+        private static ExperienceHelper? managerInstance;
 
         private System.Timers.Timer timer;
 
         private double time = 0;
 
-        private Dictionary<double, List<AdvancedSensationStreamInstance>> queue;
+        private Dictionary<double, List<AdvancedSensationStreamInstance>> queue = [];
 
         private ExperienceHelper() {
             timer = new System.Timers.Timer(100);
@@ -33,11 +28,11 @@ namespace OwoAdvancedSensationBuilder.Demo.experience
             return managerInstance;
         }
 
-        private void tick(Object source, ElapsedEventArgs e) {
+        private void tick(object? source, ElapsedEventArgs e) {
             time += 0.1;
             time = Math.Round(time, 1);
         }
-        private void addSensation(Object source, ElapsedEventArgs e) {
+        private void addSensation(object? source, ElapsedEventArgs e) {
 
             if (!queue.ContainsKey(time)) {
                 return;

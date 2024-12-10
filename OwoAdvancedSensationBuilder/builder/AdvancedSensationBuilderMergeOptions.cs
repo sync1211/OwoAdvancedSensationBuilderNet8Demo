@@ -1,12 +1,6 @@
-﻿using System;
-using OWOGame;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OWOGame;
 
-namespace OwoAdvancedSensationBuilder.builder
-{
+namespace OwoAdvancedSensationBuilder.builder {
     public class AdvancedSensationBuilderMergeOptions {
         public enum MuscleMergeMode { MAX, KEEP, OVERRIDE, MIN };
 
