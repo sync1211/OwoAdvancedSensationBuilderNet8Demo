@@ -1,17 +1,11 @@
 ﻿using OWOGame;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static OwoAdvancedSensationBuilder.builder.AdvancedSensationBuilderMergeOptions;
 
 namespace OwoAdvancedSensationBuilder.builder
 {
-    public class AdvancedSensationService {
+    public static class AdvancedSensationService {
 
-
-        public static AdvancedStreamingSensation splitSensation(MicroSensation micro, Muscle[] muscles) {
+        public static AdvancedStreamingSensation splitSensation(MicroSensation? micro, Muscle[]? muscles) {
 
             AdvancedStreamingSensation advanced = new AdvancedStreamingSensation();
             if (micro == null) {
@@ -42,11 +36,11 @@ namespace OwoAdvancedSensationBuilder.builder
             return advanced;
         }
 
-        private static int lerp(float firstFloat, float secondFloat, float by) {
+        public static int lerp(float firstFloat, float secondFloat, float by) {
             return (int)(firstFloat * (1 - by) + secondFloat * by);
         }
 
-        private static AdvancedStreamingSensation createAdvancedMicro(int frequency, int intensity, bool isShortSensation, Muscle[] muscles) {
+        private static AdvancedStreamingSensation createAdvancedMicro(int frequency, int intensity, bool isShortSensation, Muscle[]? muscles) {
 
             if (muscles == null || muscles.Length == 0) {
                 muscles = Muscle.All;
@@ -73,7 +67,7 @@ namespace OwoAdvancedSensationBuilder.builder
             return AdvancedStreamingSensation.createByAdvancedMicro(new SensationWithMuscles(s, modifiedMuscle));
         }
 
-        public static AdvancedStreamingSensation createSensationCurve(int frequency, List<int> intensities, Muscle[] muscles = null) {
+        public static AdvancedStreamingSensation createSensationCurve(int frequency, List<int> intensities, Muscle[]? muscles = null) {
             AdvancedStreamingSensation curve = new AdvancedStreamingSensation();
             if (intensities == null) {
                 return curve;
@@ -86,7 +80,7 @@ namespace OwoAdvancedSensationBuilder.builder
             return curve;
         }
 
-        public static AdvancedStreamingSensation createSensationCurve(List<int> frequencies, int intensity, Muscle[] muscles = null) {
+        public static AdvancedStreamingSensation createSensationCurve(List<int> frequencies, int intensity, Muscle[]? muscles = null) {
             AdvancedStreamingSensation curve = new AdvancedStreamingSensation();
             if (frequencies == null) {
                 return curve;
@@ -100,7 +94,7 @@ namespace OwoAdvancedSensationBuilder.builder
         }
 
         public static AdvancedStreamingSensation createSensationRamp(int frequencyStart, int frequencyEnd, int intensityStart, int intensityEnd,
-                float duration, Muscle[] muscles = null) {
+                float duration, Muscle[]? muscles = null) {
 
             AdvancedStreamingSensation ramp = new AdvancedStreamingSensation();
             float time = 0.1f;
@@ -124,7 +118,7 @@ namespace OwoAdvancedSensationBuilder.builder
             AdvancedSensationBuilderMergeOptions mergeOptions) {
 
             List<SensationWithMuscles> origSnippets = origAdvanced.getSnippets();
-            List<SensationWithMuscles> newSnippets = newAdvanced.getSnippets();
+            List<SensationWithMuscles?> newSnippets = [.. newAdvanced.getSnippets()];
 
             AdvancedStreamingSensation mergedSensation = new AdvancedStreamingSensation();
 
@@ -139,16 +133,16 @@ namespace OwoAdvancedSensationBuilder.builder
             }
 
             for (int i = 0; i < newSnippets.Count; i++) {
-                SensationWithMuscles origSensation = null;
+                SensationWithMuscles? origSensation = null;
                 if (origSnippets.Count > i) {
                     origSensation = origSnippets[i];
                 }
-                SensationWithMuscles newSensation = newSnippets[i];
+                SensationWithMuscles? newSensation = newSnippets[i];
 
                 if (origSensation == null && newSensation == null) {
                     mergedSensation.addSensation(createAdvancedMicro(0, 0, false, Muscle.All));
                 } else if (origSensation == null) {
-                    mergedSensation.addSensation(AdvancedStreamingSensation.createByAdvancedMicro((SensationWithMuscles)newSensation.MultiplyIntensityBy(mergeOptions.intensityScale)));
+                    mergedSensation.addSensation(AdvancedStreamingSensation.createByAdvancedMicro((SensationWithMuscles)newSensation!.MultiplyIntensityBy(mergeOptions.intensityScale)));
                 } else if (newSensation == null) {
                     mergedSensation.addSensation(AdvancedStreamingSensation.createByAdvancedMicro(origSensation));
                 } else {
@@ -183,60 +177,64 @@ namespace OwoAdvancedSensationBuilder.builder
             }
         }
 
-        private static Muscle[] actualMuscleMergeMax(Muscle[] newMuscles, Muscle[] origMuscles) {
-            List<Muscle> mergedMuscles = new List<Muscle>();
-            mergedMuscles.AddRange(origMuscles);
-            foreach (Muscle m in newMuscles) {
-                if (!mergedMuscles.Any(origM => origM.id == m.id)) {
-                    mergedMuscles.Add(m);
-                } else {
-                    Muscle existing = mergedMuscles.Find(origM => origM.id == m.id);
-                    if (existing.intensity < m.intensity) {
-                        mergedMuscles.Remove(existing);
-                        mergedMuscles.Add(m);
-                    }
-                }
+        public static Muscle[] actualMuscleMergeMin(Muscle[] newMuscles, Muscle[] origMuscles) {
+            Dictionary<int, Muscle> mergedMuscles = new();
+            foreach (Muscle muscle in origMuscles) {
+                mergedMuscles.Add(muscle.id, muscle);
             }
-            return mergedMuscles.ToArray();
-        }
 
-        private static Muscle[] actualMuscleMergeMin(Muscle[] newMuscles, Muscle[] origMuscles) {
-            List<Muscle> mergedMuscles = new List<Muscle>();
-            mergedMuscles.AddRange(origMuscles);
             foreach (Muscle m in newMuscles) {
-                if (!mergedMuscles.Any(origM => origM.id == m.id)) {
-                    mergedMuscles.Add(m);
-                } else {
-                    Muscle existing = mergedMuscles.Find(origM => origM.id == m.id);
+                if (!mergedMuscles.TryAdd(m.id, m)) {
+                    Muscle existing = mergedMuscles[m.id];
+
                     if (existing.intensity > m.intensity) {
-                        mergedMuscles.Remove(existing);
-                        mergedMuscles.Add(m);
+                        mergedMuscles[m.id] = m;
                     }
                 }
             }
-            return mergedMuscles.ToArray();
+            return mergedMuscles.Values.ToArray();
         }
 
-        private static Muscle[] actualMuscleMergeKeep(Muscle[] newMuscles, Muscle[] origMuscles) {
-            List<Muscle> mergedMuscles = new List<Muscle>();
-            mergedMuscles.AddRange(origMuscles);
+        public static Muscle[] actualMuscleMergeMax(Muscle[] newMuscles, Muscle[] origMuscles) {
+            Dictionary<int, Muscle> mergedMuscles = new();
+            foreach (Muscle muscle in origMuscles) {
+                mergedMuscles.Add(muscle.id, muscle);
+            }
+
             foreach (Muscle m in newMuscles) {
-                if (!mergedMuscles.Any(origM => origM.id == m.id)) {
-                    mergedMuscles.Add(m);
+                if (!mergedMuscles.TryAdd(m.id, m)) {
+                    Muscle existing = mergedMuscles[m.id];
+
+                    if (existing.intensity < m.intensity) {
+                        mergedMuscles[m.id] = m;
+                    }
                 }
             }
-            return mergedMuscles.ToArray();
+            return mergedMuscles.Values.ToArray();
         }
 
-        private static Muscle[] actualMuscleMergeOverride(Muscle[] newMuscles, Muscle[] origMuscles) {
-            List<Muscle> mergedMuscles = new List<Muscle>();
-            mergedMuscles.AddRange(newMuscles);
-            foreach (Muscle m in origMuscles) {
-                if (!mergedMuscles.Any(newM => newM.id == m.id)) {
-                    mergedMuscles.Add(m);
-                }
+        public static Muscle[] actualMuscleMergeKeep(Muscle[] newMuscles, Muscle[] origMuscles) {
+            Dictionary<int, Muscle> mergedMuscles = new();
+            foreach (Muscle muscle in origMuscles) {
+                mergedMuscles.Add(muscle.id, muscle);
             }
-            return mergedMuscles.ToArray();
+
+            foreach (Muscle m in newMuscles) {
+                mergedMuscles.TryAdd(m.id, m);
+            }
+            return mergedMuscles.Values.ToArray();
+        }
+
+        public static Muscle[] actualMuscleMergeOverride(Muscle[] newMuscles, Muscle[] origMuscles) {
+            Dictionary<int, Muscle> mergedMuscles = new();
+            foreach (Muscle muscle in origMuscles) {
+                mergedMuscles.Add(muscle.id, muscle);
+            }
+
+            foreach (Muscle m in newMuscles) {
+                mergedMuscles[m.id] = m;
+            }
+            return mergedMuscles.Values.ToArray();
         }
 
         public static AdvancedStreamingSensation cutSensation(AdvancedStreamingSensation origSensation, int from, int till) {

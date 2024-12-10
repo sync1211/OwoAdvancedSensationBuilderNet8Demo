@@ -1,9 +1,4 @@
 ﻿using OwoAdvancedSensationBuilder.builder;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OWOGame;
 
 namespace OwoAdvancedSensationBuilder.manager {
@@ -11,27 +6,25 @@ namespace OwoAdvancedSensationBuilder.manager {
 
         public delegate void SensationStreamInstanceEvent(AdvancedSensationStreamInstance instance);
 
-        public event SensationStreamInstanceEvent LastCalculationOfCycle;
+        public event SensationStreamInstanceEvent? LastCalculationOfCycle;
 
         public string name { get; }
         public int firstTick { get; set; }
         public bool overwriteManagerProcessList { get; set; }
         public bool loop { get; set; }
 
-        private AdvancedStreamingSensation _sensation;
-        public AdvancedStreamingSensation sensation { get { return _sensation; } }
+        public AdvancedStreamingSensation sensation { get; private set; }
 
-        public AdvancedSensationStreamInstance(string name, Sensation sensation = null, bool loop = false) {
+        public AdvancedSensationStreamInstance(string name, Sensation sensation, bool loop = false) {
             this.name = name;
             this.loop = loop;
             firstTick = 0;
             overwriteManagerProcessList = false;
-            if (sensation != null) {
-                _sensation = new AdvancedSensationBuilder(sensation).getSensationForStream();
-            }
+
+            this.sensation = new AdvancedSensationBuilder(sensation).getSensationForStream();
         }
 
-        public Sensation getSensationAtTick(int tick) {
+        public Sensation? getSensationAtTick(int tick) {
             if (sensation.isEmpty()) {
                 return null;
             }
@@ -52,7 +45,7 @@ namespace OwoAdvancedSensationBuilder.manager {
         }
 
         public void updateSensation(Sensation newSensation) {
-            _sensation = new AdvancedSensationBuilder(newSensation).getSensationForStream();
+            sensation = new AdvancedSensationBuilder(newSensation).getSensationForStream();
         }
 
     }

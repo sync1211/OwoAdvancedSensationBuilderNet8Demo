@@ -1,13 +1,9 @@
 ﻿using OwoAdvancedSensationBuilder.builder;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using OWOGame;
 using static OwoAdvancedSensationBuilder.builder.AdvancedSensationBuilderMergeOptions;
+using OwoAdvancedSensationBuilder.exceptions;
 
 namespace OwoAdvancedSensationBuilder.manager
 {
@@ -15,7 +11,7 @@ namespace OwoAdvancedSensationBuilder.manager
 
         private enum ProcessState { ADD, REMOVE, UPDATE }
 
-        private static AdvancedSensationManager managerInstance;
+        private static AdvancedSensationManager? managerInstance;
 
         private System.Timers.Timer timer;
 
@@ -24,12 +20,11 @@ namespace OwoAdvancedSensationBuilder.manager
         private List<string> _priorityList;
         public List<string> priorityList { get { return _priorityList; } }
 
-        private int tick = 0;
-        private bool calculating = false;
-        private Sensation calculatedSensation = null;
+        private int tick;
+        private bool calculating;
+        private Sensation? calculatedSensation;
 
-
-        Stopwatch watch;
+        Stopwatch watch = new();
 
         private AdvancedSensationManager() {
             timer = new System.Timers.Timer(100);
@@ -50,13 +45,13 @@ namespace OwoAdvancedSensationBuilder.manager
             return managerInstance;
         }
 
-        private void streamSensation(Object source, ElapsedEventArgs e) {
+        private void streamSensation(object? source, ElapsedEventArgs e) {
             OWO.Send(calculatedSensation);
             tick++;
-            Debug.WriteLine(tick + " / " + watch.ElapsedMilliseconds);
+            Debug.WriteLine($"{tick} / {watch.ElapsedMilliseconds}");
         }
 
-        private void calcManagerTick(Object source, ElapsedEventArgs e) {
+        private void calcManagerTick(object? source, EventArgs e) {
             if (calculating) {
                 return;
             }
@@ -73,41 +68,33 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         private void processUpdate() {
-            foreach (var process in new Dictionary<AdvancedSensationStreamInstance, ProcessState>(processSensation)) {
+            KeyValuePair<AdvancedSensationStreamInstance, ProcessState>[] processSensationList = processSensation.ToArray();
 
-                if (process.Value != ProcessState.UPDATE) {
-                    continue;
-                }
+            // Create a dictionary of instances with the status ADD to speed up the lookup of instances int the next loop
+            Dictionary<string, AdvancedSensationStreamInstance> instancesToAdd = new();
+            foreach (var process in processSensationList.Where(entry => entry.Value == ProcessState.ADD)) {
+                instancesToAdd.Add(process.Key.name, process.Key); //TODO: process.Key.name could be an empty string which could cause problems with collisions
+            }
+
+            foreach (var process in processSensationList.Where(entry => entry.Value == ProcessState.UPDATE)) {
                 AdvancedSensationStreamInstance instance = process.Key;
-                AdvancedSensationStreamInstance oldInstance = null;
+                AdvancedSensationStreamInstance? oldInstance = null;
 
-                if (playSensations.Keys.Contains(instance.name)) {
+                if (playSensations.ContainsKey(instance.name)) {
                     // Update Playing Sensation
                     oldInstance = playSensations[instance.name];
                 } else {
-                    foreach (KeyValuePair<AdvancedSensationStreamInstance, ProcessState> processInstance in processSensation.ToArray()) {
-                        if (processInstance.Value == ProcessState.ADD && processInstance.Key.name == instance.name) {
-                            // Update to be Added Sensation
-                            oldInstance = processInstance.Key;
-                            break;
-                        }
-                    }
+                    oldInstance = instancesToAdd.GetValueOrDefault(instance.name);
                 }
 
-                if (oldInstance != null) {
-                    oldInstance.updateSensation(instance.sensation);
-                }
+                oldInstance?.updateSensation(instance.sensation);
 
                 processSensation.Remove(process.Key);
             }
         }
 
         private void processAdd() {
-            foreach (var process in new Dictionary<AdvancedSensationStreamInstance, ProcessState>(processSensation)) {
-
-                if (process.Value != ProcessState.ADD) {
-                    continue;
-                }
+            foreach (var process in processSensation.ToArray().Where(entry => entry.Value == ProcessState.ADD)) {
                 AdvancedSensationStreamInstance instance = process.Key;
                 instance.firstTick = tick;
 
@@ -118,12 +105,7 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         private void processRemove(bool endOfCylce) {
-            foreach (var process in new Dictionary<AdvancedSensationStreamInstance, ProcessState>(processSensation)) {
-
-                if (process.Value != ProcessState.REMOVE) {
-                    continue;
-                }
-
+            foreach (var process in processSensation.ToArray().Where(entry => entry.Value == ProcessState.REMOVE)) {
                 AdvancedSensationStreamInstance instance = process.Key;
 
                 if (playSensations.ContainsKey(instance.name)) {
@@ -136,13 +118,8 @@ namespace OwoAdvancedSensationBuilder.manager
             if (playSensations.Count == 0 && endOfCylce) {
                 // Only allow to stop manager at end of cycle.
                 // Else race time conditions might stop manager while something to add just got inserted.
-                bool toAdd = false;
-                foreach (var processInstance in processSensation) {
-                    if (processInstance.Value == ProcessState.ADD) {
-                        toAdd = true;
-                        break;
-                    }
-                }
+                bool toAdd = processSensation.Any(entry => entry.Value == ProcessState.ADD);
+
                 if (!toAdd) {
                     resetManagerState();
                 }
@@ -151,25 +128,24 @@ namespace OwoAdvancedSensationBuilder.manager
 
         private void calcSensation() {
             int calcTick = tick;
-            AdvancedSensationBuilder builder = null;
+            AdvancedSensationBuilder? builder = null;
 
             AdvancedSensationBuilderMergeOptions mergeOptions = new AdvancedSensationBuilderMergeOptions();
             mergeOptions.mode = MuscleMergeMode.MAX;
             mergeOptions.overwriteBaseSensation = true;
 
-
-            List<string> reversPrio = new List<string>(priorityList);
-            reversPrio.Reverse();
             Dictionary<string, AdvancedSensationStreamInstance> snapshot = new Dictionary<string, AdvancedSensationStreamInstance>(playSensations);
 
-            foreach (var priority in reversPrio) {
+            IEnumerable<string> reversePrio = priorityList.ToArray().Reverse();
+
+            foreach (var priority in reversePrio) {
                 if (!snapshot.ContainsKey(priority)) {
                     continue;
                 }
 
                 AdvancedSensationStreamInstance sensationInstance = snapshot[priority];
 
-                Sensation sensationTick = sensationInstance.getSensationAtTick(calcTick);
+                Sensation? sensationTick = sensationInstance.getSensationAtTick(calcTick);
                 if (sensationTick == null) {
                     continue;
                 }
@@ -187,12 +163,12 @@ namespace OwoAdvancedSensationBuilder.manager
 
             mergeOptions.overwriteBaseSensation = false;
             foreach (var entry in snapshot) {
-                if (reversPrio.Contains(entry.Key)) {
+                if (reversePrio.Contains(entry.Key)) {
                     continue;
                 }
                 AdvancedSensationStreamInstance sensationInstance = entry.Value;
 
-                Sensation sensationTick = sensationInstance.getSensationAtTick(calcTick);
+                Sensation? sensationTick = sensationInstance.getSensationAtTick(calcTick);
                 if (sensationTick == null) {
                     continue;
                 }
@@ -207,6 +183,7 @@ namespace OwoAdvancedSensationBuilder.manager
                     playSensations.Remove(entry.Key);
                 }
             }
+
             if (builder != null) {
                 // May be null due to racetime condition, on last Sensation remove
                 calculatedSensation = builder.getSensationForStream();
@@ -225,7 +202,7 @@ namespace OwoAdvancedSensationBuilder.manager
             addSensationInstance(instance);
         }
 
-        public void updateSensation(Sensation sensation, String name = null) {
+        public void updateSensation(Sensation sensation, string? name = null) {
             if (name == null) {
                 name = analyzeSensation(sensation).name;
             }
@@ -233,7 +210,7 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         public void stopSensation(string sensationInstanceName) {
-            AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(sensationInstanceName);
+            AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(sensationInstanceName, SensationsFactory.Create(0, 0, 0)); // Using an empty sensation as the instance is only used for removal. In this case, the sensation property will not be used
             instance.overwriteManagerProcessList = true;
             RemoveInstanceFromManager(instance);
         }
@@ -250,7 +227,7 @@ namespace OwoAdvancedSensationBuilder.manager
             }
 
             if (!timer.Enabled) {
-                calcManagerTick(null, null);
+                calcManagerTick(null, EventArgs.Empty);
                 watch = Stopwatch.StartNew();
                 timer.Start();
             }
@@ -285,22 +262,24 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         private MicroSensation analyzeSensation(Sensation sensation) {
-            if (sensation is MicroSensation) {
-                return sensation as MicroSensation;
-            } else if (sensation is SensationWithMuscles) {
-                SensationWithMuscles withMuscles = sensation as SensationWithMuscles;
+            if (sensation is MicroSensation microSensation) {
+                return microSensation;
+            } else if (sensation is SensationWithMuscles withMuscles) {
                 return analyzeSensation(withMuscles.reference);
-            } else if (sensation is SensationsSequence) {
-                SensationsSequence sequence = sensation as SensationsSequence;
-                foreach (Sensation s in sequence.sensations) {
-                    // just take first
-                    return analyzeSensation(s);
+            } else if (sensation is SensationsSequence sequence) {
+                // just take first
+                if (sequence.sensations.FirstOrDefault() is Sensation first) {
+                    return analyzeSensation(first);
                 }
-            } else if (sensation is BakedSensation) {
-                BakedSensation baked = sensation as BakedSensation;
+
+                throw new AdvancedSensationException("SensationsSequence is empty!");
+            } else if (sensation is BakedSensation baked) {
                 return analyzeSensation(baked.reference);
             }
-            return null;
+
+            // Unsupported Sensation type
+            string typeName = sensation.GetType().Name;
+            throw new AdvancedSensationException($"Unsupported Sensation type: {typeName}");
         }
 
     }
