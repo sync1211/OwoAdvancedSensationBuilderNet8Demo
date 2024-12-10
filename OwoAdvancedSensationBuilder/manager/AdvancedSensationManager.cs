@@ -72,13 +72,11 @@ namespace OwoAdvancedSensationBuilder.manager
 
             // Create a dictionary of instances with the status ADD to speed up the lookup of instances int the next loop
             Dictionary<string, AdvancedSensationStreamInstance> instancesToAdd = new();
-            foreach (var process in processSensationList.Where(entry => entry.Value == ProcessState.ADD))
-            {
+            foreach (var process in processSensationList.Where(entry => entry.Value == ProcessState.ADD)) {
                 instancesToAdd.Add(process.Key.name, process.Key); //TODO: process.Key.name could be an empty string which could cause problems with collisions
             }
 
-            foreach (var process in processSensationList.Where(entry => entry.Value == ProcessState.UPDATE))
-            {
+            foreach (var process in processSensationList.Where(entry => entry.Value == ProcessState.UPDATE)) {
                 AdvancedSensationStreamInstance instance = process.Key;
                 AdvancedSensationStreamInstance? oldInstance = null;
 
@@ -270,8 +268,7 @@ namespace OwoAdvancedSensationBuilder.manager
                 return analyzeSensation(withMuscles.reference);
             } else if (sensation is SensationsSequence sequence) {
                 // just take first
-                if (sequence.sensations.FirstOrDefault() is Sensation first)
-                {
+                if (sequence.sensations.FirstOrDefault() is Sensation first) {
                     return analyzeSensation(first);
                 }
 
