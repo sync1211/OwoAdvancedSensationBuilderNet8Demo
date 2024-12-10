@@ -22,833 +22,906 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
-            this.btnConnect = new System.Windows.Forms.Button();
-            this.btnDisconnect = new System.Windows.Forms.Button();
-            this.btnBasic = new System.Windows.Forms.Button();
-            this.btnAdvanced = new System.Windows.Forms.Button();
-            this.btnUpdate = new System.Windows.Forms.Button();
-            this.txtFrequency = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtDuration = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtIntensity = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txtExit = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtRampDown = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.txtRampUp = new System.Windows.Forms.TextBox();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnMuscleAdd = new System.Windows.Forms.Button();
-            this.btnMuscleNew = new System.Windows.Forms.Button();
-            this.btnAdvancedMuscle = new System.Windows.Forms.Button();
-            this.lblToggle = new System.Windows.Forms.Label();
-            this.btnToggle = new System.Windows.Forms.Button();
-            this.btnBasic2 = new System.Windows.Forms.Button();
-            this.btnMerge = new System.Windows.Forms.Button();
-            this.btnMergeDelayed = new System.Windows.Forms.Button();
-            this.btnDebug = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.txtName = new System.Windows.Forms.TextBox();
-            this.btnAddToManager = new System.Windows.Forms.Button();
-            this.btnManualBuild = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.lblTwo = new System.Windows.Forms.Label();
-            this.lblOne = new System.Windows.Forms.Label();
-            this.txtBasic2 = new System.Windows.Forms.TextBox();
-            this.txtAdvanced = new System.Windows.Forms.TextBox();
-            this.txtBasic1 = new System.Windows.Forms.TextBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.btnRemoveAfter = new System.Windows.Forms.Button();
-            this.lblNameManager = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.btnRemoveNow = new System.Windows.Forms.Button();
-            this.tbInensityMultiply = new System.Windows.Forms.TrackBar();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.lbManager = new System.Windows.Forms.ListBox();
-            this.lblIntensityMultiplier = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.txtAdvanced2 = new System.Windows.Forms.TextBox();
-            this.btnLoopNow = new System.Windows.Forms.Button();
-            this.btnPlayNow = new System.Windows.Forms.Button();
-            this.label11 = new System.Windows.Forms.Label();
-            this.lbSensations = new System.Windows.Forms.ListBox();
-            this.lblName = new System.Windows.Forms.Label();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.pbThumbnail = new System.Windows.Forms.PictureBox();
-            this.lblSelectedExperience = new System.Windows.Forms.Label();
-            this.btnStopExperience = new System.Windows.Forms.Button();
-            this.btnOpenVideo = new System.Windows.Forms.Button();
-            this.btnStartVideoSensations = new System.Windows.Forms.Button();
-            this.btnAzshara = new System.Windows.Forms.Button();
-            this.btnToggleRain = new System.Windows.Forms.Button();
-            this.label14 = new System.Windows.Forms.Label();
-            this.btn120 = new System.Windows.Forms.Button();
-            this.btn20 = new System.Windows.Forms.Button();
-            this.btn20Adv = new System.Windows.Forms.Button();
-            this.btn120adv = new System.Windows.Forms.Button();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbInensityMultiply)).BeginInit();
-            this.panel1.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbThumbnail)).BeginInit();
-            this.SuspendLayout();
+        private void InitializeComponent()
+        {
+            btnConnect = new Button();
+            btnDisconnect = new Button();
+            btnBasic = new Button();
+            btnAdvanced = new Button();
+            btnUpdate = new Button();
+            txtFrequency = new TextBox();
+            label1 = new Label();
+            label2 = new Label();
+            txtDuration = new TextBox();
+            label3 = new Label();
+            txtIntensity = new TextBox();
+            label4 = new Label();
+            txtExit = new TextBox();
+            label5 = new Label();
+            txtRampDown = new TextBox();
+            label6 = new Label();
+            txtRampUp = new TextBox();
+            btnAdd = new Button();
+            btnMuscleAdd = new Button();
+            btnMuscleNew = new Button();
+            btnAdvancedMuscle = new Button();
+            lblToggle = new Label();
+            btnToggle = new Button();
+            btnBasic2 = new Button();
+            btnMerge = new Button();
+            btnMergeDelayed = new Button();
+            btnDebug = new Button();
+            tabControl1 = new TabControl();
+            tabPage1 = new TabPage();
+            txtName = new TextBox();
+            btnAddToManager = new Button();
+            btnManualBuild = new Button();
+            label7 = new Label();
+            lblTwo = new Label();
+            lblOne = new Label();
+            txtBasic2 = new TextBox();
+            txtAdvanced = new TextBox();
+            txtBasic1 = new TextBox();
+            tabPage2 = new TabPage();
+            panel2 = new Panel();
+            btnRemoveAfter = new Button();
+            lblNameManager = new Label();
+            label10 = new Label();
+            btnRemoveNow = new Button();
+            tbInensityMultiply = new TrackBar();
+            label8 = new Label();
+            label12 = new Label();
+            label9 = new Label();
+            lbManager = new ListBox();
+            lblIntensityMultiplier = new Label();
+            panel1 = new Panel();
+            txtAdvanced2 = new TextBox();
+            btnLoopNow = new Button();
+            btnPlayNow = new Button();
+            label11 = new Label();
+            lbSensations = new ListBox();
+            lblName = new Label();
+            tabPage3 = new TabPage();
+            pbThumbnail = new PictureBox();
+            lblSelectedExperience = new Label();
+            btnStopExperience = new Button();
+            btnOpenVideo = new Button();
+            btnStartVideoSensations = new Button();
+            btnAzshara = new Button();
+            btnToggleRain = new Button();
+            label14 = new Label();
+            btn120 = new Button();
+            btn20 = new Button();
+            btn20Adv = new Button();
+            btn120adv = new Button();
+            tabControl1.SuspendLayout();
+            tabPage1.SuspendLayout();
+            tabPage2.SuspendLayout();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)tbInensityMultiply).BeginInit();
+            panel1.SuspendLayout();
+            tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pbThumbnail).BeginInit();
+            SuspendLayout();
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(12, 12);
-            this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(151, 24);
-            this.btnConnect.TabIndex = 0;
-            this.btnConnect.Text = "Connect";
-            this.btnConnect.UseVisualStyleBackColor = true;
-            this.btnConnect.Click += new System.EventHandler(this.btnConnect_Click);
+            btnConnect.Location = new Point(14, 14);
+            btnConnect.Margin = new Padding(4, 3, 4, 3);
+            btnConnect.Name = "btnConnect";
+            btnConnect.Size = new Size(176, 28);
+            btnConnect.TabIndex = 0;
+            btnConnect.Text = "Connect";
+            btnConnect.UseVisualStyleBackColor = true;
+            btnConnect.Click += btnConnect_Click;
             // 
             // btnDisconnect
             // 
-            this.btnDisconnect.Location = new System.Drawing.Point(12, 42);
-            this.btnDisconnect.Name = "btnDisconnect";
-            this.btnDisconnect.Size = new System.Drawing.Size(151, 24);
-            this.btnDisconnect.TabIndex = 1;
-            this.btnDisconnect.Text = "Disconnect";
-            this.btnDisconnect.UseVisualStyleBackColor = true;
-            this.btnDisconnect.Click += new System.EventHandler(this.btnDisconnect_Click);
+            btnDisconnect.Location = new Point(14, 48);
+            btnDisconnect.Margin = new Padding(4, 3, 4, 3);
+            btnDisconnect.Name = "btnDisconnect";
+            btnDisconnect.Size = new Size(176, 28);
+            btnDisconnect.TabIndex = 1;
+            btnDisconnect.Text = "Disconnect";
+            btnDisconnect.UseVisualStyleBackColor = true;
+            btnDisconnect.Click += btnDisconnect_Click;
             // 
             // btnBasic
             // 
-            this.btnBasic.Location = new System.Drawing.Point(134, 371);
-            this.btnBasic.Name = "btnBasic";
-            this.btnBasic.Size = new System.Drawing.Size(212, 26);
-            this.btnBasic.TabIndex = 2;
-            this.btnBasic.Text = "Basic Sensation 1";
-            this.btnBasic.UseVisualStyleBackColor = true;
-            this.btnBasic.Click += new System.EventHandler(this.btnBasic_Click);
+            btnBasic.Location = new Point(156, 428);
+            btnBasic.Margin = new Padding(4, 3, 4, 3);
+            btnBasic.Name = "btnBasic";
+            btnBasic.Size = new Size(247, 30);
+            btnBasic.TabIndex = 2;
+            btnBasic.Text = "Basic Sensation 1";
+            btnBasic.UseVisualStyleBackColor = true;
+            btnBasic.Click += btnBasic_Click;
             // 
             // btnAdvanced
             // 
-            this.btnAdvanced.Location = new System.Drawing.Point(352, 371);
-            this.btnAdvanced.Name = "btnAdvanced";
-            this.btnAdvanced.Size = new System.Drawing.Size(212, 62);
-            this.btnAdvanced.TabIndex = 3;
-            this.btnAdvanced.Text = "Advanced Sensation";
-            this.btnAdvanced.UseVisualStyleBackColor = true;
-            this.btnAdvanced.Click += new System.EventHandler(this.btnAdvanced_Click);
+            btnAdvanced.Location = new Point(411, 428);
+            btnAdvanced.Margin = new Padding(4, 3, 4, 3);
+            btnAdvanced.Name = "btnAdvanced";
+            btnAdvanced.Size = new Size(247, 72);
+            btnAdvanced.TabIndex = 3;
+            btnAdvanced.Text = "Advanced Sensation";
+            btnAdvanced.UseVisualStyleBackColor = true;
+            btnAdvanced.Click += btnAdvanced_Click;
             // 
             // btnUpdate
             // 
-            this.btnUpdate.Location = new System.Drawing.Point(448, 48);
-            this.btnUpdate.Name = "btnUpdate";
-            this.btnUpdate.Size = new System.Drawing.Size(164, 33);
-            this.btnUpdate.TabIndex = 4;
-            this.btnUpdate.Text = "New Sensation";
-            this.btnUpdate.UseVisualStyleBackColor = true;
-            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            btnUpdate.Location = new Point(523, 55);
+            btnUpdate.Margin = new Padding(4, 3, 4, 3);
+            btnUpdate.Name = "btnUpdate";
+            btnUpdate.Size = new Size(191, 38);
+            btnUpdate.TabIndex = 4;
+            btnUpdate.Text = "New Sensation";
+            btnUpdate.UseVisualStyleBackColor = true;
+            btnUpdate.Click += btnUpdate_Click;
             // 
             // txtFrequency
             // 
-            this.txtFrequency.Location = new System.Drawing.Point(437, 22);
-            this.txtFrequency.Name = "txtFrequency";
-            this.txtFrequency.Size = new System.Drawing.Size(53, 20);
-            this.txtFrequency.TabIndex = 5;
-            this.txtFrequency.Text = "100";
+            txtFrequency.Location = new Point(510, 25);
+            txtFrequency.Margin = new Padding(4, 3, 4, 3);
+            txtFrequency.Name = "txtFrequency";
+            txtFrequency.Size = new Size(61, 23);
+            txtFrequency.TabIndex = 5;
+            txtFrequency.Text = "100";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(436, 6);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 13);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "frequency";
+            label1.AutoSize = true;
+            label1.Location = new Point(509, 7);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(60, 15);
+            label1.TabIndex = 6;
+            label1.Text = "frequency";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(493, 6);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 13);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "duration";
+            label2.AutoSize = true;
+            label2.Location = new Point(575, 7);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(52, 15);
+            label2.TabIndex = 8;
+            label2.Text = "duration";
             // 
             // txtDuration
             // 
-            this.txtDuration.Location = new System.Drawing.Point(494, 22);
-            this.txtDuration.Name = "txtDuration";
-            this.txtDuration.Size = new System.Drawing.Size(53, 20);
-            this.txtDuration.TabIndex = 7;
-            this.txtDuration.Text = "1";
+            txtDuration.Location = new Point(576, 25);
+            txtDuration.Margin = new Padding(4, 3, 4, 3);
+            txtDuration.Name = "txtDuration";
+            txtDuration.Size = new Size(61, 23);
+            txtDuration.TabIndex = 7;
+            txtDuration.Text = "1";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(552, 6);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(45, 13);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "intensity";
+            label3.AutoSize = true;
+            label3.Location = new Point(644, 7);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(52, 15);
+            label3.TabIndex = 10;
+            label3.Text = "intensity";
             // 
             // txtIntensity
             // 
-            this.txtIntensity.Location = new System.Drawing.Point(553, 22);
-            this.txtIntensity.Name = "txtIntensity";
-            this.txtIntensity.Size = new System.Drawing.Size(53, 20);
-            this.txtIntensity.TabIndex = 9;
-            this.txtIntensity.Text = "20";
+            txtIntensity.Location = new Point(645, 25);
+            txtIntensity.Margin = new Padding(4, 3, 4, 3);
+            txtIntensity.Name = "txtIntensity";
+            txtIntensity.Size = new Size(61, 23);
+            txtIntensity.TabIndex = 9;
+            txtIntensity.Text = "20";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(727, 6);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(23, 13);
-            this.label4.TabIndex = 16;
-            this.label4.Text = "exit";
+            label4.AutoSize = true;
+            label4.Location = new Point(848, 7);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(26, 15);
+            label4.TabIndex = 16;
+            label4.Text = "exit";
             // 
             // txtExit
             // 
-            this.txtExit.Location = new System.Drawing.Point(728, 22);
-            this.txtExit.Name = "txtExit";
-            this.txtExit.Size = new System.Drawing.Size(53, 20);
-            this.txtExit.TabIndex = 15;
-            this.txtExit.Text = "0,100";
+            txtExit.Location = new Point(849, 25);
+            txtExit.Margin = new Padding(4, 3, 4, 3);
+            txtExit.Name = "txtExit";
+            txtExit.Size = new Size(61, 23);
+            txtExit.TabIndex = 15;
+            txtExit.Text = "0,100";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(668, 6);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(59, 13);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "ramp down";
+            label5.AutoSize = true;
+            label5.Location = new Point(779, 7);
+            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(68, 15);
+            label5.TabIndex = 14;
+            label5.Text = "ramp down";
             // 
             // txtRampDown
             // 
-            this.txtRampDown.Location = new System.Drawing.Point(669, 22);
-            this.txtRampDown.Name = "txtRampDown";
-            this.txtRampDown.Size = new System.Drawing.Size(53, 20);
-            this.txtRampDown.TabIndex = 13;
-            this.txtRampDown.Text = "0,300";
+            txtRampDown.Location = new Point(780, 25);
+            txtRampDown.Margin = new Padding(4, 3, 4, 3);
+            txtRampDown.Name = "txtRampDown";
+            txtRampDown.Size = new Size(61, 23);
+            txtRampDown.TabIndex = 13;
+            txtRampDown.Text = "0,300";
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(611, 6);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(45, 13);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "ramp up";
+            label6.AutoSize = true;
+            label6.Location = new Point(713, 7);
+            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(52, 15);
+            label6.TabIndex = 12;
+            label6.Text = "ramp up";
             // 
             // txtRampUp
             // 
-            this.txtRampUp.Location = new System.Drawing.Point(612, 22);
-            this.txtRampUp.Name = "txtRampUp";
-            this.txtRampUp.Size = new System.Drawing.Size(53, 20);
-            this.txtRampUp.TabIndex = 11;
-            this.txtRampUp.Text = "0,300";
+            txtRampUp.Location = new Point(714, 25);
+            txtRampUp.Margin = new Padding(4, 3, 4, 3);
+            txtRampUp.Name = "txtRampUp";
+            txtRampUp.Size = new Size(61, 23);
+            txtRampUp.TabIndex = 11;
+            txtRampUp.Text = "0,300";
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(618, 48);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(164, 33);
-            this.btnAdd.TabIndex = 17;
-            this.btnAdd.Text = "Add Sensation";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            btnAdd.Location = new Point(721, 55);
+            btnAdd.Margin = new Padding(4, 3, 4, 3);
+            btnAdd.Name = "btnAdd";
+            btnAdd.Size = new Size(191, 38);
+            btnAdd.TabIndex = 17;
+            btnAdd.Text = "Add Sensation";
+            btnAdd.UseVisualStyleBackColor = true;
+            btnAdd.Click += btnAdd_Click;
             // 
             // btnMuscleAdd
             // 
-            this.btnMuscleAdd.Location = new System.Drawing.Point(618, 87);
-            this.btnMuscleAdd.Name = "btnMuscleAdd";
-            this.btnMuscleAdd.Size = new System.Drawing.Size(164, 33);
-            this.btnMuscleAdd.TabIndex = 18;
-            this.btnMuscleAdd.Text = "Add (with Random Muscle)";
-            this.btnMuscleAdd.UseVisualStyleBackColor = true;
-            this.btnMuscleAdd.Click += new System.EventHandler(this.btnMuscleAdd_Click);
+            btnMuscleAdd.Location = new Point(721, 100);
+            btnMuscleAdd.Margin = new Padding(4, 3, 4, 3);
+            btnMuscleAdd.Name = "btnMuscleAdd";
+            btnMuscleAdd.Size = new Size(191, 38);
+            btnMuscleAdd.TabIndex = 18;
+            btnMuscleAdd.Text = "Add (with Random Muscle)";
+            btnMuscleAdd.UseVisualStyleBackColor = true;
+            btnMuscleAdd.Click += btnMuscleAdd_Click;
             // 
             // btnMuscleNew
             // 
-            this.btnMuscleNew.Location = new System.Drawing.Point(448, 87);
-            this.btnMuscleNew.Name = "btnMuscleNew";
-            this.btnMuscleNew.Size = new System.Drawing.Size(164, 33);
-            this.btnMuscleNew.TabIndex = 19;
-            this.btnMuscleNew.Text = "New (with Random Muscle)";
-            this.btnMuscleNew.UseVisualStyleBackColor = true;
-            this.btnMuscleNew.Click += new System.EventHandler(this.btnMuscleNew_Click);
+            btnMuscleNew.Location = new Point(523, 100);
+            btnMuscleNew.Margin = new Padding(4, 3, 4, 3);
+            btnMuscleNew.Name = "btnMuscleNew";
+            btnMuscleNew.Size = new Size(191, 38);
+            btnMuscleNew.TabIndex = 19;
+            btnMuscleNew.Text = "New (with Random Muscle)";
+            btnMuscleNew.UseVisualStyleBackColor = true;
+            btnMuscleNew.Click += btnMuscleNew_Click;
             // 
             // btnAdvancedMuscle
             // 
-            this.btnAdvancedMuscle.Location = new System.Drawing.Point(570, 371);
-            this.btnAdvancedMuscle.Name = "btnAdvancedMuscle";
-            this.btnAdvancedMuscle.Size = new System.Drawing.Size(212, 62);
-            this.btnAdvancedMuscle.TabIndex = 20;
-            this.btnAdvancedMuscle.Text = "Advanced Sensation (Muscle Override Front)";
-            this.btnAdvancedMuscle.UseVisualStyleBackColor = true;
-            this.btnAdvancedMuscle.Click += new System.EventHandler(this.btnAdvancedMuscle_Click);
+            btnAdvancedMuscle.Location = new Point(665, 428);
+            btnAdvancedMuscle.Margin = new Padding(4, 3, 4, 3);
+            btnAdvancedMuscle.Name = "btnAdvancedMuscle";
+            btnAdvancedMuscle.Size = new Size(247, 72);
+            btnAdvancedMuscle.TabIndex = 20;
+            btnAdvancedMuscle.Text = "Advanced Sensation (Muscle Override Front)";
+            btnAdvancedMuscle.UseVisualStyleBackColor = true;
+            btnAdvancedMuscle.Click += btnAdvancedMuscle_Click;
             // 
             // lblToggle
             // 
-            this.lblToggle.AutoSize = true;
-            this.lblToggle.Location = new System.Drawing.Point(182, 16);
-            this.lblToggle.Name = "lblToggle";
-            this.lblToggle.Size = new System.Drawing.Size(13, 13);
-            this.lblToggle.TabIndex = 28;
-            this.lblToggle.Text = "1";
+            lblToggle.AutoSize = true;
+            lblToggle.Location = new Point(212, 18);
+            lblToggle.Margin = new Padding(4, 0, 4, 0);
+            lblToggle.Name = "lblToggle";
+            lblToggle.Size = new Size(13, 15);
+            lblToggle.TabIndex = 28;
+            lblToggle.Text = "1";
             // 
             // btnToggle
             // 
-            this.btnToggle.Location = new System.Drawing.Point(6, 6);
-            this.btnToggle.Name = "btnToggle";
-            this.btnToggle.Size = new System.Drawing.Size(173, 33);
-            this.btnToggle.TabIndex = 29;
-            this.btnToggle.Text = "Toggle Modify Sensation";
-            this.btnToggle.UseVisualStyleBackColor = true;
-            this.btnToggle.Click += new System.EventHandler(this.btnToggle_Click);
+            btnToggle.Location = new Point(7, 7);
+            btnToggle.Margin = new Padding(4, 3, 4, 3);
+            btnToggle.Name = "btnToggle";
+            btnToggle.Size = new Size(202, 38);
+            btnToggle.TabIndex = 29;
+            btnToggle.Text = "Toggle Modify Sensation";
+            btnToggle.UseVisualStyleBackColor = true;
+            btnToggle.Click += btnToggle_Click;
             // 
             // btnBasic2
             // 
-            this.btnBasic2.Location = new System.Drawing.Point(134, 407);
-            this.btnBasic2.Name = "btnBasic2";
-            this.btnBasic2.Size = new System.Drawing.Size(212, 26);
-            this.btnBasic2.TabIndex = 30;
-            this.btnBasic2.Text = "Basic Sensation 2";
-            this.btnBasic2.UseVisualStyleBackColor = true;
-            this.btnBasic2.Click += new System.EventHandler(this.btnBasic2_Click);
+            btnBasic2.Location = new Point(156, 470);
+            btnBasic2.Margin = new Padding(4, 3, 4, 3);
+            btnBasic2.Name = "btnBasic2";
+            btnBasic2.Size = new Size(247, 30);
+            btnBasic2.TabIndex = 30;
+            btnBasic2.Text = "Basic Sensation 2";
+            btnBasic2.UseVisualStyleBackColor = true;
+            btnBasic2.Click += btnBasic2_Click;
             // 
             // btnMerge
             // 
-            this.btnMerge.Location = new System.Drawing.Point(6, 126);
-            this.btnMerge.Name = "btnMerge";
-            this.btnMerge.Size = new System.Drawing.Size(173, 33);
-            this.btnMerge.TabIndex = 31;
-            this.btnMerge.Text = "Merge into Advanced";
-            this.btnMerge.UseVisualStyleBackColor = true;
-            this.btnMerge.Click += new System.EventHandler(this.btnMerge_Click);
+            btnMerge.Location = new Point(7, 145);
+            btnMerge.Margin = new Padding(4, 3, 4, 3);
+            btnMerge.Name = "btnMerge";
+            btnMerge.Size = new Size(202, 38);
+            btnMerge.TabIndex = 31;
+            btnMerge.Text = "Merge into Advanced";
+            btnMerge.UseVisualStyleBackColor = true;
+            btnMerge.Click += btnMerge_Click;
             // 
             // btnMergeDelayed
             // 
-            this.btnMergeDelayed.Location = new System.Drawing.Point(185, 126);
-            this.btnMergeDelayed.Name = "btnMergeDelayed";
-            this.btnMergeDelayed.Size = new System.Drawing.Size(173, 33);
-            this.btnMergeDelayed.TabIndex = 33;
-            this.btnMergeDelayed.Text = "Merge (delayed by 1.5s)";
-            this.btnMergeDelayed.UseVisualStyleBackColor = true;
-            this.btnMergeDelayed.Click += new System.EventHandler(this.btnMergeDelayed_Click);
+            btnMergeDelayed.Location = new Point(216, 145);
+            btnMergeDelayed.Margin = new Padding(4, 3, 4, 3);
+            btnMergeDelayed.Name = "btnMergeDelayed";
+            btnMergeDelayed.Size = new Size(202, 38);
+            btnMergeDelayed.TabIndex = 33;
+            btnMergeDelayed.Text = "Merge (delayed by 1.5s)";
+            btnMergeDelayed.UseVisualStyleBackColor = true;
+            btnMergeDelayed.Click += btnMergeDelayed_Click;
             // 
             // btnDebug
             // 
-            this.btnDebug.Location = new System.Drawing.Point(12, 144);
-            this.btnDebug.Name = "btnDebug";
-            this.btnDebug.Size = new System.Drawing.Size(151, 46);
-            this.btnDebug.TabIndex = 35;
-            this.btnDebug.Text = "Some Debug Stuff";
-            this.btnDebug.UseVisualStyleBackColor = true;
-            this.btnDebug.Click += new System.EventHandler(this.btnDebug_Click);
+            btnDebug.Location = new Point(14, 166);
+            btnDebug.Margin = new Padding(4, 3, 4, 3);
+            btnDebug.Name = "btnDebug";
+            btnDebug.Size = new Size(176, 53);
+            btnDebug.TabIndex = 35;
+            btnDebug.Text = "Some Debug Stuff";
+            btnDebug.UseVisualStyleBackColor = true;
+            btnDebug.Click += btnDebug_Click;
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(169, 12);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(808, 465);
-            this.tabControl1.TabIndex = 36;
+            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Controls.Add(tabPage3);
+            tabControl1.Location = new Point(197, 14);
+            tabControl1.Margin = new Padding(4, 3, 4, 3);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(943, 537);
+            tabControl1.TabIndex = 36;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.txtName);
-            this.tabPage1.Controls.Add(this.btnAddToManager);
-            this.tabPage1.Controls.Add(this.btnToggle);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.btnBasic);
-            this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.btnManualBuild);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.btnAdvanced);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.btnMergeDelayed);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.btnUpdate);
-            this.tabPage1.Controls.Add(this.label7);
-            this.tabPage1.Controls.Add(this.txtFrequency);
-            this.tabPage1.Controls.Add(this.btnMerge);
-            this.tabPage1.Controls.Add(this.txtDuration);
-            this.tabPage1.Controls.Add(this.btnBasic2);
-            this.tabPage1.Controls.Add(this.txtIntensity);
-            this.tabPage1.Controls.Add(this.txtRampUp);
-            this.tabPage1.Controls.Add(this.lblToggle);
-            this.tabPage1.Controls.Add(this.txtRampDown);
-            this.tabPage1.Controls.Add(this.lblTwo);
-            this.tabPage1.Controls.Add(this.txtExit);
-            this.tabPage1.Controls.Add(this.lblOne);
-            this.tabPage1.Controls.Add(this.btnAdd);
-            this.tabPage1.Controls.Add(this.txtBasic2);
-            this.tabPage1.Controls.Add(this.btnMuscleAdd);
-            this.tabPage1.Controls.Add(this.txtAdvanced);
-            this.tabPage1.Controls.Add(this.btnMuscleNew);
-            this.tabPage1.Controls.Add(this.txtBasic1);
-            this.tabPage1.Controls.Add(this.btnAdvancedMuscle);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(800, 439);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Creator";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            tabPage1.Controls.Add(txtName);
+            tabPage1.Controls.Add(btnAddToManager);
+            tabPage1.Controls.Add(btnToggle);
+            tabPage1.Controls.Add(label4);
+            tabPage1.Controls.Add(label5);
+            tabPage1.Controls.Add(btnBasic);
+            tabPage1.Controls.Add(label6);
+            tabPage1.Controls.Add(btnManualBuild);
+            tabPage1.Controls.Add(label3);
+            tabPage1.Controls.Add(btnAdvanced);
+            tabPage1.Controls.Add(label2);
+            tabPage1.Controls.Add(btnMergeDelayed);
+            tabPage1.Controls.Add(label1);
+            tabPage1.Controls.Add(btnUpdate);
+            tabPage1.Controls.Add(label7);
+            tabPage1.Controls.Add(txtFrequency);
+            tabPage1.Controls.Add(btnMerge);
+            tabPage1.Controls.Add(txtDuration);
+            tabPage1.Controls.Add(btnBasic2);
+            tabPage1.Controls.Add(txtIntensity);
+            tabPage1.Controls.Add(txtRampUp);
+            tabPage1.Controls.Add(lblToggle);
+            tabPage1.Controls.Add(txtRampDown);
+            tabPage1.Controls.Add(lblTwo);
+            tabPage1.Controls.Add(txtExit);
+            tabPage1.Controls.Add(lblOne);
+            tabPage1.Controls.Add(btnAdd);
+            tabPage1.Controls.Add(txtBasic2);
+            tabPage1.Controls.Add(btnMuscleAdd);
+            tabPage1.Controls.Add(txtAdvanced);
+            tabPage1.Controls.Add(btnMuscleNew);
+            tabPage1.Controls.Add(txtBasic1);
+            tabPage1.Controls.Add(btnAdvancedMuscle);
+            tabPage1.Location = new Point(4, 24);
+            tabPage1.Margin = new Padding(4, 3, 4, 3);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(4, 3, 4, 3);
+            tabPage1.Size = new Size(935, 509);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "Creator";
+            tabPage1.UseVisualStyleBackColor = true;
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(185, 73);
-            this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(173, 20);
-            this.txtName.TabIndex = 38;
-            this.txtName.Text = "Name For Manager";
+            txtName.Location = new Point(216, 84);
+            txtName.Margin = new Padding(4, 3, 4, 3);
+            txtName.Name = "txtName";
+            txtName.Size = new Size(201, 23);
+            txtName.TabIndex = 38;
+            txtName.Text = "Name For Manager";
             // 
             // btnAddToManager
             // 
-            this.btnAddToManager.Location = new System.Drawing.Point(6, 66);
-            this.btnAddToManager.Name = "btnAddToManager";
-            this.btnAddToManager.Size = new System.Drawing.Size(173, 33);
-            this.btnAddToManager.TabIndex = 37;
-            this.btnAddToManager.Text = "Add Advanced to Manager";
-            this.btnAddToManager.UseVisualStyleBackColor = true;
-            this.btnAddToManager.Click += new System.EventHandler(this.btnAddToManager_Click);
+            btnAddToManager.Location = new Point(7, 76);
+            btnAddToManager.Margin = new Padding(4, 3, 4, 3);
+            btnAddToManager.Name = "btnAddToManager";
+            btnAddToManager.Size = new Size(202, 38);
+            btnAddToManager.TabIndex = 37;
+            btnAddToManager.Text = "Add Advanced to Manager";
+            btnAddToManager.UseVisualStyleBackColor = true;
+            btnAddToManager.Click += btnAddToManager_Click;
             // 
             // btnManualBuild
             // 
-            this.btnManualBuild.Location = new System.Drawing.Point(720, 165);
-            this.btnManualBuild.Name = "btnManualBuild";
-            this.btnManualBuild.Size = new System.Drawing.Size(62, 46);
-            this.btnManualBuild.TabIndex = 34;
-            this.btnManualBuild.Text = "Manual Parse";
-            this.btnManualBuild.UseVisualStyleBackColor = true;
-            this.btnManualBuild.Click += new System.EventHandler(this.btnManualBuild_Click);
+            btnManualBuild.Location = new Point(840, 190);
+            btnManualBuild.Margin = new Padding(4, 3, 4, 3);
+            btnManualBuild.Name = "btnManualBuild";
+            btnManualBuild.Size = new Size(72, 53);
+            btnManualBuild.TabIndex = 34;
+            btnManualBuild.Text = "Manual Parse";
+            btnManualBuild.UseVisualStyleBackColor = true;
+            btnManualBuild.Click += btnManualBuild_Click;
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 217);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(170, 13);
-            this.label7.TabIndex = 32;
-            this.label7.Text = "Last modified advanced Sensation";
+            label7.AutoSize = true;
+            label7.Location = new Point(4, 250);
+            label7.Margin = new Padding(4, 0, 4, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(187, 15);
+            label7.TabIndex = 32;
+            label7.Text = "Last modified advanced Sensation";
             // 
             // lblTwo
             // 
-            this.lblTwo.AutoSize = true;
-            this.lblTwo.Location = new System.Drawing.Point(3, 194);
-            this.lblTwo.Name = "lblTwo";
-            this.lblTwo.Size = new System.Drawing.Size(13, 13);
-            this.lblTwo.TabIndex = 27;
-            this.lblTwo.Text = "2";
+            lblTwo.AutoSize = true;
+            lblTwo.Location = new Point(4, 224);
+            lblTwo.Margin = new Padding(4, 0, 4, 0);
+            lblTwo.Name = "lblTwo";
+            lblTwo.Size = new Size(13, 15);
+            lblTwo.TabIndex = 27;
+            lblTwo.Text = "2";
             // 
             // lblOne
             // 
-            this.lblOne.AutoSize = true;
-            this.lblOne.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOne.Location = new System.Drawing.Point(3, 168);
-            this.lblOne.Name = "lblOne";
-            this.lblOne.Size = new System.Drawing.Size(13, 13);
-            this.lblOne.TabIndex = 26;
-            this.lblOne.Text = "1";
+            lblOne.AutoSize = true;
+            lblOne.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblOne.Location = new Point(4, 194);
+            lblOne.Margin = new Padding(4, 0, 4, 0);
+            lblOne.Name = "lblOne";
+            lblOne.Size = new Size(13, 13);
+            lblOne.TabIndex = 26;
+            lblOne.Text = "1";
             // 
             // txtBasic2
             // 
-            this.txtBasic2.Location = new System.Drawing.Point(22, 191);
-            this.txtBasic2.Name = "txtBasic2";
-            this.txtBasic2.Size = new System.Drawing.Size(692, 20);
-            this.txtBasic2.TabIndex = 24;
+            txtBasic2.Location = new Point(26, 220);
+            txtBasic2.Margin = new Padding(4, 3, 4, 3);
+            txtBasic2.Name = "txtBasic2";
+            txtBasic2.Size = new Size(807, 23);
+            txtBasic2.TabIndex = 24;
             // 
             // txtAdvanced
             // 
-            this.txtAdvanced.Location = new System.Drawing.Point(6, 233);
-            this.txtAdvanced.Multiline = true;
-            this.txtAdvanced.Name = "txtAdvanced";
-            this.txtAdvanced.ReadOnly = true;
-            this.txtAdvanced.Size = new System.Drawing.Size(776, 132);
-            this.txtAdvanced.TabIndex = 22;
+            txtAdvanced.Location = new Point(7, 269);
+            txtAdvanced.Margin = new Padding(4, 3, 4, 3);
+            txtAdvanced.Multiline = true;
+            txtAdvanced.Name = "txtAdvanced";
+            txtAdvanced.ReadOnly = true;
+            txtAdvanced.Size = new Size(905, 152);
+            txtAdvanced.TabIndex = 22;
             // 
             // txtBasic1
             // 
-            this.txtBasic1.Location = new System.Drawing.Point(22, 165);
-            this.txtBasic1.Name = "txtBasic1";
-            this.txtBasic1.Size = new System.Drawing.Size(692, 20);
-            this.txtBasic1.TabIndex = 21;
+            txtBasic1.Location = new Point(26, 190);
+            txtBasic1.Margin = new Padding(4, 3, 4, 3);
+            txtBasic1.Name = "txtBasic1";
+            txtBasic1.Size = new Size(807, 23);
+            txtBasic1.TabIndex = 21;
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.panel2);
-            this.tabPage2.Controls.Add(this.panel1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(800, 439);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Manager";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            tabPage2.Controls.Add(panel2);
+            tabPage2.Controls.Add(panel1);
+            tabPage2.Location = new Point(4, 24);
+            tabPage2.Margin = new Padding(4, 3, 4, 3);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(4, 3, 4, 3);
+            tabPage2.Size = new Size(935, 509);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "Manager";
+            tabPage2.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.btnRemoveAfter);
-            this.panel2.Controls.Add(this.lblNameManager);
-            this.panel2.Controls.Add(this.label10);
-            this.panel2.Controls.Add(this.btnRemoveNow);
-            this.panel2.Controls.Add(this.tbInensityMultiply);
-            this.panel2.Controls.Add(this.label8);
-            this.panel2.Controls.Add(this.label12);
-            this.panel2.Controls.Add(this.label9);
-            this.panel2.Controls.Add(this.lbManager);
-            this.panel2.Controls.Add(this.lblIntensityMultiplier);
-            this.panel2.Location = new System.Drawing.Point(6, 219);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(788, 214);
-            this.panel2.TabIndex = 9;
+            panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(btnRemoveAfter);
+            panel2.Controls.Add(lblNameManager);
+            panel2.Controls.Add(label10);
+            panel2.Controls.Add(btnRemoveNow);
+            panel2.Controls.Add(tbInensityMultiply);
+            panel2.Controls.Add(label8);
+            panel2.Controls.Add(label12);
+            panel2.Controls.Add(label9);
+            panel2.Controls.Add(lbManager);
+            panel2.Controls.Add(lblIntensityMultiplier);
+            panel2.Location = new Point(7, 253);
+            panel2.Margin = new Padding(4, 3, 4, 3);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(919, 247);
+            panel2.TabIndex = 9;
             // 
             // btnRemoveAfter
             // 
-            this.btnRemoveAfter.Enabled = false;
-            this.btnRemoveAfter.Location = new System.Drawing.Point(208, 52);
-            this.btnRemoveAfter.Name = "btnRemoveAfter";
-            this.btnRemoveAfter.Size = new System.Drawing.Size(154, 23);
-            this.btnRemoveAfter.TabIndex = 20;
-            this.btnRemoveAfter.Text = "Remove after Finish";
-            this.btnRemoveAfter.UseVisualStyleBackColor = true;
-            this.btnRemoveAfter.Click += new System.EventHandler(this.btnRemoveAfter_Click);
+            btnRemoveAfter.Enabled = false;
+            btnRemoveAfter.Location = new Point(243, 60);
+            btnRemoveAfter.Margin = new Padding(4, 3, 4, 3);
+            btnRemoveAfter.Name = "btnRemoveAfter";
+            btnRemoveAfter.Size = new Size(180, 27);
+            btnRemoveAfter.TabIndex = 20;
+            btnRemoveAfter.Text = "Remove after Finish";
+            btnRemoveAfter.UseVisualStyleBackColor = true;
+            btnRemoveAfter.Click += btnRemoveAfter_Click;
             // 
             // lblNameManager
             // 
-            this.lblNameManager.AutoSize = true;
-            this.lblNameManager.Location = new System.Drawing.Point(205, 7);
-            this.lblNameManager.Name = "lblNameManager";
-            this.lblNameManager.Size = new System.Drawing.Size(35, 13);
-            this.lblNameManager.TabIndex = 13;
-            this.lblNameManager.Text = "Name";
+            lblNameManager.AutoSize = true;
+            lblNameManager.Location = new Point(239, 8);
+            lblNameManager.Margin = new Padding(4, 0, 4, 0);
+            lblNameManager.Name = "lblNameManager";
+            lblNameManager.Size = new Size(39, 15);
+            lblNameManager.TabIndex = 13;
+            lblNameManager.Text = "Name";
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(754, 196);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(33, 13);
-            this.label10.TabIndex = 16;
-            this.label10.Text = "200%";
+            label10.AutoSize = true;
+            label10.Location = new Point(880, 226);
+            label10.Margin = new Padding(4, 0, 4, 0);
+            label10.Name = "label10";
+            label10.Size = new Size(35, 15);
+            label10.TabIndex = 16;
+            label10.Text = "200%";
             // 
             // btnRemoveNow
             // 
-            this.btnRemoveNow.Enabled = false;
-            this.btnRemoveNow.Location = new System.Drawing.Point(208, 23);
-            this.btnRemoveNow.Name = "btnRemoveNow";
-            this.btnRemoveNow.Size = new System.Drawing.Size(154, 23);
-            this.btnRemoveNow.TabIndex = 10;
-            this.btnRemoveNow.Text = "Remove immediatly";
-            this.btnRemoveNow.UseVisualStyleBackColor = true;
-            this.btnRemoveNow.Click += new System.EventHandler(this.btnStopNow_Click);
+            btnRemoveNow.Enabled = false;
+            btnRemoveNow.Location = new Point(243, 27);
+            btnRemoveNow.Margin = new Padding(4, 3, 4, 3);
+            btnRemoveNow.Name = "btnRemoveNow";
+            btnRemoveNow.Size = new Size(180, 27);
+            btnRemoveNow.TabIndex = 10;
+            btnRemoveNow.Text = "Remove immediatly";
+            btnRemoveNow.UseVisualStyleBackColor = true;
+            btnRemoveNow.Click += btnStopNow_Click;
             // 
             // tbInensityMultiply
             // 
-            this.tbInensityMultiply.Enabled = false;
-            this.tbInensityMultiply.Location = new System.Drawing.Point(205, 148);
-            this.tbInensityMultiply.Maximum = 200;
-            this.tbInensityMultiply.Name = "tbInensityMultiply";
-            this.tbInensityMultiply.Size = new System.Drawing.Size(580, 45);
-            this.tbInensityMultiply.TabIndex = 13;
-            this.tbInensityMultiply.Value = 100;
-            this.tbInensityMultiply.Scroll += new System.EventHandler(this.tbInensityMultiply_Scroll);
+            tbInensityMultiply.Enabled = false;
+            tbInensityMultiply.Location = new Point(239, 171);
+            tbInensityMultiply.Margin = new Padding(4, 3, 4, 3);
+            tbInensityMultiply.Maximum = 200;
+            tbInensityMultiply.Name = "tbInensityMultiply";
+            tbInensityMultiply.Size = new Size(677, 45);
+            tbInensityMultiply.TabIndex = 13;
+            tbInensityMultiply.Value = 100;
+            tbInensityMultiply.Scroll += tbInensityMultiply_Scroll;
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(205, 132);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(87, 13);
-            this.label8.TabIndex = 14;
-            this.label8.Text = "IntensityMultiplier";
+            label8.AutoSize = true;
+            label8.Location = new Point(239, 152);
+            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(103, 15);
+            label8.TabIndex = 14;
+            label8.Text = "IntensityMultiplier";
             // 
             // label12
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(3, 0);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(49, 13);
-            this.label12.TabIndex = 9;
-            this.label12.Text = "Manager";
+            label12.AutoSize = true;
+            label12.Location = new Point(4, 0);
+            label12.Margin = new Padding(4, 0, 4, 0);
+            label12.Name = "label12";
+            label12.Size = new Size(54, 15);
+            label12.TabIndex = 9;
+            label12.Text = "Manager";
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(205, 196);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(21, 13);
-            this.label9.TabIndex = 15;
-            this.label9.Text = "0%";
+            label9.AutoSize = true;
+            label9.Location = new Point(239, 226);
+            label9.Margin = new Padding(4, 0, 4, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(23, 15);
+            label9.TabIndex = 15;
+            label9.Text = "0%";
             // 
             // lbManager
             // 
-            this.lbManager.FormattingEnabled = true;
-            this.lbManager.Location = new System.Drawing.Point(8, 23);
-            this.lbManager.Name = "lbManager";
-            this.lbManager.Size = new System.Drawing.Size(191, 186);
-            this.lbManager.TabIndex = 8;
-            this.lbManager.SelectedIndexChanged += new System.EventHandler(this.lbManager_SelectedIndexChanged);
+            lbManager.FormattingEnabled = true;
+            lbManager.ItemHeight = 15;
+            lbManager.Location = new Point(9, 27);
+            lbManager.Margin = new Padding(4, 3, 4, 3);
+            lbManager.Name = "lbManager";
+            lbManager.Size = new Size(222, 214);
+            lbManager.TabIndex = 8;
+            lbManager.SelectedIndexChanged += lbManager_SelectedIndexChanged;
             // 
             // lblIntensityMultiplier
             // 
-            this.lblIntensityMultiplier.AutoSize = true;
-            this.lblIntensityMultiplier.Location = new System.Drawing.Point(488, 196);
-            this.lblIntensityMultiplier.Name = "lblIntensityMultiplier";
-            this.lblIntensityMultiplier.Size = new System.Drawing.Size(33, 13);
-            this.lblIntensityMultiplier.TabIndex = 17;
-            this.lblIntensityMultiplier.Text = "100%";
+            lblIntensityMultiplier.AutoSize = true;
+            lblIntensityMultiplier.Location = new Point(569, 226);
+            lblIntensityMultiplier.Margin = new Padding(4, 0, 4, 0);
+            lblIntensityMultiplier.Name = "lblIntensityMultiplier";
+            lblIntensityMultiplier.Size = new Size(35, 15);
+            lblIntensityMultiplier.TabIndex = 17;
+            lblIntensityMultiplier.Text = "100%";
             // 
             // panel1
             // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.txtAdvanced2);
-            this.panel1.Controls.Add(this.btnLoopNow);
-            this.panel1.Controls.Add(this.btnPlayNow);
-            this.panel1.Controls.Add(this.label11);
-            this.panel1.Controls.Add(this.lbSensations);
-            this.panel1.Controls.Add(this.lblName);
-            this.panel1.Location = new System.Drawing.Point(6, 6);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(788, 207);
-            this.panel1.TabIndex = 9;
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(txtAdvanced2);
+            panel1.Controls.Add(btnLoopNow);
+            panel1.Controls.Add(btnPlayNow);
+            panel1.Controls.Add(label11);
+            panel1.Controls.Add(lbSensations);
+            panel1.Controls.Add(lblName);
+            panel1.Location = new Point(7, 7);
+            panel1.Margin = new Padding(4, 3, 4, 3);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(919, 239);
+            panel1.TabIndex = 9;
             // 
             // txtAdvanced2
             // 
-            this.txtAdvanced2.Location = new System.Drawing.Point(208, 140);
-            this.txtAdvanced2.Multiline = true;
-            this.txtAdvanced2.Name = "txtAdvanced2";
-            this.txtAdvanced2.ReadOnly = true;
-            this.txtAdvanced2.Size = new System.Drawing.Size(573, 55);
-            this.txtAdvanced2.TabIndex = 23;
+            txtAdvanced2.Location = new Point(243, 162);
+            txtAdvanced2.Margin = new Padding(4, 3, 4, 3);
+            txtAdvanced2.Multiline = true;
+            txtAdvanced2.Name = "txtAdvanced2";
+            txtAdvanced2.ReadOnly = true;
+            txtAdvanced2.Size = new Size(668, 63);
+            txtAdvanced2.TabIndex = 23;
             // 
             // btnLoopNow
             // 
-            this.btnLoopNow.Location = new System.Drawing.Point(208, 53);
-            this.btnLoopNow.Name = "btnLoopNow";
-            this.btnLoopNow.Size = new System.Drawing.Size(154, 23);
-            this.btnLoopNow.TabIndex = 12;
-            this.btnLoopNow.Text = "Loop Now";
-            this.btnLoopNow.UseVisualStyleBackColor = true;
-            this.btnLoopNow.Click += new System.EventHandler(this.btnLoopNow_Click);
+            btnLoopNow.Location = new Point(243, 61);
+            btnLoopNow.Margin = new Padding(4, 3, 4, 3);
+            btnLoopNow.Name = "btnLoopNow";
+            btnLoopNow.Size = new Size(180, 27);
+            btnLoopNow.TabIndex = 12;
+            btnLoopNow.Text = "Loop Now";
+            btnLoopNow.UseVisualStyleBackColor = true;
+            btnLoopNow.Click += btnLoopNow_Click;
             // 
             // btnPlayNow
             // 
-            this.btnPlayNow.Location = new System.Drawing.Point(208, 24);
-            this.btnPlayNow.Name = "btnPlayNow";
-            this.btnPlayNow.Size = new System.Drawing.Size(154, 23);
-            this.btnPlayNow.TabIndex = 11;
-            this.btnPlayNow.Text = "Play Now";
-            this.btnPlayNow.UseVisualStyleBackColor = true;
-            this.btnPlayNow.Click += new System.EventHandler(this.btnPlayNow_Click);
+            btnPlayNow.Location = new Point(243, 28);
+            btnPlayNow.Margin = new Padding(4, 3, 4, 3);
+            btnPlayNow.Name = "btnPlayNow";
+            btnPlayNow.Size = new Size(180, 27);
+            btnPlayNow.TabIndex = 11;
+            btnPlayNow.Text = "Play Now";
+            btnPlayNow.UseVisualStyleBackColor = true;
+            btnPlayNow.Click += btnPlayNow_Click;
             // 
             // label11
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(3, 1);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(59, 13);
-            this.label11.TabIndex = 8;
-            this.label11.Text = "Sensations";
+            label11.AutoSize = true;
+            label11.Location = new Point(4, 1);
+            label11.Margin = new Padding(4, 0, 4, 0);
+            label11.Name = "label11";
+            label11.Size = new Size(63, 15);
+            label11.TabIndex = 8;
+            label11.Text = "Sensations";
             // 
             // lbSensations
             // 
-            this.lbSensations.FormattingEnabled = true;
-            this.lbSensations.Location = new System.Drawing.Point(8, 22);
-            this.lbSensations.Name = "lbSensations";
-            this.lbSensations.Size = new System.Drawing.Size(191, 173);
-            this.lbSensations.TabIndex = 7;
-            this.lbSensations.SelectedIndexChanged += new System.EventHandler(this.lbSensations_SelectedIndexChanged);
+            lbSensations.FormattingEnabled = true;
+            lbSensations.ItemHeight = 15;
+            lbSensations.Location = new Point(9, 25);
+            lbSensations.Margin = new Padding(4, 3, 4, 3);
+            lbSensations.Name = "lbSensations";
+            lbSensations.Size = new Size(222, 199);
+            lbSensations.TabIndex = 7;
+            lbSensations.SelectedIndexChanged += lbSensations_SelectedIndexChanged;
             // 
             // lblName
             // 
-            this.lblName.AutoSize = true;
-            this.lblName.Location = new System.Drawing.Point(205, 8);
-            this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(35, 13);
-            this.lblName.TabIndex = 6;
-            this.lblName.Text = "Name";
+            lblName.AutoSize = true;
+            lblName.Location = new Point(239, 9);
+            lblName.Margin = new Padding(4, 0, 4, 0);
+            lblName.Name = "lblName";
+            lblName.Size = new Size(39, 15);
+            lblName.TabIndex = 6;
+            lblName.Text = "Name";
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.pbThumbnail);
-            this.tabPage3.Controls.Add(this.lblSelectedExperience);
-            this.tabPage3.Controls.Add(this.btnStopExperience);
-            this.tabPage3.Controls.Add(this.btnOpenVideo);
-            this.tabPage3.Controls.Add(this.btnStartVideoSensations);
-            this.tabPage3.Controls.Add(this.btnAzshara);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(800, 439);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Experience";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            tabPage3.Controls.Add(pbThumbnail);
+            tabPage3.Controls.Add(lblSelectedExperience);
+            tabPage3.Controls.Add(btnStopExperience);
+            tabPage3.Controls.Add(btnOpenVideo);
+            tabPage3.Controls.Add(btnStartVideoSensations);
+            tabPage3.Controls.Add(btnAzshara);
+            tabPage3.Location = new Point(4, 24);
+            tabPage3.Margin = new Padding(4, 3, 4, 3);
+            tabPage3.Name = "tabPage3";
+            tabPage3.Padding = new Padding(4, 3, 4, 3);
+            tabPage3.Size = new Size(935, 509);
+            tabPage3.TabIndex = 2;
+            tabPage3.Text = "Experience";
+            tabPage3.UseVisualStyleBackColor = true;
             // 
             // pbThumbnail
             // 
-            this.pbThumbnail.Location = new System.Drawing.Point(592, 110);
-            this.pbThumbnail.Name = "pbThumbnail";
-            this.pbThumbnail.Size = new System.Drawing.Size(202, 148);
-            this.pbThumbnail.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbThumbnail.TabIndex = 7;
-            this.pbThumbnail.TabStop = false;
+            pbThumbnail.Location = new Point(691, 127);
+            pbThumbnail.Margin = new Padding(4, 3, 4, 3);
+            pbThumbnail.Name = "pbThumbnail";
+            pbThumbnail.Size = new Size(236, 171);
+            pbThumbnail.SizeMode = PictureBoxSizeMode.Zoom;
+            pbThumbnail.TabIndex = 7;
+            pbThumbnail.TabStop = false;
             // 
             // lblSelectedExperience
             // 
-            this.lblSelectedExperience.AutoSize = true;
-            this.lblSelectedExperience.Location = new System.Drawing.Point(589, 261);
-            this.lblSelectedExperience.Name = "lblSelectedExperience";
-            this.lblSelectedExperience.Size = new System.Drawing.Size(130, 13);
-            this.lblSelectedExperience.TabIndex = 5;
-            this.lblSelectedExperience.Text = "Warbringers: Azshara (full)";
+            lblSelectedExperience.AutoSize = true;
+            lblSelectedExperience.Location = new Point(687, 301);
+            lblSelectedExperience.Margin = new Padding(4, 0, 4, 0);
+            lblSelectedExperience.Name = "lblSelectedExperience";
+            lblSelectedExperience.Size = new Size(146, 15);
+            lblSelectedExperience.TabIndex = 5;
+            lblSelectedExperience.Text = "Warbringers: Azshara (full)";
             // 
             // btnStopExperience
             // 
-            this.btnStopExperience.Location = new System.Drawing.Point(592, 385);
-            this.btnStopExperience.Name = "btnStopExperience";
-            this.btnStopExperience.Size = new System.Drawing.Size(202, 48);
-            this.btnStopExperience.TabIndex = 4;
-            this.btnStopExperience.Text = "Stop Experience";
-            this.btnStopExperience.UseVisualStyleBackColor = true;
-            this.btnStopExperience.Click += new System.EventHandler(this.btnStopExperience_Click);
+            btnStopExperience.Location = new Point(691, 444);
+            btnStopExperience.Margin = new Padding(4, 3, 4, 3);
+            btnStopExperience.Name = "btnStopExperience";
+            btnStopExperience.Size = new Size(236, 55);
+            btnStopExperience.TabIndex = 4;
+            btnStopExperience.Text = "Stop Experience";
+            btnStopExperience.UseVisualStyleBackColor = true;
+            btnStopExperience.Click += btnStopExperience_Click;
             // 
             // btnOpenVideo
             // 
-            this.btnOpenVideo.Location = new System.Drawing.Point(592, 277);
-            this.btnOpenVideo.Name = "btnOpenVideo";
-            this.btnOpenVideo.Size = new System.Drawing.Size(202, 48);
-            this.btnOpenVideo.TabIndex = 3;
-            this.btnOpenVideo.Text = "Open Video";
-            this.btnOpenVideo.UseVisualStyleBackColor = true;
-            this.btnOpenVideo.Click += new System.EventHandler(this.btnOpenVideo_Click);
+            btnOpenVideo.Location = new Point(691, 320);
+            btnOpenVideo.Margin = new Padding(4, 3, 4, 3);
+            btnOpenVideo.Name = "btnOpenVideo";
+            btnOpenVideo.Size = new Size(236, 55);
+            btnOpenVideo.TabIndex = 3;
+            btnOpenVideo.Text = "Open Video";
+            btnOpenVideo.UseVisualStyleBackColor = true;
+            btnOpenVideo.Click += btnOpenVideo_Click;
             // 
             // btnStartVideoSensations
             // 
-            this.btnStartVideoSensations.Location = new System.Drawing.Point(592, 331);
-            this.btnStartVideoSensations.Name = "btnStartVideoSensations";
-            this.btnStartVideoSensations.Size = new System.Drawing.Size(202, 48);
-            this.btnStartVideoSensations.TabIndex = 2;
-            this.btnStartVideoSensations.Text = "Start Sensations for Video";
-            this.btnStartVideoSensations.UseVisualStyleBackColor = true;
-            this.btnStartVideoSensations.Click += new System.EventHandler(this.btnStartVideoSensations_Click);
+            btnStartVideoSensations.Location = new Point(691, 382);
+            btnStartVideoSensations.Margin = new Padding(4, 3, 4, 3);
+            btnStartVideoSensations.Name = "btnStartVideoSensations";
+            btnStartVideoSensations.Size = new Size(236, 55);
+            btnStartVideoSensations.TabIndex = 2;
+            btnStartVideoSensations.Text = "Start Sensations for Video";
+            btnStartVideoSensations.UseVisualStyleBackColor = true;
+            btnStartVideoSensations.Click += btnStartVideoSensations_Click;
             // 
             // btnAzshara
             // 
-            this.btnAzshara.Location = new System.Drawing.Point(6, 6);
-            this.btnAzshara.Name = "btnAzshara";
-            this.btnAzshara.Size = new System.Drawing.Size(202, 85);
-            this.btnAzshara.TabIndex = 0;
-            this.btnAzshara.Text = "Warbringers: Azshara";
-            this.btnAzshara.UseVisualStyleBackColor = true;
-            this.btnAzshara.Click += new System.EventHandler(this.btnAzshara_Click);
+            btnAzshara.Location = new Point(7, 7);
+            btnAzshara.Margin = new Padding(4, 3, 4, 3);
+            btnAzshara.Name = "btnAzshara";
+            btnAzshara.Size = new Size(236, 98);
+            btnAzshara.TabIndex = 0;
+            btnAzshara.Text = "Warbringers: Azshara";
+            btnAzshara.UseVisualStyleBackColor = true;
+            btnAzshara.Click += btnAzshara_Click;
             // 
             // btnToggleRain
             // 
-            this.btnToggleRain.Location = new System.Drawing.Point(12, 196);
-            this.btnToggleRain.Name = "btnToggleRain";
-            this.btnToggleRain.Size = new System.Drawing.Size(151, 46);
-            this.btnToggleRain.TabIndex = 37;
-            this.btnToggleRain.Text = "Toggle Randomized Rain";
-            this.btnToggleRain.UseVisualStyleBackColor = true;
-            this.btnToggleRain.Click += new System.EventHandler(this.btnToggleRain_Click);
+            btnToggleRain.Location = new Point(14, 226);
+            btnToggleRain.Margin = new Padding(4, 3, 4, 3);
+            btnToggleRain.Name = "btnToggleRain";
+            btnToggleRain.Size = new Size(176, 53);
+            btnToggleRain.TabIndex = 37;
+            btnToggleRain.Text = "Toggle Randomized Rain";
+            btnToggleRain.UseVisualStyleBackColor = true;
+            btnToggleRain.Click += btnToggleRain_Click;
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(9, 128);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(91, 13);
-            this.label14.TabIndex = 38;
-            this.label14.Text = "Special Functions";
+            label14.AutoSize = true;
+            label14.Location = new Point(10, 148);
+            label14.Margin = new Padding(4, 0, 4, 0);
+            label14.Name = "label14";
+            label14.Size = new Size(99, 15);
+            label14.TabIndex = 38;
+            label14.Text = "Special Functions";
             // 
             // btn120
             // 
-            this.btn120.Location = new System.Drawing.Point(11, 421);
-            this.btn120.Name = "btn120";
-            this.btn120.Size = new System.Drawing.Size(73, 46);
-            this.btn120.TabIndex = 40;
-            this.btn120.Text = "100/20";
-            this.btn120.UseVisualStyleBackColor = true;
-            this.btn120.Click += new System.EventHandler(this.btn120_Click);
+            btn120.Location = new Point(13, 486);
+            btn120.Margin = new Padding(4, 3, 4, 3);
+            btn120.Name = "btn120";
+            btn120.Size = new Size(85, 53);
+            btn120.TabIndex = 40;
+            btn120.Text = "100/20";
+            btn120.UseVisualStyleBackColor = true;
+            btn120.Click += btn120_Click;
             // 
             // btn20
             // 
-            this.btn20.Location = new System.Drawing.Point(11, 369);
-            this.btn20.Name = "btn20";
-            this.btn20.Size = new System.Drawing.Size(73, 46);
-            this.btn20.TabIndex = 41;
-            this.btn20.Text = "20";
-            this.btn20.UseVisualStyleBackColor = true;
-            this.btn20.Click += new System.EventHandler(this.btn20_Click);
+            btn20.Location = new Point(13, 426);
+            btn20.Margin = new Padding(4, 3, 4, 3);
+            btn20.Name = "btn20";
+            btn20.Size = new Size(85, 53);
+            btn20.TabIndex = 41;
+            btn20.Text = "20";
+            btn20.UseVisualStyleBackColor = true;
+            btn20.Click += btn20_Click;
             // 
             // btn20Adv
             // 
-            this.btn20Adv.Location = new System.Drawing.Point(90, 369);
-            this.btn20Adv.Name = "btn20Adv";
-            this.btn20Adv.Size = new System.Drawing.Size(73, 46);
-            this.btn20Adv.TabIndex = 43;
-            this.btn20Adv.Text = "20 adv";
-            this.btn20Adv.UseVisualStyleBackColor = true;
-            this.btn20Adv.Click += new System.EventHandler(this.btn20Adv_Click);
+            btn20Adv.Location = new Point(105, 426);
+            btn20Adv.Margin = new Padding(4, 3, 4, 3);
+            btn20Adv.Name = "btn20Adv";
+            btn20Adv.Size = new Size(85, 53);
+            btn20Adv.TabIndex = 43;
+            btn20Adv.Text = "20 adv";
+            btn20Adv.UseVisualStyleBackColor = true;
+            btn20Adv.Click += btn20Adv_Click;
             // 
             // btn120adv
             // 
-            this.btn120adv.Location = new System.Drawing.Point(90, 421);
-            this.btn120adv.Name = "btn120adv";
-            this.btn120adv.Size = new System.Drawing.Size(73, 46);
-            this.btn120adv.TabIndex = 42;
-            this.btn120adv.Text = "100/20 adv";
-            this.btn120adv.UseVisualStyleBackColor = true;
-            this.btn120adv.Click += new System.EventHandler(this.btn120adv_Click);
+            btn120adv.Location = new Point(105, 486);
+            btn120adv.Margin = new Padding(4, 3, 4, 3);
+            btn120adv.Name = "btn120adv";
+            btn120adv.Size = new Size(85, 53);
+            btn120adv.TabIndex = 42;
+            btn120adv.Text = "100/20 adv";
+            btn120adv.UseVisualStyleBackColor = true;
+            btn120adv.Click += btn120adv_Click;
             // 
-            // Form1
+            // AdvancedDemoForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(981, 481);
-            this.Controls.Add(this.btn20Adv);
-            this.Controls.Add(this.btn120adv);
-            this.Controls.Add(this.btn20);
-            this.Controls.Add(this.btn120);
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.btnToggleRain);
-            this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.btnDisconnect);
-            this.Controls.Add(this.btnDebug);
-            this.Controls.Add(this.btnConnect);
-            this.Name = "Form1";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbInensityMultiply)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbThumbnail)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1144, 555);
+            Controls.Add(btn20Adv);
+            Controls.Add(btn120adv);
+            Controls.Add(btn20);
+            Controls.Add(btn120);
+            Controls.Add(label14);
+            Controls.Add(btnToggleRain);
+            Controls.Add(tabControl1);
+            Controls.Add(btnDisconnect);
+            Controls.Add(btnDebug);
+            Controls.Add(btnConnect);
+            Margin = new Padding(4, 3, 4, 3);
+            Name = "AdvancedDemoForm";
+            Text = "AdvancedDemoForm";
+            Load += Form1_Load;
+            tabControl1.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tabPage1.PerformLayout();
+            tabPage2.ResumeLayout(false);
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)tbInensityMultiply).EndInit();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            tabPage3.ResumeLayout(false);
+            tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pbThumbnail).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
