@@ -2,8 +2,7 @@
 using OwoAdvancedSensationBuilder.manager;
 using OWOGame;
 
-namespace OwoAdvancedSensationBuilder.Demo.experience
-{
+namespace OwoAdvancedSensationBuilder.Demo.experience {
     internal class ExperienceAzshara {
 
         Dictionary<double, List<AdvancedSensationStreamInstance>> queue = new Dictionary<double, List<AdvancedSensationStreamInstance>>();
