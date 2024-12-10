@@ -13,18 +13,15 @@ namespace OwoAdvancedSensationBuilder.manager {
         public bool overwriteManagerProcessList { get; set; }
         public bool loop { get; set; }
 
-        private AdvancedStreamingSensation _sensation;
-        public AdvancedStreamingSensation sensation { get { return _sensation; } }
+        public AdvancedStreamingSensation sensation { get; private set; }
 
-        public AdvancedSensationStreamInstance(string name, Sensation? sensation = null, bool loop = false) {
+        public AdvancedSensationStreamInstance(string name, Sensation sensation, bool loop = false) {
             this.name = name;
             this.loop = loop;
             firstTick = 0;
             overwriteManagerProcessList = false;
 
-            if (sensation != null) {
-                _sensation = new AdvancedSensationBuilder(sensation).getSensationForStream();
-            }
+            this.sensation = new AdvancedSensationBuilder(sensation).getSensationForStream();
         }
 
         public Sensation? getSensationAtTick(int tick) {
@@ -48,7 +45,7 @@ namespace OwoAdvancedSensationBuilder.manager {
         }
 
         public void updateSensation(Sensation newSensation) {
-            _sensation = new AdvancedSensationBuilder(newSensation).getSensationForStream();
+            sensation = new AdvancedSensationBuilder(newSensation).getSensationForStream();
         }
 
     }

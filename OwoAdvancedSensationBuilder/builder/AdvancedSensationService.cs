@@ -5,7 +5,7 @@ namespace OwoAdvancedSensationBuilder.builder
 {
     public static class AdvancedSensationService {
 
-        public static AdvancedStreamingSensation splitSensation(MicroSensation? micro, Muscle[] muscles) {
+        public static AdvancedStreamingSensation splitSensation(MicroSensation? micro, Muscle[]? muscles) {
 
             AdvancedStreamingSensation advanced = new AdvancedStreamingSensation();
             if (micro == null) {

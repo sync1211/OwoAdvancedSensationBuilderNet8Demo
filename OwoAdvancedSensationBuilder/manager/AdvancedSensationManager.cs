@@ -212,7 +212,7 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         public void stopSensation(string sensationInstanceName) {
-            AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(sensationInstanceName);
+            AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(sensationInstanceName, SensationsFactory.Create(0, 0, 0)); // Using an empty sensation as the instance is only used for removal. In this case, the sensation property will not be used
             instance.overwriteManagerProcessList = true;
             RemoveInstanceFromManager(instance);
         }
@@ -270,7 +270,8 @@ namespace OwoAdvancedSensationBuilder.manager
                 return analyzeSensation(withMuscles.reference);
             } else if (sensation is SensationsSequence sequence) {
                 // just take first
-                if (sequence.sensations.FirstOrDefault() is Sensation first) {
+                if (sequence.sensations.FirstOrDefault() is Sensation first)
+                {
                     return analyzeSensation(first);
                 }
 

@@ -12,8 +12,9 @@ namespace OwoAdvancedSensationBuilder.builder
             this.muscles = muscles;
 
             MicroSensation? micro = analyzeSensation(sensation);
-            if (advanced == null) {
-                // Not null when Sensation is SensationsSequence
+
+            // advanced will already be set by analyzeSensation if Sensation is SensationsSequence or AdvancedStreamingSensation
+            if (advanced == null) { 
                 advanced = AdvancedSensationService.splitSensation(micro, this.muscles);
             }
         }
