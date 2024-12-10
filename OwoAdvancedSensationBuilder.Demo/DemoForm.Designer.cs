@@ -1,5 +1,5 @@
 ﻿namespace OwoAdvancedSensationBuilder.Demo {
-    partial class Form1 {
+    partial class DemoForm {
         /// <summary>
         ///  Required designer variable.
         /// </summary>
@@ -22,10 +22,12 @@
         ///  Required method for Designer support - do not modify
         ///  the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent() {
+        private void InitializeComponent()
+        {
             btnOpen = new Button();
             btnStart = new Button();
             btnDebug = new Button();
+            openAdvancedFormBtn = new Button();
             SuspendLayout();
             // 
             // btnOpen
@@ -58,16 +60,27 @@
             btnDebug.UseVisualStyleBackColor = true;
             btnDebug.Click += btnDebug_Click;
             // 
-            // Form1
+            // openAdvancedFormBtn
+            // 
+            openAdvancedFormBtn.Location = new Point(12, 368);
+            openAdvancedFormBtn.Name = "openAdvancedFormBtn";
+            openAdvancedFormBtn.Size = new Size(75, 70);
+            openAdvancedFormBtn.TabIndex = 3;
+            openAdvancedFormBtn.Text = "Advanced";
+            openAdvancedFormBtn.UseVisualStyleBackColor = true;
+            openAdvancedFormBtn.Click += openAdvancedFormBtn_Click;
+            // 
+            // DemoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(openAdvancedFormBtn);
             Controls.Add(btnDebug);
             Controls.Add(btnStart);
             Controls.Add(btnOpen);
-            Name = "Form1";
-            Text = "Form1";
+            Name = "DemoForm";
+            Text = "Demo Form";
             Load += Form1_Load;
             ResumeLayout(false);
         }
@@ -77,5 +90,6 @@
         private Button btnOpen;
         private Button btnStart;
         private Button btnDebug;
+        private Button openAdvancedFormBtn;
     }
 }

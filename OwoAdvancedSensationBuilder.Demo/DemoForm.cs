@@ -5,28 +5,35 @@ using OWOGame;
 using System.Diagnostics;
 
 namespace OwoAdvancedSensationBuilder.Demo {
-    public partial class Form1 : Form {
-        public Form1() {
+    public partial class DemoForm : Form
+    {
+        public DemoForm()
+        {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e) {
+        private void Form1_Load(object sender, EventArgs e)
+        {
             OWO.AutoConnect();
         }
 
-        private void btnOpen_Click(object sender, EventArgs e) {
-            var ps = new ProcessStartInfo("https://www.youtube.com/watch?v=hndyTy3uiZM") {
+        private void btnOpen_Click(object sender, EventArgs e)
+        {
+            var ps = new ProcessStartInfo("https://www.youtube.com/watch?v=hndyTy3uiZM")
+            {
                 UseShellExecute = true,
                 Verb = "open"
             };
             Process.Start(ps);
         }
 
-        private void btnStart_Click(object sender, EventArgs e) {
+        private void btnStart_Click(object sender, EventArgs e)
+        {
             ExperienceHelper.getInstance().startAzshara();
         }
 
-        private void btnDebug_Click(object sender, EventArgs e) {
+        private void btnDebug_Click(object sender, EventArgs e)
+        {
             Muscle[] barrier = { Muscle.Pectoral_L.WithIntensity(80), Muscle.Arm_L, Muscle.Dorsal_L,
                 Muscle.Pectoral_R.WithIntensity(80), Muscle.Arm_R, Muscle.Dorsal_R };
 
@@ -40,6 +47,12 @@ namespace OwoAdvancedSensationBuilder.Demo {
                  .appendNow(AdvancedSensationService.createSensationRamp(50, 50, 75, 75, 9)) // 85*/
                 .getSensationForStream();
             AdvancedSensationManager.getInstance().playOnce(s);
+        }
+
+        private void openAdvancedFormBtn_Click(object sender, EventArgs e) {
+            using (AdvancedDemoForm advancedDemoForm = new()) {
+                advancedDemoForm.ShowDialog();
+            }
         }
     }
 }
