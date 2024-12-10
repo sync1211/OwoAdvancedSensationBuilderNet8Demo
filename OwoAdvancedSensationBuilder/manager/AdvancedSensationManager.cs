@@ -73,7 +73,7 @@ namespace OwoAdvancedSensationBuilder.manager
             Dictionary<string, AdvancedSensationStreamInstance> instancesToAdd = new();
             foreach (var process in processSensationList.Where(entry => entry.Value == ProcessState.ADD))
             {
-                instancesToAdd.Add(process.Key.name, process.Key);
+                instancesToAdd.Add(process.Key.name, process.Key); //TODO: process.Key.name could be an empty string which could cause problems with collisions
             }
 
             foreach (var process in processSensationList.Where(entry => entry.Value == ProcessState.UPDATE))
