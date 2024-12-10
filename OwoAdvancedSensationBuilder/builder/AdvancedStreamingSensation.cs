@@ -1,13 +1,15 @@
-﻿using OWOGame;
+﻿using OwoAdvancedSensationBuilder.exceptions;
+using OWOGame;
+using System.Diagnostics;
 
 namespace OwoAdvancedSensationBuilder.builder
 {
     public class AdvancedStreamingSensation : SensationsSequence {
 
-        public static AdvancedStreamingSensation? createByAdvancedMicro(SensationWithMuscles advancedMicro) {
+        public static AdvancedStreamingSensation createByAdvancedMicro(SensationWithMuscles advancedMicro) {
             if (advancedMicro.Duration > 0.3f) {
-                Console.WriteLine("AdvancedStreamingSensation - createByAdvancedMicro() - Invalid Advanced Micro");
-                return null; //TODO: Replace this with throwing an exception?
+                Debug.WriteLine("AdvancedStreamingSensation - createByAdvancedMicro() - Invalid Advanced Micro");
+                throw new AdvancedSensationException("AdvancedStreamingSensation - createByAdvancedMicro() - Invalid Advanced Micro");
             }
             return new AdvancedStreamingSensation(advancedMicro);
         }
