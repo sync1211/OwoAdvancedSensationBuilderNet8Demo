@@ -1,4 +1,5 @@
-﻿using OWOGame;
+﻿using OwoAdvancedSensationBuilder.exceptions;
+using OWOGame;
 
 namespace OwoAdvancedSensationBuilder.builder
 {
@@ -8,10 +9,9 @@ namespace OwoAdvancedSensationBuilder.builder
         private Muscle[]? muscles;
 
         public AdvancedSensationBuilder(Sensation sensation, Muscle[]? muscles = null) {
-
             this.muscles = muscles;
 
-            MicroSensation? micro = analyzeSensation(sensation);
+            MicroSensation micro = analyzeSensation(sensation);
 
             // advanced will already be set by analyzeSensation if Sensation is SensationsSequence or AdvancedStreamingSensation
             if (advanced == null) { 
@@ -20,11 +20,10 @@ namespace OwoAdvancedSensationBuilder.builder
         }
 
         public AdvancedSensationBuilder(List<int> intensities, Muscle[]? muscles = null) {
-            this.muscles = muscles;
-            advanced = AdvancedSensationService.createSensationCurve(100, intensities, this.muscles);
+            advanced = AdvancedSensationService.createSensationCurve(100, intensities, muscles);
         }
 
-        private MicroSensation? analyzeSensation(Sensation sensation) {
+        private MicroSensation analyzeSensation(Sensation sensation) {
             if (sensation is AdvancedStreamingSensation advSensation) {
                 advanced = advSensation;
             } else if (sensation is MicroSensation microSensation) {
@@ -44,7 +43,9 @@ namespace OwoAdvancedSensationBuilder.builder
                 return analyzeSensation(baked.reference);
             }
 
-            return null;
+            // Unsupported Sensation type
+            string typeName = sensation.GetType().Name;
+            throw new AdvancedSensationException($"Unsupported Sensation type: {typeName}");
         }
 
         public Sensation? getSensationForSend() {
