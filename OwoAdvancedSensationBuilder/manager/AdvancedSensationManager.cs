@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Timers;
 using OWOGame;
 using static OwoAdvancedSensationBuilder.builder.AdvancedSensationBuilderMergeOptions;
+using OwoAdvancedSensationBuilder.exceptions;
 
 namespace OwoAdvancedSensationBuilder.manager
 {
@@ -205,7 +206,7 @@ namespace OwoAdvancedSensationBuilder.manager
 
         public void updateSensation(Sensation sensation, string? name = null) {
             if (name == null) {
-                name = analyzeSensation(sensation)?.name;
+                name = analyzeSensation(sensation).name;
             }
             processSensation[new AdvancedSensationStreamInstance(name, sensation)] = ProcessState.UPDATE;
         }
@@ -262,24 +263,25 @@ namespace OwoAdvancedSensationBuilder.manager
             return returnInstances;
         }
 
-        private MicroSensation? analyzeSensation(Sensation sensation) {
+        private MicroSensation analyzeSensation(Sensation sensation) {
             if (sensation is MicroSensation microSensation) {
                 return microSensation;
             } else if (sensation is SensationWithMuscles withMuscles) {
                 return analyzeSensation(withMuscles.reference);
             } else if (sensation is SensationsSequence sequence) {
                 // just take first
-                if (sequence.sensations.FirstOrDefault() is Sensation first)
-                {
+                if (sequence.sensations.FirstOrDefault() is Sensation first) {
                     return analyzeSensation(first);
                 }
 
-                return null;
+                throw new AdvancedSensationException("SensationsSequence is empty!");
             } else if (sensation is BakedSensation baked) {
                 return analyzeSensation(baked.reference);
             }
 
-            return null;
+            // Unsupported Sensation type
+            string typeName = sensation.GetType().Name;
+            throw new AdvancedSensationException($"Unsupported Sensation type: {typeName}");
         }
 
     }

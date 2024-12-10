@@ -142,7 +142,7 @@ namespace OwoAdvancedSensationBuilder.builder
                 if (origSensation == null && newSensation == null) {
                     mergedSensation.addSensation(createAdvancedMicro(0, 0, false, Muscle.All));
                 } else if (origSensation == null) {
-                    mergedSensation.addSensation(AdvancedStreamingSensation.createByAdvancedMicro((SensationWithMuscles)newSensation.MultiplyIntensityBy(mergeOptions.intensityScale)));
+                    mergedSensation.addSensation(AdvancedStreamingSensation.createByAdvancedMicro((SensationWithMuscles)newSensation!.MultiplyIntensityBy(mergeOptions.intensityScale)));
                 } else if (newSensation == null) {
                     mergedSensation.addSensation(AdvancedStreamingSensation.createByAdvancedMicro(origSensation));
                 } else {
