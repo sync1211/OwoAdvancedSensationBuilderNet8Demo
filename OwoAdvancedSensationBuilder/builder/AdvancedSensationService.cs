@@ -3,7 +3,7 @@ using static OwoAdvancedSensationBuilder.builder.AdvancedSensationBuilderMergeOp
 
 namespace OwoAdvancedSensationBuilder.builder
 {
-    public class AdvancedSensationService {
+    public static class AdvancedSensationService {
 
         public static AdvancedStreamingSensation splitSensation(MicroSensation? micro, Muscle[] muscles) {
 
