@@ -1,8 +1,7 @@
 ﻿using OwoAdvancedSensationBuilder.manager;
 using System.Timers;
 
-namespace OwoAdvancedSensationBuilder.Demo.experience
-{
+namespace OwoAdvancedSensationBuilder.Demo.experience {
     internal class ExperienceHelper {
 
         private static ExperienceHelper? managerInstance;
