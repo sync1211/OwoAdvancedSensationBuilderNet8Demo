@@ -8,7 +8,7 @@ namespace OwoAdvancedSensationBuilder.builder
 
         public static AdvancedStreamingSensation createByAdvancedMicro(SensationWithMuscles advancedMicro) {
             if (advancedMicro.Duration > 0.3f) {
-                Debug.WriteLine("AdvancedStreamingSensation - createByAdvancedMicro() - Invalid Advanced Micro");
+                Console.WriteLine("AdvancedStreamingSensation - createByAdvancedMicro() - Invalid Advanced Micro");
                 throw new AdvancedSensationException("AdvancedStreamingSensation - createByAdvancedMicro() - Invalid Advanced Micro");
             }
             return new AdvancedStreamingSensation(advancedMicro);
