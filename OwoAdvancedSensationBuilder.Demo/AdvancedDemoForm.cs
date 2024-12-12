@@ -2,6 +2,7 @@
 using OwoAdvancedSensationBuilder.Demo.experience;
 using OwoAdvancedSensationBuilder.manager;
 using OWOGame;
+using System.Text.Json.Serialization.Metadata;
 using TrackBar = System.Windows.Forms.TrackBar;
 
 namespace OwoAdvancedSensationBuilder {
@@ -39,6 +40,9 @@ namespace OwoAdvancedSensationBuilder {
             lblSelectedExperience.Text = "Warbringers: Azshara";
             pbThumbnail.Load("https://img.youtube.com/vi/hndyTy3uiZM/0.jpg");
             videoUrl = "https://www.youtube.com/watch?v=hndyTy3uiZM";
+
+            AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
+            manager.OnTick += Timer_Elapsed;
         }
 
         private void btnDebug_Click(object sender, EventArgs e) {
@@ -88,10 +92,8 @@ namespace OwoAdvancedSensationBuilder {
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
             if (manager.getPlayingSensationInstances().Keys.Contains("Rain Snippet")) {
                 manager.stopSensation("Rain Snippet");
-                updateVisualisationManager(true);
             } else {
                 addRainRandom();
-                updateVisualisationManager();
             }
         }
 
@@ -311,7 +313,6 @@ namespace OwoAdvancedSensationBuilder {
 
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
             manager.updateSensation(s.MultiplyIntensityBy(tb.Value), selected);
-            updateVisualisationManager();
         }
 
         private void btnPlayNow_Click(object sender, EventArgs e) {
@@ -320,9 +321,7 @@ namespace OwoAdvancedSensationBuilder {
 
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
             AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(selected, s);
-            instance.LastCalculationOfCycle += Instance_LastCalculationOfCycle1;
             manager.play(instance);
-            updateVisualisationManager();
         }
 
         private void btnLoopNow_Click(object sender, EventArgs e) {
@@ -332,7 +331,6 @@ namespace OwoAdvancedSensationBuilder {
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
             AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(selected, s, true);
             manager.play(instance);
-            updateVisualisationManager();
         }
 
         private void btnStopNow_Click(object sender, EventArgs e) {
@@ -340,7 +338,6 @@ namespace OwoAdvancedSensationBuilder {
 
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
             manager.stopSensation(selected);
-            updateVisualisationManager(true);
         }
 
         private void btnRemoveAfter_Click(object sender, EventArgs e) {
@@ -356,27 +353,14 @@ namespace OwoAdvancedSensationBuilder {
         private void Form1_LastCalculationOfCycle(AdvancedSensationStreamInstance instance) {
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
             manager.stopSensation(instance.name);
-            updateVisualisationManager(true);
         }
 
-        private void Instance_LastCalculationOfCycle1(AdvancedSensationStreamInstance instance) {
-            updateVisualisationManager(true);
-        }
 
-        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
+        private void Timer_Elapsed(object? sender, EventArgs e) {
             updateVisualisationManager();
         }
 
         private void updateVisualisationManager(bool wait = false) {
-
-            if (wait) {
-                System.Timers.Timer timer = new System.Timers.Timer(150);
-                timer.Elapsed += Timer_Elapsed;
-                timer.AutoReset = false;
-                timer.Enabled = true;
-                return;
-            }
-
             if (lbManager.InvokeRequired) {
                 Action doInvoke = delegate { updateVisualisationManager(false); };
                 lbManager.Invoke(doInvoke);
@@ -387,9 +371,16 @@ namespace OwoAdvancedSensationBuilder {
 
             List<string> names = new List<string>(manager.getPlayingSensationInstances().Keys);
 
+            int selectedItem = lbManager.SelectedIndex;
             lbManager.Items.Clear();
             foreach (string name in names) {
                 lbManager.Items.Add(name);
+            }
+
+            // Restore selection
+            if (selectedItem >= 0 && selectedItem < lbManager.Items.Count)
+            {
+                lbManager.SelectedIndex = selectedItem;
             }
 
             lblIntensityMultiplier.Text = tbInensityMultiply.Value.ToString() + "%";
