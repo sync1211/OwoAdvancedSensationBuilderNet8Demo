@@ -14,6 +14,7 @@ namespace OwoAdvancedSensationBuilder.manager
         private static AdvancedSensationManager? managerInstance;
 
         private System.Timers.Timer timer;
+        public EventHandler? OnTick;
 
         private Dictionary<string, AdvancedSensationStreamInstance> playSensations;
         private Dictionary<AdvancedSensationStreamInstance, ProcessState> processSensation;
@@ -30,6 +31,7 @@ namespace OwoAdvancedSensationBuilder.manager
             timer = new System.Timers.Timer(100);
             timer.Elapsed += streamSensation;
             timer.Elapsed += calcManagerTick;
+            timer.Elapsed += dispatchEvent;
             timer.AutoReset = true;
             timer.Enabled = false;
 
@@ -43,6 +45,10 @@ namespace OwoAdvancedSensationBuilder.manager
                 managerInstance = new AdvancedSensationManager();
             }
             return managerInstance;
+        }
+
+        private void dispatchEvent(object? source, EventArgs e) {
+            OnTick?.Invoke(this, EventArgs.Empty);
         }
 
         private void streamSensation(object? source, ElapsedEventArgs e) {
