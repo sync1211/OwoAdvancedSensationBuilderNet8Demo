@@ -17,8 +17,7 @@ namespace OwoAdvancedSensationBuilder.manager
 
         private Dictionary<string, AdvancedSensationStreamInstance> playSensations;
         private Dictionary<AdvancedSensationStreamInstance, ProcessState> processSensation;
-        private List<string> _priorityList;
-        public List<string> priorityList { get { return _priorityList; } }
+        public List<string> priorityList { get; }
 
         private int tick;
         private bool calculating;
@@ -35,7 +34,7 @@ namespace OwoAdvancedSensationBuilder.manager
 
             playSensations = new Dictionary<string, AdvancedSensationStreamInstance>();
             processSensation = new Dictionary<AdvancedSensationStreamInstance, ProcessState>();
-            _priorityList = new List<string>();
+            priorityList = new List<string>();
         }
 
         public static AdvancedSensationManager getInstance() {
