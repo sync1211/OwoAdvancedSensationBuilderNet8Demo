@@ -11,7 +11,7 @@ namespace OwoAdvancedSensationBuilder.builder
         public AdvancedSensationBuilder(Sensation sensation, Muscle[]? muscles = null) {
             this.muscles = muscles;
 
-            MicroSensation micro = analyzeSensation(sensation);
+            MicroSensation? micro = analyzeSensation(sensation);
 
             // advanced will already be set by analyzeSensation if Sensation is SensationsSequence or AdvancedStreamingSensation
             if (advanced == null) { 
@@ -23,9 +23,10 @@ namespace OwoAdvancedSensationBuilder.builder
             advanced = AdvancedSensationService.createSensationCurve(100, intensities, muscles);
         }
 
-        private MicroSensation analyzeSensation(Sensation sensation) {
+        private MicroSensation? analyzeSensation(Sensation sensation) {
             if (sensation is AdvancedStreamingSensation advSensation) {
                 advanced = advSensation;
+                return null;
             } else if (sensation is MicroSensation microSensation) {
                 return microSensation;
             } else if (sensation is SensationWithMuscles withMuscles) {
@@ -39,6 +40,8 @@ namespace OwoAdvancedSensationBuilder.builder
                 foreach (Sensation s in sequence.sensations) {
                     advanced.addSensation(s);
                 }
+
+                return null;
             } else if (sensation is BakedSensation baked) {
                 return analyzeSensation(baked.reference);
             }
