@@ -84,6 +84,7 @@ namespace OwoAdvancedSensationBuilder.manager
                     oldInstance = playSensations[instance.name];
                 } else {
                     // Update Sensation thats not added yet
+                    // Would trigger Update event before Add event
                     oldInstance = instancesToAdd.GetValueOrDefault(instance.name);
                 }
 
