@@ -2,6 +2,7 @@
 using OwoAdvancedSensationBuilder.Demo.experience;
 using OwoAdvancedSensationBuilder.manager;
 using OWOGame;
+using static OwoAdvancedSensationBuilder.manager.AdvancedSensationManager;
 using TrackBar = System.Windows.Forms.TrackBar;
 
 namespace OwoAdvancedSensationBuilder {
@@ -88,29 +89,28 @@ namespace OwoAdvancedSensationBuilder {
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
             if (manager.getPlayingSensationInstances().Keys.Contains("Rain Snippet")) {
                 manager.stopSensation("Rain Snippet");
-                updateVisualisationManager(true);
             } else {
                 addRainRandom();
-                updateVisualisationManager();
             }
         }
 
         private void addRainRandom() {
-
-            Random r = new Random();
-
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
-            AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance("Rain Snippet",
-                    SensationsFactory.Create(20, 0.1f, 60, 0, 0, 0.3f).WithMuscles(Muscle.All[r.Next(0, Muscle.All.Length)]));
+            AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance("Rain Snippet", getRandomRainSensation(), true);
             instance.LastCalculationOfCycle += Instance_LastCalculationOfCycle;
+            instance.AfterStateChanged += updateViewAfterStateChange;
+
             manager.play(instance);
+        }
+
+        private Sensation getRandomRainSensation() {
+            Random r = new Random();
+            return SensationsFactory.Create(20, 0.1f, 60, 0, 0, 0.3f).WithMuscles(Muscle.All[r.Next(0, Muscle.All.Length)]);
         }
 
         private void Instance_LastCalculationOfCycle(AdvancedSensationStreamInstance instance) {
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
-            if (manager.getPlayingSensationInstances(false).ContainsKey("Rain Snippet")) {
-                addRainRandom();
-            }
+            manager.updateSensation(getRandomRainSensation(), "Rain Snippet");
         }
 
         private void btn20_Click(object sender, EventArgs e) {
@@ -320,9 +320,8 @@ namespace OwoAdvancedSensationBuilder {
 
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
             AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(selected, s);
-            instance.LastCalculationOfCycle += Instance_LastCalculationOfCycle1;
+            instance.AfterStateChanged += updateViewAfterStateChange;
             manager.play(instance);
-            updateVisualisationManager();
         }
 
         private void btnLoopNow_Click(object sender, EventArgs e) {
@@ -331,8 +330,8 @@ namespace OwoAdvancedSensationBuilder {
 
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
             AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(selected, s, true);
+            instance.AfterStateChanged += updateViewAfterStateChange;
             manager.play(instance);
-            updateVisualisationManager();
         }
 
         private void btnStopNow_Click(object sender, EventArgs e) {
@@ -340,7 +339,6 @@ namespace OwoAdvancedSensationBuilder {
 
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
             manager.stopSensation(selected);
-            updateVisualisationManager(true);
         }
 
         private void btnRemoveAfter_Click(object sender, EventArgs e) {
@@ -349,36 +347,20 @@ namespace OwoAdvancedSensationBuilder {
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
             Dictionary<string, AdvancedSensationStreamInstance> instances = manager.getPlayingSensationInstances();
             if (selected != null && instances.ContainsKey(selected)) {
-                instances[selected].LastCalculationOfCycle += Form1_LastCalculationOfCycle;
+                instances[selected].loop = false;
             }
         }
 
-        private void Form1_LastCalculationOfCycle(AdvancedSensationStreamInstance instance) {
-            AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
-            manager.stopSensation(instance.name);
-            updateVisualisationManager(true);
-        }
-
-        private void Instance_LastCalculationOfCycle1(AdvancedSensationStreamInstance instance) {
-            updateVisualisationManager(true);
-        }
-
-        private void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e) {
-            updateVisualisationManager();
-        }
-
-        private void updateVisualisationManager(bool wait = false) {
-
-            if (wait) {
-                System.Timers.Timer timer = new System.Timers.Timer(150);
-                timer.Elapsed += Timer_Elapsed;
-                timer.AutoReset = false;
-                timer.Enabled = true;
-                return;
+        private void updateViewAfterStateChange(AdvancedSensationStreamInstance instance, ProcessState state) {
+            if (state == ProcessState.REMOVE || state == ProcessState.ADD) {
+                updateVisualisationManager();
             }
+        }
+
+        private void updateVisualisationManager() {
 
             if (lbManager.InvokeRequired) {
-                Action doInvoke = delegate { updateVisualisationManager(false); };
+                Action doInvoke = delegate { updateVisualisationManager(); };
                 lbManager.Invoke(doInvoke);
                 return;
             }

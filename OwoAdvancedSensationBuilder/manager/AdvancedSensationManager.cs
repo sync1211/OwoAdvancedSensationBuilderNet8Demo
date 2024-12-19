@@ -9,7 +9,7 @@ namespace OwoAdvancedSensationBuilder.manager
 {
     public class AdvancedSensationManager {
 
-        private enum ProcessState { ADD, REMOVE, UPDATE }
+        public enum ProcessState { ADD, REMOVE, UPDATE }
 
         private static AdvancedSensationManager? managerInstance;
 
@@ -83,10 +83,12 @@ namespace OwoAdvancedSensationBuilder.manager
                     // Update Playing Sensation
                     oldInstance = playSensations[instance.name];
                 } else {
+                    // Update Sensation thats not added yet
                     oldInstance = instancesToAdd.GetValueOrDefault(instance.name);
                 }
 
                 oldInstance?.updateSensation(instance.sensation);
+                oldInstance?.triggerStateChangeEvent(ProcessState.UPDATE);
 
                 processSensation.Remove(process.Key);
             }
@@ -98,6 +100,7 @@ namespace OwoAdvancedSensationBuilder.manager
                 instance.firstTick = tick;
 
                 playSensations[instance.name] = instance;
+                instance.triggerStateChangeEvent(ProcessState.ADD);
 
                 processSensation.Remove(process.Key);
             }
@@ -108,7 +111,9 @@ namespace OwoAdvancedSensationBuilder.manager
                 AdvancedSensationStreamInstance instance = process.Key;
 
                 if (playSensations.ContainsKey(instance.name)) {
+                    AdvancedSensationStreamInstance oldInstance = playSensations[instance.name];
                     playSensations.Remove(instance.name);
+                    oldInstance.triggerStateChangeEvent(ProcessState.REMOVE);
                 }
 
                 processSensation.Remove(process.Key);
@@ -156,7 +161,9 @@ namespace OwoAdvancedSensationBuilder.manager
                 }
 
                 if (sensationInstance.isLastTickOfCycle(calcTick) && !sensationInstance.loop) {
+                    AdvancedSensationStreamInstance oldInstance = playSensations[priority];
                     playSensations.Remove(priority);
+                    oldInstance.triggerStateChangeEvent(ProcessState.REMOVE);
                 }
             }
 
@@ -179,7 +186,9 @@ namespace OwoAdvancedSensationBuilder.manager
                 }
 
                 if (sensationInstance.isLastTickOfCycle(calcTick) && !sensationInstance.loop) {
+                    AdvancedSensationStreamInstance oldInstance = playSensations[entry.Key];
                     playSensations.Remove(entry.Key);
+                    oldInstance.triggerStateChangeEvent(ProcessState.REMOVE);
                 }
             }
 

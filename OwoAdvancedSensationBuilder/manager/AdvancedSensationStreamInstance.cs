@@ -1,12 +1,15 @@
 ﻿using OwoAdvancedSensationBuilder.builder;
 using OWOGame;
+using static OwoAdvancedSensationBuilder.manager.AdvancedSensationManager;
 
 namespace OwoAdvancedSensationBuilder.manager {
     public class AdvancedSensationStreamInstance {
 
         public delegate void SensationStreamInstanceEvent(AdvancedSensationStreamInstance instance);
+        public delegate void SensationStreamInstanceStateEvent(AdvancedSensationStreamInstance instance, ProcessState state);
 
         public event SensationStreamInstanceEvent? LastCalculationOfCycle;
+        public event SensationStreamInstanceStateEvent? AfterStateChanged;
 
         public string name { get; }
         public int firstTick { get; set; }
@@ -30,7 +33,7 @@ namespace OwoAdvancedSensationBuilder.manager {
             }
 
             int playedSensation = (tick - firstTick) % sensation.sensations.Count;
-
+            
             if (isLastTickOfCycle(tick)) {
                 // trigger events for the last calculation
                 LastCalculationOfCycle?.Invoke(this);
@@ -46,6 +49,10 @@ namespace OwoAdvancedSensationBuilder.manager {
 
         public void updateSensation(Sensation newSensation) {
             sensation = new AdvancedSensationBuilder(newSensation).getSensationForStream();
+        }
+
+        public void triggerStateChangeEvent(ProcessState state) {
+            AfterStateChanged?.Invoke(this, state);
         }
 
     }
