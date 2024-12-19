@@ -47,7 +47,6 @@ namespace OwoAdvancedSensationBuilder.Demo.experience {
             timer.Stop();
             manager.stopAll();
             time = 0;
-            manager.priorityList.Clear();
         }
 
         public void startAzshara() {

@@ -17,7 +17,6 @@ namespace OwoAdvancedSensationBuilder.manager
 
         private Dictionary<string, AdvancedSensationStreamInstance> playSensations;
         private Dictionary<AdvancedSensationStreamInstance, ProcessState> processSensation;
-        public List<string> priorityList { get; }
 
         private int tick;
         private bool calculating;
@@ -34,7 +33,6 @@ namespace OwoAdvancedSensationBuilder.manager
 
             playSensations = new Dictionary<string, AdvancedSensationStreamInstance>();
             processSensation = new Dictionary<AdvancedSensationStreamInstance, ProcessState>();
-            priorityList = new List<string>();
         }
 
         public static AdvancedSensationManager getInstance() {
@@ -137,42 +135,11 @@ namespace OwoAdvancedSensationBuilder.manager
 
             AdvancedSensationBuilderMergeOptions mergeOptions = new AdvancedSensationBuilderMergeOptions();
             mergeOptions.mode = MuscleMergeMode.MAX;
-            mergeOptions.overwriteBaseSensation = true;
 
-            Dictionary<string, AdvancedSensationStreamInstance> snapshot = new Dictionary<string, AdvancedSensationStreamInstance>(playSensations);
+            var snapshot = playSensations.ToList();
+            snapshot.Sort((e1, e2) => e1.Value.sensation.Priority.CompareTo(e2.Value.sensation.Priority));
 
-            IEnumerable<string> reversePrio = priorityList.ToArray().Reverse();
-
-            foreach (var priority in reversePrio) {
-                if (!snapshot.ContainsKey(priority)) {
-                    continue;
-                }
-
-                AdvancedSensationStreamInstance sensationInstance = snapshot[priority];
-
-                Sensation? sensationTick = sensationInstance.getSensationAtTick(calcTick);
-                if (sensationTick == null) {
-                    continue;
-                }
-
-                if (builder == null) {
-                    builder = new AdvancedSensationBuilder(sensationTick);
-                } else {
-                    builder.merge(sensationTick, mergeOptions);
-                }
-
-                if (sensationInstance.isLastTickOfCycle(calcTick) && !sensationInstance.loop) {
-                    AdvancedSensationStreamInstance oldInstance = playSensations[priority];
-                    playSensations.Remove(priority);
-                    oldInstance.triggerStateChangeEvent(ProcessState.REMOVE);
-                }
-            }
-
-            mergeOptions.overwriteBaseSensation = false;
             foreach (var entry in snapshot) {
-                if (reversePrio.Contains(entry.Key)) {
-                    continue;
-                }
                 AdvancedSensationStreamInstance sensationInstance = entry.Value;
 
                 Sensation? sensationTick = sensationInstance.getSensationAtTick(calcTick);

@@ -9,9 +9,6 @@ namespace OwoAdvancedSensationBuilder.Demo.experience {
         int count = 0;
 
         public Dictionary<double, List<AdvancedSensationStreamInstance>> getAzshara() {
-            List<string> prio = AdvancedSensationManager.getInstance().priorityList;
-            prio.Add("boomingWave");
-            prio.Add("wind");
 
             queue = new Dictionary<double, List<AdvancedSensationStreamInstance>>();
             count = 0;
@@ -50,16 +47,20 @@ namespace OwoAdvancedSensationBuilder.Demo.experience {
                 .appendNow(windConstant6)                                       // 31
                 .getSensationForStream();
 
+            windBaseline.Priority = 0;
+
             return new AdvancedSensationStreamInstance("wind", windBaseline);
         }
 
         private AdvancedSensationStreamInstance getBoomingWave() {
             Sensation boomingWave = SensationsFactory.Create(45, 2, 58, 0.2f, 0, 0).WithMuscles(Muscle.All);
+            boomingWave.Priority = 1;
             return new AdvancedSensationStreamInstance("boomingWave", boomingWave);
         }
 
         private AdvancedSensationStreamInstance getCrashingWave() {
             Sensation boomingWave = SensationsFactory.Create(45, 4, 70, 0.3f, 0, 0).WithMuscles(Muscle.All);
+            boomingWave.Priority = 1;
             return new AdvancedSensationStreamInstance("boomingWave", boomingWave);
         }
 
