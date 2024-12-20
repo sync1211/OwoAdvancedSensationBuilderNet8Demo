@@ -70,7 +70,7 @@ namespace OwoAdvancedSensationBuilder.manager
             // Create a dictionary of instances with the status ADD to speed up the lookup of instances int the next loop
             Dictionary<string, AdvancedSensationStreamInstance> instancesToAdd = new();
             foreach (var process in processSensationList.Where(entry => entry.Value == ProcessState.ADD)) {
-                instancesToAdd.Add(process.Key.name, process.Key); //TODO: process.Key.name could be an empty string which could cause problems with collisions
+                instancesToAdd.TryAdd(process.Key.name, process.Key); //TODO: process.Key.name could be an empty string which could cause problems with collisions
             }
 
             foreach (var process in processSensationList.Where(entry => entry.Value == ProcessState.UPDATE)) {
@@ -97,6 +97,12 @@ namespace OwoAdvancedSensationBuilder.manager
             foreach (var process in processSensation.ToArray().Where(entry => entry.Value == ProcessState.ADD)) {
                 AdvancedSensationStreamInstance instance = process.Key;
                 instance.firstTick = tick;
+
+                if (playSensations.ContainsKey(instance.name)) {
+                    AdvancedSensationStreamInstance oldInstance = playSensations[instance.name];
+                    playSensations.Remove(instance.name);
+                    oldInstance.triggerStateChangeEvent(ProcessState.REMOVE);
+                }
 
                 playSensations[instance.name] = instance;
                 instance.triggerStateChangeEvent(ProcessState.ADD);
@@ -137,7 +143,16 @@ namespace OwoAdvancedSensationBuilder.manager
             mergeOptions.mode = MuscleMergeMode.MAX;
 
             var snapshot = playSensations.ToList();
-            snapshot.Sort((e1, e2) => e1.Value.sensation.Priority.CompareTo(e2.Value.sensation.Priority));
+            snapshot.Sort((e1, e2) => {
+                // TODO: Check if sorted correctly
+                if (e1.Value.sensation.Priority != e2.Value.sensation.Priority) {
+                    // Higher prio first
+                    return e1.Value.sensation.Priority.CompareTo(e2.Value.sensation.Priority);
+                } else {
+                    // Oldest entry first
+                    return e1.Value.timeStamp.CompareTo(e2.Value.timeStamp) * -1;
+                }
+            });
 
             foreach (var entry in snapshot) {
                 AdvancedSensationStreamInstance sensationInstance = entry.Value;
@@ -199,6 +214,7 @@ namespace OwoAdvancedSensationBuilder.manager
 
         private void addSensationInstance(AdvancedSensationStreamInstance instance) {
             if (!processSensation.ContainsKey(instance) || instance.overwriteManagerProcessList) {
+                instance.timeStamp = DateTime.Now.Ticks;
                 processSensation[instance] = ProcessState.ADD;
             }
 

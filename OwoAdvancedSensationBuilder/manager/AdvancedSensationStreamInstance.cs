@@ -15,6 +15,7 @@ namespace OwoAdvancedSensationBuilder.manager {
         public int firstTick { get; set; }
         public bool overwriteManagerProcessList { get; set; }
         public bool loop { get; set; }
+        public long timeStamp { get; set; }
 
         public AdvancedStreamingSensation sensation { get; private set; }
 
