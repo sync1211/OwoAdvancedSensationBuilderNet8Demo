@@ -41,16 +41,9 @@ namespace OwoAdvancedSensationBuilder.Test.builder {
                 Muscle.Lumbar_L.WithIntensity(20)     // ID = 9
             ];
 
-            Muscle[] actualMuscles = AdvancedSensationService.actualMuscleMergeMax(newMuscles, oldMuscles);
-
-            // Sort by ID as we only care about the intensity values
-            Muscle[] actualMusclesSorted = actualMuscles.OrderBy(m => m.id).ToArray();
-
-            Assert.AreEqual(expectedMuscles.Length, actualMuscles.Length);
-            for (int i = 0; i < expectedMuscles.Length; i++) {
-                Assert.AreEqual(expectedMuscles[i].id, actualMusclesSorted[i].id);
-                Assert.AreEqual(expectedMuscles[i].intensity, actualMusclesSorted[i].intensity, $"Muscle at index {i} has an intensity of {actualMuscles[i].intensity}, expected: {expectedMuscles[i].intensity}");
-            }
+            AdvancedSensationBuilderMergeOptions mergeOptions = new AdvancedSensationBuilderMergeOptions();
+            mergeOptions.withMode(AdvancedSensationBuilderMergeOptions.MuscleMergeMode.MAX);
+            testMuscleMerge(oldMuscles, newMuscles, expectedMuscles, mergeOptions);
         }
 
         [TestMethod]
@@ -78,16 +71,9 @@ namespace OwoAdvancedSensationBuilder.Test.builder {
                 Muscle.Lumbar_L.WithIntensity(20)
             ];
 
-            Muscle[] actualMuscles = AdvancedSensationService.actualMuscleMergeMin(newMuscles, oldMuscles);
-
-            // Sort by ID as we only care about the intensity values
-            Muscle[] actualMusclesSorted = actualMuscles.OrderBy(m => m.id).ToArray();
-
-            Assert.AreEqual(expectedMuscles.Length, actualMuscles.Length);
-            for (int i = 0; i < expectedMuscles.Length; i++) {
-                Assert.AreEqual(expectedMuscles[i].id, actualMusclesSorted[i].id);
-                Assert.AreEqual(expectedMuscles[i].intensity, actualMusclesSorted[i].intensity, $"Muscle at index {i} has an intensity of {actualMuscles[i].intensity}, expected: {expectedMuscles[i].intensity}");
-            }
+            AdvancedSensationBuilderMergeOptions mergeOptions = new AdvancedSensationBuilderMergeOptions();
+            mergeOptions.withMode(AdvancedSensationBuilderMergeOptions.MuscleMergeMode.MIN);
+            testMuscleMerge(oldMuscles, newMuscles, expectedMuscles, mergeOptions);
         }
 
         [TestMethod]
@@ -115,16 +101,10 @@ namespace OwoAdvancedSensationBuilder.Test.builder {
                 Muscle.Lumbar_L.WithIntensity(20)
             ];
 
-            Muscle[] actualMuscles = AdvancedSensationService.actualMuscleMergeOverride(newMuscles, oldMuscles);
 
-            // Sort by ID as we only care about the intensity values
-            Muscle[] actualMusclesSorted = actualMuscles.OrderBy(m => m.id).ToArray();
-
-            Assert.AreEqual(expectedMuscles.Length, actualMuscles.Length);
-            for (int i = 0; i < expectedMuscles.Length; i++) {
-                Assert.AreEqual(expectedMuscles[i].id, actualMusclesSorted[i].id);
-                Assert.AreEqual(expectedMuscles[i].intensity, actualMusclesSorted[i].intensity, $"Muscle at index {i} has an intensity of {actualMuscles[i].intensity}, expected: {expectedMuscles[i].intensity}");
-            }
+            AdvancedSensationBuilderMergeOptions mergeOptions = new AdvancedSensationBuilderMergeOptions();
+            mergeOptions.withMode(AdvancedSensationBuilderMergeOptions.MuscleMergeMode.OVERRIDE);
+            testMuscleMerge(oldMuscles, newMuscles, expectedMuscles, mergeOptions);
         }
 
         [TestMethod]
@@ -152,7 +132,17 @@ namespace OwoAdvancedSensationBuilder.Test.builder {
                 Muscle.Lumbar_L.WithIntensity(20)
             ];
 
-            Muscle[] actualMuscles = AdvancedSensationService.actualMuscleMergeKeep(newMuscles, oldMuscles);
+            AdvancedSensationBuilderMergeOptions mergeOptions = new AdvancedSensationBuilderMergeOptions();
+            mergeOptions.withMode(AdvancedSensationBuilderMergeOptions.MuscleMergeMode.KEEP);
+            testMuscleMerge(oldMuscles, newMuscles, expectedMuscles, mergeOptions);
+        }
+
+        private void testMuscleMerge(Muscle[] oldMuscles, Muscle[] newMuscles, Muscle[] expectedMuscles, AdvancedSensationBuilderMergeOptions mergeOptions) {
+            Sensation baseSensation = SensationsFactory.Create(100, 0.1f, 100, 0, 0, 0);
+            AdvancedStreamingSensation advanced1 = new AdvancedSensationBuilder(baseSensation, oldMuscles).getSensationForStream();
+            AdvancedStreamingSensation advanced2 = new AdvancedSensationBuilder(baseSensation, newMuscles).getSensationForStream();
+            AdvancedStreamingSensation merged = AdvancedSensationService.actualMerge(advanced1, advanced2, mergeOptions);
+            Muscle[] actualMuscles = ((SensationWithMuscles) merged.sensations[0]).muscles;
 
             // Sort by ID as we only care about the intensity values
             Muscle[] actualMusclesSorted = actualMuscles.OrderBy(m => m.id).ToArray();

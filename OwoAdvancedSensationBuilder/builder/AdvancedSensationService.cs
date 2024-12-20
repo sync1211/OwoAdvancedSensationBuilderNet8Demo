@@ -177,7 +177,7 @@ namespace OwoAdvancedSensationBuilder.builder
             }
         }
 
-        public static Muscle[] actualMuscleMergeMin(Muscle[] newMuscles, Muscle[] origMuscles) {
+        private static Muscle[] actualMuscleMergeMin(Muscle[] newMuscles, Muscle[] origMuscles) {
             Dictionary<int, Muscle> mergedMuscles = new();
             foreach (Muscle muscle in origMuscles) {
                 mergedMuscles.Add(muscle.id, muscle);
@@ -195,7 +195,7 @@ namespace OwoAdvancedSensationBuilder.builder
             return mergedMuscles.Values.ToArray();
         }
 
-        public static Muscle[] actualMuscleMergeMax(Muscle[] newMuscles, Muscle[] origMuscles) {
+        private static Muscle[] actualMuscleMergeMax(Muscle[] newMuscles, Muscle[] origMuscles) {
             Dictionary<int, Muscle> mergedMuscles = new();
             foreach (Muscle muscle in origMuscles) {
                 mergedMuscles.Add(muscle.id, muscle);
@@ -213,7 +213,7 @@ namespace OwoAdvancedSensationBuilder.builder
             return mergedMuscles.Values.ToArray();
         }
 
-        public static Muscle[] actualMuscleMergeKeep(Muscle[] newMuscles, Muscle[] origMuscles) {
+        private static Muscle[] actualMuscleMergeKeep(Muscle[] newMuscles, Muscle[] origMuscles) {
             Dictionary<int, Muscle> mergedMuscles = new();
             foreach (Muscle muscle in origMuscles) {
                 mergedMuscles.Add(muscle.id, muscle);
