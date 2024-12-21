@@ -30,7 +30,7 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "I worked on a solution to solve a few of the limitations that the OWO has."));
             flowIntro.Controls.Add(new TextSection("First, that the OWO doesn't allow to play multiple Sensations at once."));
             flowIntro.Controls.Add(new TextSection("Second, that the OWO doesn't have have a feature to update Sensations at runtime."));
-            flowIntro.Controls.Add(new TextSection("Third, that the OWO doesn't have the most options to create very complex Sensations."));
+            flowIntro.Controls.Add(new TextSection("Third, that the OWO doesn't have the most options to create more complex Sensations."));
             flowIntro.Controls.Add(new TextSection("My Solution to these problems are the the AdvancedSensationBuilder, " +
                 "the AdvancedSensationManager and the AdvancedSensationService (in the following just \"Builder\", \"Manager\" or \"Service\"). But first..."));
 
@@ -50,8 +50,8 @@ namespace OwoAdvancedSensationBuilder.Demo {
 
             flowIntro.Controls.Add(new HeaderSection("The Manager"));
             flowIntro.Controls.Add(new TextSection("The Manager is the part that plays the Sensations. It keeps a reference to all Sensations and streams " +
-                " every 0.1 seconds the Sensation that is to be played based on all managed Sensations."));
-            flowIntro.Controls.Add(new TextSection("The manager plays a combination of all Sensations, but can only calculate the intensities." +
+                " every 0.1 seconds the calculated Sensation based on all managed Sensations."));
+            flowIntro.Controls.Add(new TextSection("The manager plays a combination of all Sensations, but can only calculate the intensities. " +
                 "To decide the overall frequency it respects the Priority of the Sensations. In case of the same Priority, " +
                 "the oldest inserted Sensation has priority."));
             flowIntro.Controls.Add(new TextSection("The Manager also allows to update Sensations. This allows to change Sensations at runtime and the " +
@@ -62,8 +62,8 @@ namespace OwoAdvancedSensationBuilder.Demo {
 
             flowIntro.Controls.Add(new HeaderSection("The Service"));
             flowIntro.Controls.Add(new TextSection("The Service is the part that actually does all the math. This is where Sensations actually get combined, cut " +
-                "or what else. Additionally the Service has a few Methods that allow to create a new Builder in ways a normal Sensation cant do, like e.g. " +
-                "a Ramp up that doesnt start at 0."));
+                "or what else. Additionally the Service has a few Methods that allow to create a new Builder in ways a normal Sensation can't do, like e.g. " +
+                "a Ramp up that doesn't start at 0."));
 
             flowIntro.Controls.Add(new HeaderSection("Drawbacks"));
             flowIntro.Controls.Add(new TextSection("The Main drawback is that by using the Manager it is (currently) not really possible to use " +
@@ -72,24 +72,24 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "but there is no inbuilt way to fill this Class with the User calibrated Values."));
             flowIntro.Controls.Add(new TextSection("You may say now \"Why not use the Baked Sensations the regular way and the advanced Sensations " +
                 "the new Way?\". Well that is in theory possible, but leads to the minor issue that generally the two Methods don't have great compatibility. " +
-                "The regular way sends the Sensation once while the Manager sends a Sensation every 0.1 Seconds while processing Sensations, " +
+                "The regular way sends the Sensation once while the Manager sends a Sensation every 0.1 seconds while processing Sensations, " +
                 "which would then cancel the non-managed Sensations. This could be designed and worked around, but would require some work."));
             flowIntro.Controls.Add(new TextSection("Lastly there is minor issue number two. As mentioned above the Manager works in 0.1 Second Ticks. " +
                 "This means two things. First that there could be a delay of up to 0.1 Seconds if you try to add a new Sensation to a running Manager and " +
                 "second, (especially very short) RampUps or RampDowns may feel slightly stiffer. I have no information on how smoothly OWO ramps its Sensations, " +
-                "but the advanced Sensations dont use the OWO ramping. Instead the ramping steps are getting Calculated in 0.1 Second steps."));
+                "but the advanced Sensations doesn't use the OWO ramping. Instead the ramping steps are getting calculated in 0.1 second steps."));
 
             flowIntro.Controls.Add(new HeaderSection("Regarding this Demo"));
-            flowIntro.Controls.Add(new TextSection("As this is a Demo for OWO Code, there multiple things you can click to actually feel and experience yourself, " +
-                "such as e.g. this here."));
+            flowIntro.Controls.Add(new TextSection("As this is a Demo for OWO Code, there are multiple opportunities to feel stuff yourself. " +
+                "There are multiple Triggers such as this Buttons here."));
             Sensation tap = SensationsFactory.Create(100, 0.1f, 15, 0.1f, 0, 0.2f).WithMuscles(Muscle.Dorsal_R);
             tap = tap.Append(tap);
             flowIntro.Controls.Add(new SensationSection(this, "Tap on back", tap, false));
-            flowIntro.Controls.Add(new TextSection("You probably already noticed the \"Managed Sensations\" list on the right. " +
-                "This list displays the Sensation in the Manager and hopefully makes a few things easier to understand. " +
-                "Also If there is a Sensation you want to stop, such as a looping Sensation started from a different Tab or where you forget how you started it, " +
-                "simply double click it at any time."));
-            flowIntro.Controls.Add(new TextSection("I also reccomend to checkout the \"Finale\" Tab once you finished to try everything out ^^ "));
+            flowIntro.Controls.Add(new TextSection("You probably also already noticed the \"Managed Sensations\" list on the right. " +
+                "This list displays the Sensations in the Manager and hopefully makes a few things easier to understand. " +
+                "Also If there is a Sensation you want to stop, such as a looping Sensation started from a different Tab or a Sensation where you forgot " +
+                "how you started it, simply double click it at any time."));
+            flowIntro.Controls.Add(new TextSection("I also reccomend to check out the \"Finale\" Tab once you finished trying everything out ^^ "));
         }
 
         private void initCompare() {
