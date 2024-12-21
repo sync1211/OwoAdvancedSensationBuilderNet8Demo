@@ -120,8 +120,11 @@ namespace OwoAdvancedSensationBuilder.Demo {
             flowComparisson.Controls.Add(new CompareSection(this, "hug", hugOrig, hugAdvanced));
         }
 
-        public void playManagedSensation(AdvancedSensationStreamInstance instance) {
+        public void setupManagedSensation(AdvancedSensationStreamInstance instance) {
             instance.AfterStateChanged += Instance_AfterStateChanged;
+        }
+        
+        public void playManagedSensation(AdvancedSensationStreamInstance instance) {
             AdvancedSensationManager.getInstance().play(instance);
         }
         public void toggleManagedSensation(AdvancedSensationStreamInstance instance) {

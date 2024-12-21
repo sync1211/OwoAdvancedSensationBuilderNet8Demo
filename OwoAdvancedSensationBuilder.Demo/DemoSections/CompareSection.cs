@@ -31,16 +31,22 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections
         }
 
         private void btnManager_Click(object sender, EventArgs e) {
-            demo.playManagedSensation(new AdvancedSensationStreamInstance(name, orig));
+            AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(name, orig);
+            demo.setupManagedSensation(instance);
+            demo.playManagedSensation(instance);
         }
 
         private void btnMultiManager_Click(object sender, EventArgs e) {
-            demo.playManagedSensation(new AdvancedSensationStreamInstance(name + "_" + DateTime.Now.Ticks, orig));
+            AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(name + "_" + DateTime.Now.Ticks, orig);
+            demo.setupManagedSensation(instance);
+            demo.playManagedSensation(instance);
         }
 
         private void btnAdvanced_Click(object sender, EventArgs e) {
             if (advanced != null) {
-                demo.playManagedSensation(new AdvancedSensationStreamInstance(name, advanced));
+                AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(name, advanced);
+                demo.setupManagedSensation(instance);
+                demo.playManagedSensation(instance);
             }
         }
     }

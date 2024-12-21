@@ -34,6 +34,7 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
             if (instance.loop) {
                 btnFeel.Text = "Feel (toggle)";
             }
+            demo.setupManagedSensation(instance);
         }
 
         private void btnFeel_Click(object sender, EventArgs e) {
