@@ -88,9 +88,9 @@ namespace OwoAdvancedSensationBuilder.manager
                 AdvancedSensationStreamInstance instance = process.Key;
                 AdvancedSensationStreamInstance? oldInstance = null;
 
-                if (playSensations.ContainsKey(instance.name)) {
+                if (playSensations.TryGetValue(instance.name, out AdvancedSensationStreamInstance? playSensation) && playSensation != null) {
                     // Update Playing Sensation
-                    oldInstance = playSensations[instance.name];
+                    oldInstance = playSensation;
                 } else {
                     // Update Sensation thats not added yet
                     // Would trigger Update event before Add event
