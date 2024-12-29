@@ -252,10 +252,10 @@ namespace OwoAdvancedSensationBuilder.manager
 
             if (instance.overwriteManagerProcessList) {
                 // Update removal state no matter if it already exists
-                processSensation.AddOrUpdate(instance, ProcessState.REMOVE, (_, _) => ProcessState.REMOVE);
+                processSensation.AddOrUpdate(instance, ProcessState.ADD, (_, _) => ProcessState.ADD);
             } else {
                 // Add removal state
-                processSensation.TryAdd(instance, ProcessState.REMOVE);
+                processSensation.TryAdd(instance, ProcessState.ADD);
             }
 
             if (!timer.Enabled) {
