@@ -76,7 +76,7 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         private void processUpdate() {
-            KeyValuePair<AdvancedSensationStreamInstance, ProcessState>[] processSensationList = processSensation();
+            KeyValuePair<AdvancedSensationStreamInstance, ProcessState>[] processSensationList = processSensation.ToArray();
 
             // Create a dictionary of instances with the status ADD to speed up the lookup of instances int the next loop
             Dictionary<string, AdvancedSensationStreamInstance> instancesToAdd = new();
