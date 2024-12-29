@@ -234,15 +234,28 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         private void RemoveInstanceFromManager(AdvancedSensationStreamInstance instance) {
-            if (instance.name != null && (!processSensation.ContainsKey(instance) || instance.overwriteManagerProcessList)) {
+            if (instance.name != null) {
+                return;
+            }
+
+            if (instance.overwriteManagerProcessList) {
+                // Update removal state no matter if it already exists
                 processSensation.AddOrUpdate(instance, ProcessState.REMOVE, (_, _) => ProcessState.REMOVE);
+            } else {
+                // Add removal state
+                processSensation.TryAdd(instance, ProcessState.REMOVE);
             }
         }
 
         private void addSensationInstance(AdvancedSensationStreamInstance instance) {
-            if (!processSensation.ContainsKey(instance) || instance.overwriteManagerProcessList) {
-                instance.timeStamp = DateTime.Now.Ticks;
-                processSensation.AddOrUpdate(instance, ProcessState.ADD, (_, _) => ProcessState.ADD);
+            instance.timeStamp = DateTime.Now.Ticks;
+
+            if (instance.overwriteManagerProcessList) {
+                // Update removal state no matter if it already exists
+                processSensation.AddOrUpdate(instance, ProcessState.REMOVE, (_, _) => ProcessState.REMOVE);
+            } else {
+                // Add removal state
+                processSensation.TryAdd(instance, ProcessState.REMOVE);
             }
 
             if (!timer.Enabled) {
