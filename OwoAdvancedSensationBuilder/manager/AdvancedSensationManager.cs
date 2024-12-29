@@ -109,8 +109,7 @@ namespace OwoAdvancedSensationBuilder.manager
                 instance.firstTick = tick;
 
                 AddInfo info = AddInfo.NEW;
-                if (playSensations.ContainsKey(instance.name)) {
-                    AdvancedSensationStreamInstance oldInstance = playSensations[instance.name]; 
+                if (playSensations.TryGetValue(instance.name, out AdvancedSensationStreamInstance? oldInstance) && oldInstance != null) {
                     playSensations.Remove(instance.name);
                     oldInstance.triggerRemoveEvent(RemoveInfo.REPLACED);
                     info = AddInfo.REPLACE;
@@ -127,8 +126,7 @@ namespace OwoAdvancedSensationBuilder.manager
             foreach (var process in processSensation.ToArray().Where(entry => entry.Value == ProcessState.REMOVE)) {
                 AdvancedSensationStreamInstance instance = process.Key;
 
-                if (playSensations.ContainsKey(instance.name)) {
-                    AdvancedSensationStreamInstance oldInstance = playSensations[instance.name];
+                if (playSensations.TryGetValue(instance.name, out AdvancedSensationStreamInstance? oldInstance) && oldInstance != null) {
                     playSensations.Remove(instance.name);
                     oldInstance.triggerRemoveEvent(RemoveInfo.MANUAL);
                 }
