@@ -44,6 +44,10 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         private void streamSensation(object? source, ElapsedEventArgs e) {
+            if (calculatedSensation == null) {
+                Debug.WriteLine("Sensation not yet calculated before streamSensation was called!");
+                return;
+            }
             OWO.Send(calculatedSensation);
             tick++;
             Debug.WriteLine($"{tick} / {watch.ElapsedMilliseconds}");
