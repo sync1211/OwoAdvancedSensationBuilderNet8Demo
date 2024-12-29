@@ -76,7 +76,7 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         private void processUpdate() {
-            KeyValuePair<AdvancedSensationStreamInstance, ProcessState>[] processSensationList = processSensation.ToArray();
+            KeyValuePair<AdvancedSensationStreamInstance, ProcessState>[] processSensationList = processSensation();
 
             // Create a dictionary of instances with the status ADD to speed up the lookup of instances int the next loop
             Dictionary<string, AdvancedSensationStreamInstance> instancesToAdd = new();
@@ -104,7 +104,7 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         private void processAdd() {
-            foreach (var process in processSensation.ToArray().Where(entry => entry.Value == ProcessState.ADD)) {
+            foreach (var process in processSensation.Where(entry => entry.Value == ProcessState.ADD)) {
                 AdvancedSensationStreamInstance instance = process.Key;
                 instance.firstTick = tick;
 
@@ -122,8 +122,8 @@ namespace OwoAdvancedSensationBuilder.manager
             }
         }
 
-        private void processRemove() {
-            foreach (var process in processSensation.ToArray().Where(entry => entry.Value == ProcessState.REMOVE)) {
+        private void processRemove(bool endOfCylce) {
+            foreach (var process in processSensation.Where(entry => entry.Value == ProcessState.REMOVE)) {
                 AdvancedSensationStreamInstance instance = process.Key;
 
                 if (playSensations.TryGetValue(instance.name, out AdvancedSensationStreamInstance? oldInstance) && oldInstance != null) {
@@ -278,7 +278,7 @@ namespace OwoAdvancedSensationBuilder.manager
                 returnInstances[playInstance.Key] = playInstance.Value;
             }
             if (addPlanned) {
-                foreach (var processInstance in processSensation.ToArray()) {
+                foreach (var processInstance in processSensation) {
                     if (processInstance.Value == ProcessState.ADD) {
                         returnInstances[processInstance.Key.name] = processInstance.Key;
                     }
