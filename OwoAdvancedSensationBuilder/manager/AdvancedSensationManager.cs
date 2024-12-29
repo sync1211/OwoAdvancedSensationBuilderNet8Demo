@@ -236,7 +236,7 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         private void RemoveInstanceFromManager(AdvancedSensationStreamInstance instance) {
-            if (instance.name != null) {
+            if (instance.name == null) {
                 return;
             }
 
