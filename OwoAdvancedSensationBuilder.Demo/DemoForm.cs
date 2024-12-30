@@ -90,7 +90,7 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "There are multiple Triggers such as this Buttons here, often accompanied by a code example to recreate the effect."));
             Sensation tap = SensationsFactory.Create(100, 0.1f, 15, 0.1f, 0, 0.2f).WithMuscles(Muscle.Dorsal_R);
             tap = tap.Append(tap);
-            flowIntro.Controls.Add(new SensationSection(this, "Tap on back", tap, false)
+            flowIntro.Controls.Add(new SensationSection(this, flowIntro, "Tap on back", tap, false)
                 .withCode("Sensation tap = SensationsFactory.Create(100, 0.1f, 15, 0.1f, 0, 0.2f)\r\n" +
                 "    .WithName(\"Tap on back\")\r\n" +
                 "    .WithMuscles(Muscle.Dorsal_R);\r\n" +
@@ -111,7 +111,7 @@ namespace OwoAdvancedSensationBuilder.Demo {
             flowFeatures.Controls.Add(new HeaderSection("Play multiple Sensations at the same time"));
             flowFeatures.Controls.Add(new TextSection("Using the Manager lets you play multiple Sensations at the same Time."));
             flowFeatures.Controls.Add(new TextSection("If the Sensation affects different muscles both Sensations just play."));
-            flowFeatures.Controls.Add(new SensationSection(this, "Left and Right",
+            flowFeatures.Controls.Add(new SensationSection(this, flowFeatures, "Left and Right",
                 new AdvancedSensationStreamInstance("Left", SensationsFactory.Create(100, 1.0f, 20, 0.5f, 0.5f, 0).WithMuscles(Muscle.Pectoral_L)),
                 new AdvancedSensationStreamInstance("Right", SensationsFactory.Create(100, 1.5f, 20, 0.5f, 0.5f, 0).WithMuscles(Muscle.Pectoral_R))
                 ).withCode(
@@ -128,7 +128,7 @@ namespace OwoAdvancedSensationBuilder.Demo {
 
             flowFeatures.Controls.Add(new TextSection("If the Sensation affects the same muscles both Sensations get merged, meaning that (by default) " +
                 "only the highest intensity per Muscle gets played."));
-            flowFeatures.Controls.Add(new SensationSection(this, "Same Muscles",
+            flowFeatures.Controls.Add(new SensationSection(this, flowFeatures, "Same Muscles",
                 new AdvancedSensationStreamInstance("Constant", SensationsFactory.Create(100, 2, 20, 0, 0, 0)
                         .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R)),
                 new AdvancedSensationStreamInstance("Rising", SensationsFactory.Create(100, 2, 50, 2, 0, 0)
@@ -148,7 +148,7 @@ namespace OwoAdvancedSensationBuilder.Demo {
             flowFeatures.Controls.Add(new TextSection("Something to keep in mind though, is that only intensity can be merged. The Frequency cannot!"));
             flowFeatures.Controls.Add(new TextSection("By default the Sensation thats added last defines the Frequency, " +
                 "but once this Sensation is over the Frequency might change to that of an earlier Sensation. "));
-            flowFeatures.Controls.Add(new SensationSection(this, "Different Frequencies",
+            flowFeatures.Controls.Add(new SensationSection(this, flowFeatures, "(!) Different Frequencies",
                 new AdvancedSensationStreamInstance("Constant Chest", SensationsFactory.Create(100, 3, 20, 0, 0, 0)
                         .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R)),
                 new AdvancedSensationStreamInstance("Rumbling Stomach", SensationsFactory.Create(20, 1.5f, 20, 0, 0, 0)
@@ -168,7 +168,7 @@ namespace OwoAdvancedSensationBuilder.Demo {
             flowFeatures.Controls.Add(new HeaderSection("New Priority handling"));
             flowFeatures.Controls.Add(new TextSection("The default OWO priority won't block other sensations with lower priority anymore, " +
                 "but rather controlls which frequency has priority."));
-            flowFeatures.Controls.Add(new SensationSection(this, "With Priority",
+            flowFeatures.Controls.Add(new SensationSection(this, flowFeatures, "With Priority",
                 new AdvancedSensationStreamInstance("Constant Chest (prio)", SensationsFactory.Create(100, 1.5f, 20, 0, 0, 0)
                         .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R).WithPriority(1)),
                 new AdvancedSensationStreamInstance("Rumbling Stomach", SensationsFactory.Create(20, 3, 20, 0, 0, 0)
@@ -189,7 +189,7 @@ namespace OwoAdvancedSensationBuilder.Demo {
 
             flowFeatures.Controls.Add(new TextSection("If a Sensation should restrict other Sensations that would be seen as less priority by the Manager " +
                 "(meaning eg. same priority, but played earlier) thats possible to do too, by setting that on the AdvancedSensationStreamInstance."));
-            flowFeatures.Controls.Add(new SensationSection(this, "With Blocking Priority",
+            flowFeatures.Controls.Add(new SensationSection(this, flowFeatures, "With Blocking Priority",
                 new AdvancedSensationStreamInstance("Constant Chest (prio)", SensationsFactory.Create(100, 1.5f, 20, 0, 0, 0)
                         .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R).WithPriority(1)).setBlockLowerPrio(true),
                 new AdvancedSensationStreamInstance("Rumbling Stomach", SensationsFactory.Create(20, 3, 30, 0, 0, 0)
@@ -209,6 +209,57 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "AdvancedSensationManager manager = AdvancedSensationManager.getInstance();\r\n" +
                 "manager.play(constant);\r\n" +
                 "manager.playOnce(rumbling);"));
+
+
+            flowFeatures.Controls.Add(new HeaderSection("Working with the Manager"));
+            flowFeatures.Controls.Add(new TextSection("The previous example made it so, that the Sensations with lower Priority wouldn't play while " +
+                "the higher Priority one plays, but it continued afterwards as it still was added."));
+            flowFeatures.Controls.Add(new TextSection("Let's say that in the last example we also want to block adding new Sensations of lower Priority. " +
+                "This is currently not a feature and I can't possibly anticipate every other feature that one might need. But don't worry, because at least " +
+                "for a few usecases there are ways to implemented to manage these yourself."));
+            flowFeatures.Controls.Add(new TextSection("One such tool is to get every managed Sensation to simply check if there are Sensations that would block " +
+                "a potential new Sensation."));
+            flowFeatures.Controls.Add(new SensationSection(this, flowFeatures, "With customAddSensation()",
+                new AdvancedSensationStreamInstance("Constant Chest (prio)", SensationsFactory.Create(100, 1.5f, 20, 0, 0, 0)
+                        .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R).WithPriority(1)).setBlockLowerPrio(true)
+                ).withCode(
+                "public void sendTestSensations() {\r\n" +
+                "    AdvancedSensationStreamInstance constant = new AdvancedSensationStreamInstance(\"Constant Chest (prio)\",\r\n" +
+                "        SensationsFactory.Create(100, 1.5f, 20, 0, 0, 0).WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R).WithPriority(1))\r\n" +
+                "    .setBlockLowerPrio(true);\r\n" +
+                "\r\n" +
+                "    AdvancedSensationStreamInstance rumbling = new AdvancedSensationStreamInstance(\"Rumbling Stomach\",\r\n" +
+                "        SensationsFactory.Create(20, 3f, 20, 0, 0, 0).WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R));\r\n" +
+                "\r\n" +
+                "    customAddSensation(constant);\r\n" +
+                "    customAddSensation(rumbling);\r\n" +
+                "}\r\n" +
+                "\r\n" +
+                "public void customAddSensation(AdvancedSensationStreamInstance instance) {\r\n" +
+                "    AdvancedSensationManager manager = AdvancedSensationManager.getInstance();\r\n" +
+                "    Dictionary<string, AdvancedSensationStreamInstance> managedSensations = manager.getPlayingSensationInstances();\r\n" +
+                "    bool blocked = managedSensations.Values.Any(inst => inst.blockLowerPrio && inst.sensation.Priority > instance.sensation.Priority);\r\n" +
+                "    if (!blocked) {\r\n" +
+                "        manager.play(instance);\r\n" +
+                "    }\r\n" +
+                "}"));
+
+            flowFeatures.Controls.Add(new TextSection("Now that we solved not adding new Sensations that we dont allow, what is with potentially long running " +
+                "Sensations that already run? Well depending on the usecase we can stop all managed Sensations or use a similar Logic as above to just stop " +
+                "specific ones. "));
+            flowFeatures.Controls.Add(new CodeSection(
+                "// To stop every single running Sensation call\r\n" +
+                "AdvancedSensationManager.getInstance().stopAll();"));
+            flowFeatures.Controls.Add(new CodeSection(
+                "// To stop only specific Sensations call\r\n" +
+                "AdvancedSensationManager.getInstance().stopSensation(\"SensationInstanceName\");"));
+
+            flowFeatures.Controls.Add(new HeaderSection("Build in support for looping Sensations"));
+            flowFeatures.Controls.Add(new TextSection("The previous example made it so, that the Sensations with lower Priority wouldn't play while " +
+                "the higher Priority one plays, but it continued afterwards as it still was added."));
+
+            
+
         }
         private void initCompare() {
             flowComparisson.Controls.Clear();
@@ -295,13 +346,21 @@ namespace OwoAdvancedSensationBuilder.Demo {
             AdvancedSensationStreamInstance constant = new AdvancedSensationStreamInstance("Constant Chest (prio)",
                 SensationsFactory.Create(100, 1.5f, 20, 0, 0, 0).WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R).WithPriority(1))
                 .setBlockLowerPrio(true);
-            Sensation rumbling = SensationsFactory.Create(20, 1.5f, 20, 0, 0, 0)
-                .WithName("Rumbling Stomach")
-                .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R);
 
+            AdvancedSensationStreamInstance rumbling = new AdvancedSensationStreamInstance("Rumbling Stomach",
+                SensationsFactory.Create(20, 3f, 20, 0, 0, 0).WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R));
+
+            customAddSensation(constant);
+            customAddSensation(rumbling);
+        }
+
+        private void customAddSensation(AdvancedSensationStreamInstance instance) {
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
-            manager.play(constant);
-            manager.playOnce(rumbling);
+            Dictionary<string, AdvancedSensationStreamInstance> managedSensations = manager.getPlayingSensationInstances();
+            bool blocked = managedSensations.Values.Any(inst => inst.blockLowerPrio && inst.sensation.Priority > instance.sensation.Priority);
+            if (!blocked) {
+                manager.play(instance);
+            }
         }
     }
 }

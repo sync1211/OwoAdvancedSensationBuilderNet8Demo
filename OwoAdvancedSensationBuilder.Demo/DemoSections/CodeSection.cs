@@ -19,7 +19,6 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
             tb.ReadOnly = true;
             tb.AutoSize = true;
             tb.AutoSizeMode = AutoSizeMode.GrowOnly;
-            tb.MinimumSize = new Size(700, 60);
             tb.MaximumSize = new Size(700, 300);
             tb.BorderStyle = BorderStyle.FixedSingle;
             tb.TextChanged += Tb_TextChanged;
@@ -40,11 +39,12 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
         Style MethodStyle = new TextStyle(Brushes.RosyBrown, null, FontStyle.Bold);
         Style NumberStyle = new TextStyle(Brushes.Navy, null, FontStyle.Regular);
         Style EnumConstantsStyle = new TextStyle(Brushes.Navy, null, FontStyle.Bold);
+        Style LogicStyle = new TextStyle(Brushes.DarkRed, null, FontStyle.Bold);
 
         private void Tb_TextChanged(object? sender, TextChangedEventArgs e) {
             e.ChangedRange.SetStyle(CommentStyle, @"//.*$", RegexOptions.Multiline);
             e.ChangedRange.SetStyle(StringStyle, @""".*""", RegexOptions.Multiline);
-            e.ChangedRange.SetStyle(MethodStyle, @"(?<=\.)(\w*?)(?=\()", RegexOptions.Multiline);
+            e.ChangedRange.SetStyle(MethodStyle, @"( |(?<=\.))(\w*?)(?=\()", RegexOptions.Multiline);
             e.ChangedRange.SetStyle(StringStyle, @""".*""", RegexOptions.Multiline);
             e.ChangedRange.SetStyle(NumberStyle, @"[0-9]+(\.?[0-9]*)f?", RegexOptions.Multiline);
             e.ChangedRange.SetStyle(EnumConstantsStyle, @"(?<=\.)(\w*?)((_L)|(_R))", RegexOptions.Multiline);
@@ -61,12 +61,13 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
             keywords.Add("double");
             keywords.Add("float");
             keywords.Add("bool");
+            keywords.Add("void");
             foreach (string keyword in keywords) {
                 e.ChangedRange.SetStyle(KeywordStyle, @"" + keyword , RegexOptions.Multiline);
             }
 
-
             List<string> classes = new List<string>();
+            classes.Add("Dictionary");
             classes.Add("OWO");
             classes.Add("SensationsFactory");
             classes.Add("Sensation");
@@ -75,6 +76,16 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
             classes.Add("AdvancedSensationStreamInstance");
             foreach (string clazz in classes) {
                 e.ChangedRange.SetStyle(ClassStyle, @"(^| |(?<=\())" + clazz , RegexOptions.Multiline);
+            }
+
+            List<string> logics = new List<string>();
+            logics.Add("if");
+            logics.Add("else");
+            logics.Add("for");
+            logics.Add("foreach");
+            logics.Add("while");
+            foreach (string logic in logics) {
+                e.ChangedRange.SetStyle(LogicStyle, @"" + logic, RegexOptions.Multiline);
             }
         }
 

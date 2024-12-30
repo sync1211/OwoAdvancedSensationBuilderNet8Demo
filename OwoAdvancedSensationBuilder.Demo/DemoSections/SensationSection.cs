@@ -6,33 +6,38 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
     public partial class SensationSection : UserControl {
 
         DemoForm demo;
+        FlowLayoutPanel flowPanel;
         string name;
         List<AdvancedSensationStreamInstance> instances = new List<AdvancedSensationStreamInstance>();
 
-        public SensationSection(DemoForm demo, string name, Sensation sensation, bool loop = false) {
+
+        public SensationSection(DemoForm demo, FlowLayoutPanel flowPanel, string name, Sensation sensation, bool loop = false) {
             InitializeComponent();
 
             this.demo = demo;
+            this.flowPanel = flowPanel;
             this.name = name;
             this.instances.Add(new AdvancedSensationStreamInstance(name, sensation).setLoop(loop));
 
             init();
         }
 
-        public SensationSection(DemoForm demo, AdvancedSensationStreamInstance instance) {
+        public SensationSection(DemoForm demo, FlowLayoutPanel flowPanel, AdvancedSensationStreamInstance instance) {
             InitializeComponent();
 
             this.demo = demo;
+            this.flowPanel = flowPanel;
             this.name = instance.name;
             this.instances.Add(instance);
 
             init();
         }
 
-        public SensationSection(DemoForm demo, string name, params AdvancedSensationStreamInstance[] instances) {
+        public SensationSection(DemoForm demo, FlowLayoutPanel flowPanel, string name, params AdvancedSensationStreamInstance[] instances) {
             InitializeComponent();
 
             this.demo = demo;
+            this.flowPanel = flowPanel;
             this.name = name;
             this.instances.AddRange(instances);
 
@@ -42,7 +47,7 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
         private void init() {
             lblSensationName.Text = name;
             if (instances[0].loop) {
-                btnFeel.Text = btnFeel.Text + " (toggle)";
+                btnFeel.Text = "Feel (toggle)";
             }
 
             foreach (AdvancedSensationStreamInstance instance in instances) {
@@ -76,6 +81,7 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
             if (showCode) {
                 btnToggleCode.Text = "Hide Code";
                 cs.Show();
+                flowPanel.ScrollControlIntoView(cs);
             } else {
                 btnToggleCode.Text = "Show Code";
                 cs.Hide();
