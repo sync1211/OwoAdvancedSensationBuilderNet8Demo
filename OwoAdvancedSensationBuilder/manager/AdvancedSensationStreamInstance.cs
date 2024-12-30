@@ -12,11 +12,11 @@ namespace OwoAdvancedSensationBuilder.manager {
         public event SensationStreamInstanceStateEvent? AfterStateChanged;
 
         public string name { get; }
-        public int firstTick { get; set; }
+        internal int firstTick { get; set; }
         public bool overwriteManagerProcessList { get; set; }
         public bool loop { get; set; }
         public bool blockLowerPrio { get; set; }
-        public long timeStamp { get; set; }
+        public long timeStamp { get; internal set; }
 
         public AdvancedStreamingSensation sensation { get; private set; }
 
@@ -30,7 +30,7 @@ namespace OwoAdvancedSensationBuilder.manager {
             this.sensation = new AdvancedSensationBuilder(sensation).getSensationForStream();
         }
 
-        public Sensation? getSensationAtTick(int tick) {
+        internal Sensation? getSensationAtTick(int tick) {
             if (sensation.isEmpty()) {
                 return null;
             }
@@ -45,9 +45,20 @@ namespace OwoAdvancedSensationBuilder.manager {
             return sensation.sensations[playedSensation];
         }
 
-        public bool isLastTickOfCycle(int tick) {
+        internal bool isLastTickOfCycle(int tick) {
             int playedSensation = (tick - firstTick) % sensation.sensations.Count;
             return sensation.sensations.Count - 1 == playedSensation;
+        }
+
+        internal void updateSensation(Sensation newSensation, int tick) {
+            // Update the internal first tick value to the "latest first tick", so it is compatible with the new Sensation.
+            firstTick = tick - ((tick - firstTick) % sensation.sensations.Count);
+            sensation = new AdvancedSensationBuilder(newSensation).getSensationForStream();
+            triggerStateChangeEvent(ProcessState.UPDATE);
+        }
+
+        internal void triggerStateChangeEvent(ProcessState state) {
+            AfterStateChanged?.Invoke(this, state);
         }
 
         public AdvancedSensationStreamInstance setLoop(bool loop) {
@@ -58,14 +69,6 @@ namespace OwoAdvancedSensationBuilder.manager {
         public AdvancedSensationStreamInstance setBlockLowerPrio(bool blockLowerPrio) {
             this.blockLowerPrio = blockLowerPrio;
             return this;
-        }
-
-        public void updateSensation(Sensation newSensation) {
-            sensation = new AdvancedSensationBuilder(newSensation).getSensationForStream();
-        }
-
-        public void triggerStateChangeEvent(ProcessState state) {
-            AfterStateChanged?.Invoke(this, state);
         }
 
     }

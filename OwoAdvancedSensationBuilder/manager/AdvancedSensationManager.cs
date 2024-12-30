@@ -86,8 +86,7 @@ namespace OwoAdvancedSensationBuilder.manager
                     oldInstance = instancesToAdd.GetValueOrDefault(instance.name);
                 }
 
-                oldInstance?.updateSensation(instance.sensation);
-                oldInstance?.triggerStateChangeEvent(ProcessState.UPDATE);
+                oldInstance?.updateSensation(instance.sensation, tick);
 
                 processSensation.Remove(process.Key);
             }
