@@ -16,6 +16,7 @@ namespace OwoAdvancedSensationBuilder.builder
         private AdvancedStreamingSensation(SensationWithMuscles advancedMicro) : base() {
             // Dont make this public to avoid missuse, as this wont do a check or transform
             this.sensations.Add(advancedMicro);
+            this.WithPriority(advancedMicro.Priority);
         }
 
         public AdvancedStreamingSensation(params Sensation[] sensations) : base() {

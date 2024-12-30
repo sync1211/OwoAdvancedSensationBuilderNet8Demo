@@ -20,7 +20,7 @@ namespace OwoAdvancedSensationBuilder.manager
 
         private int tick;
         private bool calculating;
-        private Sensation? calculatedSensation;
+        private AdvancedStreamingSensation? calculatedSensation;
 
         Stopwatch watch = new();
 
@@ -144,16 +144,16 @@ namespace OwoAdvancedSensationBuilder.manager
 
             var snapshot = playSensations.ToList();
             snapshot.Sort((e1, e2) => {
-                // TODO: Check if sorted correctly
                 if (e1.Value.sensation.Priority != e2.Value.sensation.Priority) {
                     // Higher prio first
-                    return e1.Value.sensation.Priority.CompareTo(e2.Value.sensation.Priority);
+                    return e1.Value.sensation.Priority.CompareTo(e2.Value.sensation.Priority) * -1;
                 } else {
                     // Oldest entry first
-                    return e1.Value.timeStamp.CompareTo(e2.Value.timeStamp) * -1;
+                    return e1.Value.timeStamp.CompareTo(e2.Value.timeStamp);
                 }
             });
 
+            bool blockFurtherSensations = false;
             foreach (var entry in snapshot) {
                 AdvancedSensationStreamInstance sensationInstance = entry.Value;
 
@@ -164,9 +164,11 @@ namespace OwoAdvancedSensationBuilder.manager
 
                 if (builder == null) {
                     builder = new AdvancedSensationBuilder(sensationTick);
-                } else {
+                } else if (!blockFurtherSensations) {
                     builder.merge(sensationTick, mergeOptions);
                 }
+
+                blockFurtherSensations |= sensationInstance.blockLowerPrio;
 
                 if (sensationInstance.isLastTickOfCycle(calcTick) && !sensationInstance.loop) {
                     AdvancedSensationStreamInstance oldInstance = playSensations[entry.Key];
@@ -177,16 +179,16 @@ namespace OwoAdvancedSensationBuilder.manager
 
             if (builder != null) {
                 // May be null due to racetime condition, on last Sensation remove
-                calculatedSensation = builder.getSensationForStream();
+                calculatedSensation = builder.getSensationForStream(true);
             }
         }
 
         public void playOnce(Sensation sensation) {
-            addSensationInstance(new AdvancedSensationStreamInstance(analyzeSensation(sensation).name, sensation, false));
+            play(new AdvancedSensationStreamInstance(analyzeSensation(sensation).name, sensation));
         }
 
         public void playLoop(Sensation sensation) {
-            addSensationInstance(new AdvancedSensationStreamInstance(analyzeSensation(sensation).name, sensation, true));
+            play(new AdvancedSensationStreamInstance(analyzeSensation(sensation).name, sensation).setLoop(true));
         }
 
         public void play(AdvancedSensationStreamInstance instance) {

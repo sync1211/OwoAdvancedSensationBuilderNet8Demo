@@ -41,7 +41,7 @@
             // btnFeel
             // 
             btnFeel.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point,  0);
-            btnFeel.Location = new Point(296, 1);
+            btnFeel.Location = new Point(263, 1);
             btnFeel.Name = "btnFeel";
             btnFeel.Size = new Size(130, 40);
             btnFeel.TabIndex = 3;
@@ -53,10 +53,11 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSize = true;
             Controls.Add(btnFeel);
             Controls.Add(lblSensationName);
             Name = "SensationSection";
-            Size = new Size(790, 46);
+            Size = new Size(400, 46);
             ResumeLayout(false);
             PerformLayout();
         }

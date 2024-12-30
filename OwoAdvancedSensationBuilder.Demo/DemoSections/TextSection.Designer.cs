@@ -42,6 +42,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             Controls.Add(lblText);
+            MinimumSize = new Size(790, 0);
             Name = "TextSection";
             Size = new Size(790, 20);
             ResumeLayout(false);

@@ -3,6 +3,7 @@ using OwoAdvancedSensationBuilder.Demo.DemoSections;
 using OwoAdvancedSensationBuilder.manager;
 using OWOGame;
 using System.Collections.Specialized;
+using System.Xml.Linq;
 
 namespace OwoAdvancedSensationBuilder.Demo {
     public partial class DemoForm : Form {
@@ -16,7 +17,10 @@ namespace OwoAdvancedSensationBuilder.Demo {
             OWO.AutoConnect();
 
             initIntro();
+            initFeatures();
+            flowBuilder.Controls.Clear();
             initCompare();
+
 
             flowFinale.Controls.Clear();
             flowFinale.Controls.Add(new ExperienceSection());
@@ -92,6 +96,58 @@ namespace OwoAdvancedSensationBuilder.Demo {
             flowIntro.Controls.Add(new TextSection("I also reccomend to check out the \"Finale\" Tab once you finished trying everything out ^^ "));
         }
 
+
+        private void initFeatures() {
+            flowFeatures.Controls.Clear();
+
+            flowFeatures.Controls.Add(new HeaderSection("Play multiple Sensations at the same time"));
+            flowFeatures.Controls.Add(new TextSection("Using the Manager lets you play multiple Sensations at the same Time."));
+            flowFeatures.Controls.Add(new TextSection("If the Sensation affects different muscles both Sensations just play."));
+            flowFeatures.Controls.Add(new SensationSection(this, "Left and Right",
+                new AdvancedSensationStreamInstance("Left", SensationsFactory.Create(100, 1.0f, 20, 0.5f, 0.5f, 0).WithMuscles(Muscle.Pectoral_L)),
+                new AdvancedSensationStreamInstance("Right", SensationsFactory.Create(100, 1.5f, 20, 0.5f, 0.5f, 0).WithMuscles(Muscle.Pectoral_R))
+                ));
+
+            flowFeatures.Controls.Add(new TextSection("If the Sensation affects the same muscles both Sensations get merged, meaning that (by default) " +
+                "only the highest intensity per Muscle gets played."));
+            flowFeatures.Controls.Add(new SensationSection(this, "Same Muscles",
+                new AdvancedSensationStreamInstance("Constant", SensationsFactory.Create(100, 2, 20, 0, 0, 0)
+                        .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R)),
+                new AdvancedSensationStreamInstance("Rising", SensationsFactory.Create(100, 2, 50, 2, 0, 0)
+                        .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R))
+                ));
+
+            flowFeatures.Controls.Add(new TextSection("Something to keep in mind though, is that only intensity can be merged. The Frequency cannot!"));
+            flowFeatures.Controls.Add(new TextSection("By default the Sensation thats added first defines the Frequency, " +
+                "but once this Sensation is over the Frequency might change"));
+            flowFeatures.Controls.Add(new SensationSection(this, "Different Frequencies",
+                new AdvancedSensationStreamInstance("Constant Chest", SensationsFactory.Create(100, 1.5f, 20, 0, 0, 0)
+                        .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R)),
+                new AdvancedSensationStreamInstance("Rumbling Stomach", SensationsFactory.Create(20, 3, 20, 0, 0, 0)
+                        .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R))
+                ));
+
+            flowFeatures.Controls.Add(new TextSection("The default OWO priority won't block other sensations with lower priority anymore, " +
+                "but rather controlls which frequency has priority."));
+            flowFeatures.Controls.Add(new SensationSection(this, "With Priority",
+                new AdvancedSensationStreamInstance("Constant Chest", SensationsFactory.Create(100, 3, 20, 0, 0, 0)
+                        .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R)),
+                new AdvancedSensationStreamInstance("Rumbling Stomach (prio)", SensationsFactory.Create(20, 1.5f, 20, 0, 0, 0)
+                        .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R)
+                        .WithPriority(1))
+                ));
+
+            flowFeatures.Controls.Add(new TextSection("If a Sensation should restrict other Sensations that would be seen as less priority by the Manager " +
+                "(meaning eg. same priority, but played later) thats possible to do too, by setting that on the AdvancedSensationStreamInstance."));
+            flowFeatures.Controls.Add(new SensationSection(this, "With Blocking Priority",
+                new AdvancedSensationStreamInstance("Constant Chest", SensationsFactory.Create(100, 3, 20, 0, 0, 0)
+                        .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R)),
+                new AdvancedSensationStreamInstance("Rumbling Stomach (prio)", SensationsFactory.Create(20, 1.5f, 30, 0, 0, 0)
+                        .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R)
+                        .WithPriority(1))
+                    .setBlockLowerPrio(true)
+                ));
+        }
         private void initCompare() {
             flowComparisson.Controls.Clear();
 

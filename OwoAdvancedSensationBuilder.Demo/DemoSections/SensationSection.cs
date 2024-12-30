@@ -7,14 +7,14 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
 
         DemoForm demo;
         string name;
-        AdvancedSensationStreamInstance instance;
+        List<AdvancedSensationStreamInstance> instances = new List<AdvancedSensationStreamInstance>();
 
-        public SensationSection(DemoForm demo, string name, Sensation sensation, bool loop) {
+        public SensationSection(DemoForm demo, string name, Sensation sensation, bool loop = false) {
             InitializeComponent();
 
             this.demo = demo;
             this.name = name;
-            this.instance = new AdvancedSensationStreamInstance(name, sensation, loop);
+            this.instances.Add(new AdvancedSensationStreamInstance(name, sensation).setLoop(loop));
 
             init();
         }
@@ -24,24 +24,39 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
 
             this.demo = demo;
             this.name = instance.name;
-            this.instance = instance;
+            this.instances.Add(instance);
+
+            init();
+        }
+
+        public SensationSection(DemoForm demo, string name, params AdvancedSensationStreamInstance[] instances) {
+            InitializeComponent();
+
+            this.demo = demo;
+            this.name = name;
+            this.instances.AddRange(instances);
 
             init();
         }
 
         private void init() {
             lblSensationName.Text = name;
-            if (instance.loop) {
-                btnFeel.Text = "Feel (toggle)";
+            if (instances[0].loop) {
+                btnFeel.Text = btnFeel.Text + " (toggle)";
             }
-            demo.setupManagedSensation(instance);
+
+            foreach (AdvancedSensationStreamInstance instance in instances) {
+                demo.setupManagedSensation(instance);
+            }
         }
 
         private void btnFeel_Click(object sender, EventArgs e) {
-            if (instance.loop) {
-                demo.toggleManagedSensation(instance);
+            if (instances[0].loop) {
+                demo.toggleManagedSensation(instances[0]);
             } else {
-                demo.playManagedSensation(instance);
+                foreach (AdvancedSensationStreamInstance instance in instances) {
+                    demo.playManagedSensation(instance);
+                }
             }
         }
     }

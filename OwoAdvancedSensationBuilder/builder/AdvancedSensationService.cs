@@ -5,12 +5,10 @@ namespace OwoAdvancedSensationBuilder.builder
 {
     public static class AdvancedSensationService {
 
-        public static AdvancedStreamingSensation splitSensation(MicroSensation? micro, Muscle[]? muscles) {
+        public static AdvancedStreamingSensation splitSensation(MicroSensation micro, Muscle[]? muscles) {
 
             AdvancedStreamingSensation advanced = new AdvancedStreamingSensation();
-            if (micro == null) {
-                return advanced;
-            }
+            advanced.WithPriority(micro.Priority);
 
             float time = 0.1f;
 
@@ -21,14 +19,14 @@ namespace OwoAdvancedSensationBuilder.builder
             while (micro.Duration >= time) {
                 if (rampUp >= time) {
                     float by = 1f / rampUp * time;
-                    advanced.addSensation(createAdvancedMicro(micro.frequency, lerp(0, micro.intensity, by), micro.duration <= 0.2, muscles));
+                    advanced.addSensation(createAdvancedMicro(micro.frequency, lerp(0, micro.intensity, by), micro.duration <= 0.2, micro.Priority, muscles));
                 } else if (exitDelay < time) {
-                    advanced.addSensation(createAdvancedMicro(micro.frequency, 0, micro.duration <= 0.2, muscles));
+                    advanced.addSensation(createAdvancedMicro(micro.frequency, 0, micro.duration <= 0.2, micro.Priority, muscles));
                 } else if (rampDown < time) {
                     float by = 1f / micro.rampDown * (time - rampDown);
-                    advanced.addSensation(createAdvancedMicro(micro.frequency, lerp(micro.intensity, 0, by), micro.duration <= 0.2, muscles));
+                    advanced.addSensation(createAdvancedMicro(micro.frequency, lerp(micro.intensity, 0, by), micro.duration <= 0.2, micro.Priority, muscles));
                 } else {
-                    advanced.addSensation(createAdvancedMicro(micro.frequency, micro.intensity, micro.duration <= 0.2, muscles));
+                    advanced.addSensation(createAdvancedMicro(micro.frequency, micro.intensity, micro.duration <= 0.2, micro.Priority, muscles));
                 }
                 time = (float)Math.Round(time + 0.1f, 2);
             }
@@ -40,7 +38,7 @@ namespace OwoAdvancedSensationBuilder.builder
             return (int)(firstFloat * (1 - by) + secondFloat * by);
         }
 
-        private static AdvancedStreamingSensation createAdvancedMicro(int frequency, int intensity, bool isShortSensation, Muscle[]? muscles) {
+        private static AdvancedStreamingSensation createAdvancedMicro(int frequency, int intensity, bool isShortSensation, int priority, Muscle[]? muscles) {
 
             if (muscles == null || muscles.Length == 0) {
                 muscles = Muscle.All;
@@ -63,38 +61,38 @@ namespace OwoAdvancedSensationBuilder.builder
                 duration = 0.2f;
             }
 
-            Sensation s = SensationsFactory.Create(frequency, duration, 100, 0, 0, 0);
-            return AdvancedStreamingSensation.createByAdvancedMicro(new SensationWithMuscles(s, modifiedMuscle));
+            Sensation s = SensationsFactory.Create(frequency, duration, 100, 0, 0, 0).WithPriority(priority);
+            return AdvancedStreamingSensation.createByAdvancedMicro((SensationWithMuscles) new SensationWithMuscles(s, modifiedMuscle).WithPriority(priority));
         }
 
-        public static AdvancedStreamingSensation createSensationCurve(int frequency, List<int> intensities, Muscle[]? muscles = null) {
+        public static AdvancedStreamingSensation createSensationCurve(int frequency, List<int> intensities, Muscle[]? muscles = null, int priority = 0) {
             AdvancedStreamingSensation curve = new AdvancedStreamingSensation();
             if (intensities == null) {
                 return curve;
             }
 
             foreach (int intensity in intensities) {
-                curve.addSensation(createAdvancedMicro(frequency, intensity, false, muscles));
+                curve.addSensation(createAdvancedMicro(frequency, intensity, false, priority, muscles));
             }
 
             return curve;
         }
 
-        public static AdvancedStreamingSensation createSensationCurve(List<int> frequencies, int intensity, Muscle[]? muscles = null) {
+        public static AdvancedStreamingSensation createSensationCurve(List<int> frequencies, int intensity, Muscle[]? muscles = null, int priority = 0) {
             AdvancedStreamingSensation curve = new AdvancedStreamingSensation();
             if (frequencies == null) {
                 return curve;
             }
 
             foreach (int frequency in frequencies) {
-                curve.addSensation(createAdvancedMicro(frequency, intensity, false, muscles));
+                curve.addSensation(createAdvancedMicro(frequency, intensity, false, priority, muscles));
             }
 
             return curve;
         }
 
         public static AdvancedStreamingSensation createSensationRamp(int frequencyStart, int frequencyEnd, int intensityStart, int intensityEnd,
-                float duration, Muscle[]? muscles = null) {
+                float duration, Muscle[]? muscles = null, int priority = 0) {
 
             AdvancedStreamingSensation ramp = new AdvancedStreamingSensation();
             float time = 0.1f;
@@ -103,7 +101,7 @@ namespace OwoAdvancedSensationBuilder.builder
             for (int i = 0; i <= snippets; i++) {
                 int frequency = lerp(frequencyStart, frequencyEnd, 1f / duration * time);
                 int intensity = lerp(intensityStart, intensityEnd, 1f / duration * time); ;
-                ramp.addSensation(createAdvancedMicro(frequency, intensity, false, muscles));
+                ramp.addSensation(createAdvancedMicro(frequency, intensity, false, priority, muscles));
                     time = (float)Math.Round(time + 0.1f, 2);
                 }
 
@@ -140,7 +138,7 @@ namespace OwoAdvancedSensationBuilder.builder
                 SensationWithMuscles? newSensation = newSnippets[i];
 
                 if (origSensation == null && newSensation == null) {
-                    mergedSensation.addSensation(createAdvancedMicro(0, 0, false, Muscle.All));
+                    mergedSensation.addSensation(createAdvancedMicro(0, 0, false, 0, Muscle.All));
                 } else if (origSensation == null) {
                     mergedSensation.addSensation(AdvancedStreamingSensation.createByAdvancedMicro((SensationWithMuscles)newSensation!.MultiplyIntensityBy(mergeOptions.intensityScale)));
                 } else if (newSensation == null) {

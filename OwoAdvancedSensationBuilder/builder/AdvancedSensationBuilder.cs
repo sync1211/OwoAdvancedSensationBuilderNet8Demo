@@ -14,8 +14,12 @@ namespace OwoAdvancedSensationBuilder.builder
             MicroSensation? micro = analyzeSensation(sensation);
 
             // advanced will already be set by analyzeSensation if Sensation is SensationsSequence or AdvancedStreamingSensation
-            if (advanced == null) { 
+            // In other cases micro should always be set
+            if (advanced == null && micro != null) {
+                micro.WithPriority(sensation.Priority);
                 advanced = AdvancedSensationService.splitSensation(micro, this.muscles);
+            } else if (advanced == null) {
+                throw new AdvancedSensationException("Sensation could not be analyzed successfully");
             }
         }
 
@@ -59,10 +63,16 @@ namespace OwoAdvancedSensationBuilder.builder
             return advanced.transformForSend();
         }
 
-        public AdvancedStreamingSensation getSensationForStream() {
+        public AdvancedStreamingSensation getSensationForStream(bool flattenPriority = false) {
             if (advanced == null) {
                 advanced = new AdvancedStreamingSensation();
             }
+
+            if (flattenPriority) {
+                // Actual Sensation has to be on a unified prio for OWO to not cancel stuff
+                advanced.WithPriority(0);
+            }
+
             return advanced;
         }
 

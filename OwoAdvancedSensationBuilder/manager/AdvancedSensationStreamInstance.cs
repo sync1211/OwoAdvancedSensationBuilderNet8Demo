@@ -15,13 +15,15 @@ namespace OwoAdvancedSensationBuilder.manager {
         public int firstTick { get; set; }
         public bool overwriteManagerProcessList { get; set; }
         public bool loop { get; set; }
+        public bool blockLowerPrio { get; set; }
         public long timeStamp { get; set; }
 
         public AdvancedStreamingSensation sensation { get; private set; }
 
-        public AdvancedSensationStreamInstance(string name, Sensation sensation, bool loop = false) {
+        public AdvancedSensationStreamInstance(string name, Sensation sensation) {
             this.name = name;
-            this.loop = loop;
+            loop = false;
+            blockLowerPrio = false;
             firstTick = 0;
             overwriteManagerProcessList = false;
 
@@ -46,6 +48,16 @@ namespace OwoAdvancedSensationBuilder.manager {
         public bool isLastTickOfCycle(int tick) {
             int playedSensation = (tick - firstTick) % sensation.sensations.Count;
             return sensation.sensations.Count - 1 == playedSensation;
+        }
+
+        public AdvancedSensationStreamInstance setLoop(bool loop) {
+            this.loop = loop;
+            return this;
+        }
+
+        public AdvancedSensationStreamInstance setBlockLowerPrio(bool blockLowerPrio) {
+            this.blockLowerPrio = blockLowerPrio;
+            return this;
         }
 
         public void updateSensation(Sensation newSensation) {

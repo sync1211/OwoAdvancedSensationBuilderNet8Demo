@@ -38,6 +38,9 @@
             label3 = new Label();
             lbManager = new ListBox();
             label4 = new Label();
+            tabPage4 = new TabPage();
+            flowBuilder = new FlowLayoutPanel();
+            label6 = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             flowIntro.SuspendLayout();
@@ -47,6 +50,8 @@
             flowComparisson.SuspendLayout();
             tabFinale.SuspendLayout();
             flowFinale.SuspendLayout();
+            tabPage4.SuspendLayout();
+            flowBuilder.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
@@ -54,6 +59,7 @@
             tabControl1.Anchor =  AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage3);
+            tabControl1.Controls.Add(tabPage4);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabFinale);
             tabControl1.Location = new Point(0, 0);
@@ -202,6 +208,36 @@
             label4.TabIndex = 7;
             label4.Text = "Managed Sensations";
             // 
+            // tabPage4
+            // 
+            tabPage4.Controls.Add(flowBuilder);
+            tabPage4.Location = new Point(4, 24);
+            tabPage4.Name = "tabPage4";
+            tabPage4.Padding = new Padding(3);
+            tabPage4.Size = new Size(822, 420);
+            tabPage4.TabIndex = 4;
+            tabPage4.Text = "Builder";
+            tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // flowBuilder
+            // 
+            flowBuilder.Anchor =  AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            flowBuilder.AutoScroll = true;
+            flowBuilder.Controls.Add(label6);
+            flowBuilder.Location = new Point(3, 4);
+            flowBuilder.Name = "flowBuilder";
+            flowBuilder.Size = new Size(816, 413);
+            flowBuilder.TabIndex = 7;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(3, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(144, 15);
+            label6.TabIndex = 0;
+            label6.Text = "Content Filled At Runtime";
+            // 
             // DemoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -226,6 +262,9 @@
             tabFinale.ResumeLayout(false);
             flowFinale.ResumeLayout(false);
             flowFinale.PerformLayout();
+            tabPage4.ResumeLayout(false);
+            flowBuilder.ResumeLayout(false);
+            flowBuilder.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -247,5 +286,8 @@
         private TabPage tabPage3;
         private FlowLayoutPanel flowFeatures;
         private Label label5;
+        private TabPage tabPage4;
+        private FlowLayoutPanel flowBuilder;
+        private Label label6;
     }
 }
