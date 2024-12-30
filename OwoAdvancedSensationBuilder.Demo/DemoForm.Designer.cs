@@ -44,6 +44,7 @@
             label3 = new Label();
             lbManager = new ListBox();
             label4 = new Label();
+            btnDebug = new Button();
             tabControl1.SuspendLayout();
             tabIntro.SuspendLayout();
             flowIntro.SuspendLayout();
@@ -274,11 +275,22 @@
             label4.TabIndex = 7;
             label4.Text = "Managed Sensations";
             // 
+            // btnDebug
+            // 
+            btnDebug.Location = new Point(897, 0);
+            btnDebug.Name = "btnDebug";
+            btnDebug.Size = new Size(75, 23);
+            btnDebug.TabIndex = 8;
+            btnDebug.Text = "debug";
+            btnDebug.UseVisualStyleBackColor = true;
+            btnDebug.Click += btnDebug_Click;
+            // 
             // DemoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(984, 703);
+            Controls.Add(btnDebug);
             Controls.Add(label4);
             Controls.Add(lbManager);
             Controls.Add(tabControl1);
@@ -331,5 +343,6 @@
         private TabPage tabReference;
         private FlowLayoutPanel flowReference;
         private Label label7;
+        private Button btnDebug;
     }
 }

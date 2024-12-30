@@ -53,6 +53,14 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
             keywords.Add("public");
             keywords.Add("private");
             keywords.Add("new");
+            keywords.Add("true");
+            keywords.Add("false");
+            keywords.Add("null");
+            keywords.Add("string");
+            keywords.Add("int");
+            keywords.Add("double");
+            keywords.Add("float");
+            keywords.Add("bool");
             foreach (string keyword in keywords) {
                 e.ChangedRange.SetStyle(KeywordStyle, @"" + keyword , RegexOptions.Multiline);
             }

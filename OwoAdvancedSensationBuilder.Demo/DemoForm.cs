@@ -87,10 +87,16 @@ namespace OwoAdvancedSensationBuilder.Demo {
 
             flowIntro.Controls.Add(new HeaderSection("Regarding this Demo"));
             flowIntro.Controls.Add(new TextSection("As this is a Demo for OWO Code, there are multiple opportunities to feel stuff yourself. " +
-                "There are multiple Triggers such as this Buttons here."));
+                "There are multiple Triggers such as this Buttons here, often accompanied by a code example to recreate the effect."));
             Sensation tap = SensationsFactory.Create(100, 0.1f, 15, 0.1f, 0, 0.2f).WithMuscles(Muscle.Dorsal_R);
             tap = tap.Append(tap);
-            flowIntro.Controls.Add(new SensationSection(this, "Tap on back", tap, false));
+            flowIntro.Controls.Add(new SensationSection(this, "Tap on back", tap, false)
+                .withCode("Sensation tap = SensationsFactory.Create(100, 0.1f, 15, 0.1f, 0, 0.2f)\r\n" +
+                "    .WithName(\"Tap on back\")\r\n" +
+                "    .WithMuscles(Muscle.Dorsal_R);\r\n" +
+                "\r\n" +
+                "AdvancedSensationManager manager = AdvancedSensationManager.getInstance();\r\n" +
+                "manager.playOnce(tap);"));
             flowIntro.Controls.Add(new TextSection("You probably also already noticed the \"Managed Sensations\" list on the right. " +
                 "This list displays the Sensations in the Manager and hopefully makes a few things easier to understand. " +
                 "Also If there is a Sensation you want to stop, such as a looping Sensation started from a different Tab or a Sensation where you forgot " +
@@ -109,9 +115,16 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 new AdvancedSensationStreamInstance("Left", SensationsFactory.Create(100, 1.0f, 20, 0.5f, 0.5f, 0).WithMuscles(Muscle.Pectoral_L)),
                 new AdvancedSensationStreamInstance("Right", SensationsFactory.Create(100, 1.5f, 20, 0.5f, 0.5f, 0).WithMuscles(Muscle.Pectoral_R))
                 ).withCode(
-                "// TEST \r\n" +
-                "new AdvancedSensationStreamInstance(\"Left\", SensationsFactory.Create(100, 1.0f, 20, 0.5f, 0.5f, 0).WithMuscles(Muscle.Pectoral_L)),\r\n" +
-                "new AdvancedSensationStreamInstance(\"Right\", SensationsFactory.Create(100, 1.5f, 20, 0.5f, 0.5f, 0).WithMuscles(Muscle.Pectoral_R))"));
+                "Sensation left = SensationsFactory.Create(100, 1.0f, 20, 0.5f, 0.5f, 0)\r\n" +
+                "    .WithName(\"Left\")\r\n" +
+                "    .WithMuscles(Muscle.Pectoral_L);\r\n" +
+                "Sensation right = SensationsFactory.Create(100, 1.5f, 20, 0.5f, 0.5f, 0)\r\n" +
+                "    .WithName(\"Right\")\r\n" +
+                "    .WithMuscles(Muscle.Pectoral_R);\r\n" +
+                "\r\n" +
+                "AdvancedSensationManager manager = AdvancedSensationManager.getInstance();\r\n" +
+                "manager.playOnce(left);\r\n" +
+                "manager.playOnce(right);"));
 
             flowFeatures.Controls.Add(new TextSection("If the Sensation affects the same muscles both Sensations get merged, meaning that (by default) " +
                 "only the highest intensity per Muscle gets played."));
@@ -120,7 +133,17 @@ namespace OwoAdvancedSensationBuilder.Demo {
                         .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R)),
                 new AdvancedSensationStreamInstance("Rising", SensationsFactory.Create(100, 2, 50, 2, 0, 0)
                         .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R))
-                ));
+                ).withCode(
+                "Sensation constant = SensationsFactory.Create(100, 2, 20, 0, 0, 0)\r\n" +
+                "    .WithName(\"Constant\")\r\n" +
+                "    .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R);\r\n" +
+                "Sensation rising = SensationsFactory.Create(100, 2, 50, 2, 0, 0)\r\n" +
+                "    .WithName(\"Rising\")\r\n" +
+                "    .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R);\r\n" +
+                "\r\n" +
+                "AdvancedSensationManager manager = AdvancedSensationManager.getInstance();\r\n" +
+                "manager.playOnce(constant);\r\n" +
+                "manager.playOnce(rising);"));
 
             flowFeatures.Controls.Add(new TextSection("Something to keep in mind though, is that only intensity can be merged. The Frequency cannot!"));
             flowFeatures.Controls.Add(new TextSection("By default the Sensation thats added last defines the Frequency, " +
@@ -130,7 +153,17 @@ namespace OwoAdvancedSensationBuilder.Demo {
                         .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R)),
                 new AdvancedSensationStreamInstance("Rumbling Stomach", SensationsFactory.Create(20, 1.5f, 20, 0, 0, 0)
                         .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R))
-                ));
+                ).withCode(
+                "Sensation constant = SensationsFactory.Create(100, 3, 20, 0, 0, 0)\r\n" +
+                "    .WithName(\"Constant Chest\")\r\n" +
+                "    .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R);\r\n" +
+                "Sensation rumbling = SensationsFactory.Create(20, 1.5f, 20, 0, 0, 0)\r\n" +
+                "    .WithName(\"Rumbling Stomach\")\r\n" +
+                "    .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R);\r\n" +
+                "\r\n" +
+                "AdvancedSensationManager manager = AdvancedSensationManager.getInstance();\r\n" +
+                "manager.playOnce(constant);\r\n" +
+                "manager.playOnce(rumbling);"));
 
             flowFeatures.Controls.Add(new HeaderSection("New Priority handling"));
             flowFeatures.Controls.Add(new TextSection("The default OWO priority won't block other sensations with lower priority anymore, " +
@@ -140,7 +173,19 @@ namespace OwoAdvancedSensationBuilder.Demo {
                         .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R).WithPriority(1)),
                 new AdvancedSensationStreamInstance("Rumbling Stomach", SensationsFactory.Create(20, 3, 20, 0, 0, 0)
                         .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R))
-                ));
+                ).withCode(
+                "Sensation constant = SensationsFactory.Create(100, 3, 20, 0, 0, 0)\r\n" +
+                "    .WithName(\"Constant Chest (prio)\")\r\n" +
+                "    .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R)\r\n" +
+                "    .WithPriority(1);\r\n" +
+                "\r\n" +
+                "Sensation rumbling = SensationsFactory.Create(20, 1.5f, 20, 0, 0, 0)\r\n" +
+                "    .WithName(\"Rumbling Stomach\")\r\n" +
+                "    .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R);\r\n" +
+                "\r\n" +
+                "AdvancedSensationManager manager = AdvancedSensationManager.getInstance();\r\n" +
+                "manager.playOnce(constant);\r\n" +
+                "manager.playOnce(rumbling);"));
 
             flowFeatures.Controls.Add(new TextSection("If a Sensation should restrict other Sensations that would be seen as less priority by the Manager " +
                 "(meaning eg. same priority, but played earlier) thats possible to do too, by setting that on the AdvancedSensationStreamInstance."));
@@ -149,7 +194,21 @@ namespace OwoAdvancedSensationBuilder.Demo {
                         .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R).WithPriority(1)).setBlockLowerPrio(true),
                 new AdvancedSensationStreamInstance("Rumbling Stomach", SensationsFactory.Create(20, 3, 30, 0, 0, 0)
                         .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R))
-                ));
+                ).withCode(
+                "AdvancedSensationStreamInstance constant = \r\n" +
+                "    new AdvancedSensationStreamInstance(\"Constant Chest (prio)\", \r\n" +
+                "        SensationsFactory.Create(100, 1.5f, 20, 0, 0, 0)\r\n" +
+                "            .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R)\r\n" +
+                "            .WithPriority(1))\r\n" +
+                "    .setBlockLowerPrio(true);\r\n" +
+                "\r\n" +
+                "Sensation rumbling = SensationsFactory.Create(20, 1.5f, 20, 0, 0, 0)\r\n" +
+                "    .WithName(\"Rumbling Stomach\")\r\n" +
+                "    .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R);\r\n" +
+                "\r\n" +
+                "AdvancedSensationManager manager = AdvancedSensationManager.getInstance();\r\n" +
+                "manager.play(constant);\r\n" +
+                "manager.playOnce(rumbling);"));
         }
         private void initCompare() {
             flowComparisson.Controls.Clear();
@@ -198,7 +257,7 @@ namespace OwoAdvancedSensationBuilder.Demo {
         public void setupManagedSensation(AdvancedSensationStreamInstance instance) {
             instance.AfterStateChanged += Instance_AfterStateChanged;
         }
-        
+
         public void playManagedSensation(AdvancedSensationStreamInstance instance) {
             AdvancedSensationManager.getInstance().play(instance);
         }
@@ -232,5 +291,17 @@ namespace OwoAdvancedSensationBuilder.Demo {
             }
         }
 
+        private void btnDebug_Click(object sender, EventArgs e) {
+            AdvancedSensationStreamInstance constant = new AdvancedSensationStreamInstance("Constant Chest (prio)",
+                SensationsFactory.Create(100, 1.5f, 20, 0, 0, 0).WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R).WithPriority(1))
+                .setBlockLowerPrio(true);
+            Sensation rumbling = SensationsFactory.Create(20, 1.5f, 20, 0, 0, 0)
+                .WithName("Rumbling Stomach")
+                .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R);
+
+            AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
+            manager.play(constant);
+            manager.playOnce(rumbling);
+        }
     }
 }
