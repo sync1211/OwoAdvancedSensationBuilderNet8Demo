@@ -59,5 +59,27 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
                 }
             }
         }
+
+        public SensationSection withCode(string code) {
+            cs = new CodeSection(code);
+            cs.Hide();
+            cs.Location = new Point(0, 50);
+            Controls.Add(cs);
+            btnToggleCode.Visible = true;
+            return this;
+        }
+
+        CodeSection cs;
+        bool showCode = false;
+        private void btnToggleCode_Click(object sender, EventArgs e) {
+            showCode = !showCode;
+            if (showCode) {
+                btnToggleCode.Text = "Hide Code";
+                cs.Show();
+            } else {
+                btnToggleCode.Text = "Show Code";
+                cs.Hide();
+            }
+        }
     }
 }

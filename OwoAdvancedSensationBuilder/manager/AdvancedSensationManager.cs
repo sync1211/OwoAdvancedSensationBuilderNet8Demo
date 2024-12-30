@@ -148,8 +148,8 @@ namespace OwoAdvancedSensationBuilder.manager
                     // Higher prio first
                     return e1.Value.sensation.Priority.CompareTo(e2.Value.sensation.Priority) * -1;
                 } else {
-                    // Oldest entry first
-                    return e1.Value.timeStamp.CompareTo(e2.Value.timeStamp);
+                    // Latest entry first
+                    return e1.Value.timeStamp.CompareTo(e2.Value.timeStamp) * -1;
                 }
             });
 

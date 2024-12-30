@@ -24,60 +24,66 @@
         /// </summary>
         private void InitializeComponent() {
             tabControl1 = new TabControl();
-            tabPage1 = new TabPage();
+            tabIntro = new TabPage();
             flowIntro = new FlowLayoutPanel();
             label1 = new Label();
-            tabPage3 = new TabPage();
+            tabFeature = new TabPage();
             flowFeatures = new FlowLayoutPanel();
             label5 = new Label();
-            tabPage2 = new TabPage();
+            tabBuilder = new TabPage();
+            flowBuilder = new FlowLayoutPanel();
+            label6 = new Label();
+            tabComparisson = new TabPage();
             flowComparisson = new FlowLayoutPanel();
             label2 = new Label();
-            tabFinale = new TabPage();
-            flowFinale = new FlowLayoutPanel();
+            tabReference = new TabPage();
+            flowReference = new FlowLayoutPanel();
+            label7 = new Label();
+            tabExamples = new TabPage();
+            flowExamples = new FlowLayoutPanel();
             label3 = new Label();
             lbManager = new ListBox();
             label4 = new Label();
-            tabPage4 = new TabPage();
-            flowBuilder = new FlowLayoutPanel();
-            label6 = new Label();
             tabControl1.SuspendLayout();
-            tabPage1.SuspendLayout();
+            tabIntro.SuspendLayout();
             flowIntro.SuspendLayout();
-            tabPage3.SuspendLayout();
+            tabFeature.SuspendLayout();
             flowFeatures.SuspendLayout();
-            tabPage2.SuspendLayout();
-            flowComparisson.SuspendLayout();
-            tabFinale.SuspendLayout();
-            flowFinale.SuspendLayout();
-            tabPage4.SuspendLayout();
+            tabBuilder.SuspendLayout();
             flowBuilder.SuspendLayout();
+            tabComparisson.SuspendLayout();
+            flowComparisson.SuspendLayout();
+            tabReference.SuspendLayout();
+            flowReference.SuspendLayout();
+            tabExamples.SuspendLayout();
+            flowExamples.SuspendLayout();
             SuspendLayout();
             // 
             // tabControl1
             // 
             tabControl1.Anchor =  AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            tabControl1.Controls.Add(tabPage1);
-            tabControl1.Controls.Add(tabPage3);
-            tabControl1.Controls.Add(tabPage4);
-            tabControl1.Controls.Add(tabPage2);
-            tabControl1.Controls.Add(tabFinale);
+            tabControl1.Controls.Add(tabIntro);
+            tabControl1.Controls.Add(tabFeature);
+            tabControl1.Controls.Add(tabBuilder);
+            tabControl1.Controls.Add(tabComparisson);
+            tabControl1.Controls.Add(tabReference);
+            tabControl1.Controls.Add(tabExamples);
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(830, 448);
+            tabControl1.Size = new Size(830, 694);
             tabControl1.TabIndex = 5;
             // 
-            // tabPage1
+            // tabIntro
             // 
-            tabPage1.Controls.Add(flowIntro);
-            tabPage1.Location = new Point(4, 24);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(822, 420);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "Introduction";
-            tabPage1.UseVisualStyleBackColor = true;
+            tabIntro.Controls.Add(flowIntro);
+            tabIntro.Location = new Point(4, 24);
+            tabIntro.Name = "tabIntro";
+            tabIntro.Padding = new Padding(3);
+            tabIntro.Size = new Size(822, 666);
+            tabIntro.TabIndex = 0;
+            tabIntro.Text = "Introduction";
+            tabIntro.UseVisualStyleBackColor = true;
             // 
             // flowIntro
             // 
@@ -86,7 +92,7 @@
             flowIntro.Controls.Add(label1);
             flowIntro.Location = new Point(3, 6);
             flowIntro.Name = "flowIntro";
-            flowIntro.Size = new Size(816, 411);
+            flowIntro.Size = new Size(816, 654);
             flowIntro.TabIndex = 5;
             // 
             // label1
@@ -98,16 +104,16 @@
             label1.TabIndex = 0;
             label1.Text = "Content Filled At Runtime";
             // 
-            // tabPage3
+            // tabFeature
             // 
-            tabPage3.Controls.Add(flowFeatures);
-            tabPage3.Location = new Point(4, 24);
-            tabPage3.Name = "tabPage3";
-            tabPage3.Padding = new Padding(3);
-            tabPage3.Size = new Size(822, 420);
-            tabPage3.TabIndex = 3;
-            tabPage3.Text = "Feature Overview";
-            tabPage3.UseVisualStyleBackColor = true;
+            tabFeature.Controls.Add(flowFeatures);
+            tabFeature.Location = new Point(4, 24);
+            tabFeature.Name = "tabFeature";
+            tabFeature.Padding = new Padding(3);
+            tabFeature.Size = new Size(822, 666);
+            tabFeature.TabIndex = 3;
+            tabFeature.Text = "Feature Overview";
+            tabFeature.UseVisualStyleBackColor = true;
             // 
             // flowFeatures
             // 
@@ -116,7 +122,7 @@
             flowFeatures.Controls.Add(label5);
             flowFeatures.Location = new Point(3, 5);
             flowFeatures.Name = "flowFeatures";
-            flowFeatures.Size = new Size(816, 411);
+            flowFeatures.Size = new Size(816, 655);
             flowFeatures.TabIndex = 6;
             // 
             // label5
@@ -128,16 +134,46 @@
             label5.TabIndex = 0;
             label5.Text = "Content Filled At Runtime";
             // 
-            // tabPage2
+            // tabBuilder
             // 
-            tabPage2.Controls.Add(flowComparisson);
-            tabPage2.Location = new Point(4, 24);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(822, 420);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "Comparisson";
-            tabPage2.UseVisualStyleBackColor = true;
+            tabBuilder.Controls.Add(flowBuilder);
+            tabBuilder.Location = new Point(4, 24);
+            tabBuilder.Name = "tabBuilder";
+            tabBuilder.Padding = new Padding(3);
+            tabBuilder.Size = new Size(822, 666);
+            tabBuilder.TabIndex = 4;
+            tabBuilder.Text = "Builder";
+            tabBuilder.UseVisualStyleBackColor = true;
+            // 
+            // flowBuilder
+            // 
+            flowBuilder.Anchor =  AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            flowBuilder.AutoScroll = true;
+            flowBuilder.Controls.Add(label6);
+            flowBuilder.Location = new Point(3, 4);
+            flowBuilder.Name = "flowBuilder";
+            flowBuilder.Size = new Size(816, 659);
+            flowBuilder.TabIndex = 7;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(3, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(144, 15);
+            label6.TabIndex = 0;
+            label6.Text = "Content Filled At Runtime";
+            // 
+            // tabComparisson
+            // 
+            tabComparisson.Controls.Add(flowComparisson);
+            tabComparisson.Location = new Point(4, 24);
+            tabComparisson.Name = "tabComparisson";
+            tabComparisson.Padding = new Padding(3);
+            tabComparisson.Size = new Size(822, 666);
+            tabComparisson.TabIndex = 1;
+            tabComparisson.Text = "Comparisson";
+            tabComparisson.UseVisualStyleBackColor = true;
             // 
             // flowComparisson
             // 
@@ -146,7 +182,7 @@
             flowComparisson.Controls.Add(label2);
             flowComparisson.Location = new Point(3, 3);
             flowComparisson.Name = "flowComparisson";
-            flowComparisson.Size = new Size(816, 413);
+            flowComparisson.Size = new Size(816, 657);
             flowComparisson.TabIndex = 6;
             // 
             // label2
@@ -158,26 +194,56 @@
             label2.TabIndex = 0;
             label2.Text = "Content Filled At Runtime";
             // 
-            // tabFinale
+            // tabReference
             // 
-            tabFinale.Controls.Add(flowFinale);
-            tabFinale.Location = new Point(4, 24);
-            tabFinale.Name = "tabFinale";
-            tabFinale.Padding = new Padding(3);
-            tabFinale.Size = new Size(822, 420);
-            tabFinale.TabIndex = 2;
-            tabFinale.Text = "Finale";
-            tabFinale.UseVisualStyleBackColor = true;
+            tabReference.Controls.Add(flowReference);
+            tabReference.Location = new Point(4, 24);
+            tabReference.Name = "tabReference";
+            tabReference.Padding = new Padding(3);
+            tabReference.Size = new Size(822, 666);
+            tabReference.TabIndex = 5;
+            tabReference.Text = "Code Reference";
+            tabReference.UseVisualStyleBackColor = true;
             // 
-            // flowFinale
+            // flowReference
             // 
-            flowFinale.Anchor =  AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            flowFinale.AutoScroll = true;
-            flowFinale.Controls.Add(label3);
-            flowFinale.Location = new Point(3, 5);
-            flowFinale.Name = "flowFinale";
-            flowFinale.Size = new Size(816, 413);
-            flowFinale.TabIndex = 6;
+            flowReference.Anchor =  AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            flowReference.AutoScroll = true;
+            flowReference.Controls.Add(label7);
+            flowReference.Location = new Point(3, 6);
+            flowReference.Name = "flowReference";
+            flowReference.Size = new Size(816, 655);
+            flowReference.TabIndex = 7;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(3, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(144, 15);
+            label7.TabIndex = 0;
+            label7.Text = "Content Filled At Runtime";
+            // 
+            // tabExamples
+            // 
+            tabExamples.Controls.Add(flowExamples);
+            tabExamples.Location = new Point(4, 24);
+            tabExamples.Name = "tabExamples";
+            tabExamples.Padding = new Padding(3);
+            tabExamples.Size = new Size(822, 666);
+            tabExamples.TabIndex = 2;
+            tabExamples.Text = "Examples";
+            tabExamples.UseVisualStyleBackColor = true;
+            // 
+            // flowExamples
+            // 
+            flowExamples.Anchor =  AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            flowExamples.AutoScroll = true;
+            flowExamples.Controls.Add(label3);
+            flowExamples.Location = new Point(3, 5);
+            flowExamples.Name = "flowExamples";
+            flowExamples.Size = new Size(816, 655);
+            flowExamples.TabIndex = 6;
             // 
             // label3
             // 
@@ -195,7 +261,7 @@
             lbManager.ItemHeight = 15;
             lbManager.Location = new Point(836, 39);
             lbManager.Name = "lbManager";
-            lbManager.Size = new Size(136, 409);
+            lbManager.Size = new Size(136, 649);
             lbManager.TabIndex = 6;
             lbManager.MouseDoubleClick += lbManager_MouseDoubleClick;
             // 
@@ -208,41 +274,11 @@
             label4.TabIndex = 7;
             label4.Text = "Managed Sensations";
             // 
-            // tabPage4
-            // 
-            tabPage4.Controls.Add(flowBuilder);
-            tabPage4.Location = new Point(4, 24);
-            tabPage4.Name = "tabPage4";
-            tabPage4.Padding = new Padding(3);
-            tabPage4.Size = new Size(822, 420);
-            tabPage4.TabIndex = 4;
-            tabPage4.Text = "Builder";
-            tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // flowBuilder
-            // 
-            flowBuilder.Anchor =  AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            flowBuilder.AutoScroll = true;
-            flowBuilder.Controls.Add(label6);
-            flowBuilder.Location = new Point(3, 4);
-            flowBuilder.Name = "flowBuilder";
-            flowBuilder.Size = new Size(816, 413);
-            flowBuilder.TabIndex = 7;
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(3, 0);
-            label6.Name = "label6";
-            label6.Size = new Size(144, 15);
-            label6.TabIndex = 0;
-            label6.Text = "Content Filled At Runtime";
-            // 
             // DemoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(984, 457);
+            ClientSize = new Size(984, 703);
             Controls.Add(label4);
             Controls.Add(lbManager);
             Controls.Add(tabControl1);
@@ -250,21 +286,24 @@
             Text = "AdvancedSensationBuilder and AdvancedSensationManager for OWO - Demo";
             Load += Form1_Load;
             tabControl1.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
+            tabIntro.ResumeLayout(false);
             flowIntro.ResumeLayout(false);
             flowIntro.PerformLayout();
-            tabPage3.ResumeLayout(false);
+            tabFeature.ResumeLayout(false);
             flowFeatures.ResumeLayout(false);
             flowFeatures.PerformLayout();
-            tabPage2.ResumeLayout(false);
-            flowComparisson.ResumeLayout(false);
-            flowComparisson.PerformLayout();
-            tabFinale.ResumeLayout(false);
-            flowFinale.ResumeLayout(false);
-            flowFinale.PerformLayout();
-            tabPage4.ResumeLayout(false);
+            tabBuilder.ResumeLayout(false);
             flowBuilder.ResumeLayout(false);
             flowBuilder.PerformLayout();
+            tabComparisson.ResumeLayout(false);
+            flowComparisson.ResumeLayout(false);
+            flowComparisson.PerformLayout();
+            tabReference.ResumeLayout(false);
+            flowReference.ResumeLayout(false);
+            flowReference.PerformLayout();
+            tabExamples.ResumeLayout(false);
+            flowExamples.ResumeLayout(false);
+            flowExamples.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -272,22 +311,25 @@
         #endregion
 
         private TabControl tabControl1;
-        private TabPage tabPage1;
+        private TabPage tabIntro;
         private FlowLayoutPanel flowIntro;
         private Label label1;
-        private TabPage tabPage2;
-        private TabPage tabFinale;
+        private TabPage tabComparisson;
+        private TabPage tabExamples;
         private FlowLayoutPanel flowComparisson;
         private Label label2;
-        private FlowLayoutPanel flowFinale;
+        private FlowLayoutPanel flowExamples;
         private Label label3;
         private ListBox lbManager;
         private Label label4;
-        private TabPage tabPage3;
+        private TabPage tabFeature;
         private FlowLayoutPanel flowFeatures;
         private Label label5;
-        private TabPage tabPage4;
+        private TabPage tabBuilder;
         private FlowLayoutPanel flowBuilder;
         private Label label6;
+        private TabPage tabReference;
+        private FlowLayoutPanel flowReference;
+        private Label label7;
     }
 }

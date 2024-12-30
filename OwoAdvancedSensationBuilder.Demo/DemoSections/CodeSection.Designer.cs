@@ -1,5 +1,5 @@
 ﻿namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
-    partial class HeaderSection {
+    partial class CodeSection {
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -23,32 +23,31 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            lblHeader = new Label();
+            pnlCode = new Panel();
             SuspendLayout();
             // 
-            // lblHeader
+            // pnlCode
             // 
-            lblHeader.AutoSize = true;
-            lblHeader.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point,  0);
-            lblHeader.Location = new Point(14, 20);
-            lblHeader.Name = "lblHeader";
-            lblHeader.Size = new Size(83, 30);
-            lblHeader.TabIndex = 0;
-            lblHeader.Text = "Header";
+            pnlCode.Anchor =  AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            pnlCode.AutoSize = true;
+            pnlCode.Location = new Point(37, 3);
+            pnlCode.Name = "pnlCode";
+            pnlCode.Size = new Size(750, 34);
+            pnlCode.TabIndex = 1;
             // 
-            // HeaderSection
+            // CodeSection
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(lblHeader);
-            Name = "HeaderSection";
-            Size = new Size(790, 60);
+            AutoSize = true;
+            Controls.Add(pnlCode);
+            Name = "CodeSection";
+            Size = new Size(790, 40);
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private Label lblHeader;
+        private Panel pnlCode;
     }
 }
