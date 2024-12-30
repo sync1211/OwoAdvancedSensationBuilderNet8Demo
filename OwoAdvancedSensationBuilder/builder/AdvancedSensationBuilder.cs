@@ -55,8 +55,15 @@ namespace OwoAdvancedSensationBuilder.builder
             throw new AdvancedSensationException($"Unsupported Sensation type: {typeName}");
         }
 
+        /// <summary>
+        /// <para>IF POSSIBLE USE THE SENSATION MANAGER INSTEAD! </para>
+        /// The method <c>getSensationForSend()</c> changes the way Sensations feel.
+        /// Due to internal OWO logic, these Sensations feel about 10 Intensity stronger.
+        /// </summary>
         public Sensation? getSensationForSend() {
-            Console.WriteLine("getSensationForSend() IS NOT YET WORKING CORRECTLY. SCALING IS MISSING");
+            Console.WriteLine("getSensationForSend() IS NOT WORKING CORRECTLY. " +
+                "Due to internal OWO logic, these Sensations feel about 10 Intensity stronger. " +
+                "Try to use the Manager instead.");
             if (advanced == null) {
                 advanced = new AdvancedStreamingSensation();
             }
