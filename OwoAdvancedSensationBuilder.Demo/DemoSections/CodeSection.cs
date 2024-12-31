@@ -45,6 +45,7 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
             e.ChangedRange.SetStyle(CommentStyle, @"//.*$", RegexOptions.Multiline);
             e.ChangedRange.SetStyle(StringStyle, @""".*""", RegexOptions.Multiline);
             e.ChangedRange.SetStyle(MethodStyle, @"( |(?<=\.))(\w*?)(?=\()", RegexOptions.Multiline);
+            e.ChangedRange.SetStyle(MethodStyle, @"(?<=\+\= )(\w*?)(?=;)", RegexOptions.Multiline);
             e.ChangedRange.SetStyle(StringStyle, @""".*""", RegexOptions.Multiline);
             e.ChangedRange.SetStyle(NumberStyle, @"[0-9]+(\.?[0-9]*)f?", RegexOptions.Multiline);
             e.ChangedRange.SetStyle(EnumConstantsStyle, @"(?<=\.)(\w*?)((_L)|(_R))", RegexOptions.Multiline);
@@ -64,6 +65,7 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
             keywords.Add("void");
             keywords.Add("out");
             keywords.Add("var");
+            keywords.Add("throw");
             foreach (string keyword in keywords) {
                 e.ChangedRange.SetStyle(KeywordStyle, @"" + keyword , RegexOptions.Multiline);
             }

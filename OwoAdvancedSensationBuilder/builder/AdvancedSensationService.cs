@@ -67,6 +67,7 @@ namespace OwoAdvancedSensationBuilder.builder
 
         public static AdvancedStreamingSensation createSensationCurve(int frequency, List<int> intensities, Muscle[]? muscles = null, int priority = 0) {
             AdvancedStreamingSensation curve = new AdvancedStreamingSensation();
+            curve.WithPriority(priority);
             if (intensities == null) {
                 return curve;
             }
@@ -75,11 +76,13 @@ namespace OwoAdvancedSensationBuilder.builder
                 curve.addSensation(createAdvancedMicro(frequency, intensity, false, priority, muscles));
             }
 
+
             return curve;
         }
 
         public static AdvancedStreamingSensation createSensationCurve(List<int> frequencies, int intensity, Muscle[]? muscles = null, int priority = 0) {
             AdvancedStreamingSensation curve = new AdvancedStreamingSensation();
+            curve.WithPriority(priority);
             if (frequencies == null) {
                 return curve;
             }
@@ -95,6 +98,7 @@ namespace OwoAdvancedSensationBuilder.builder
                 float duration, Muscle[]? muscles = null, int priority = 0) {
 
             AdvancedStreamingSensation ramp = new AdvancedStreamingSensation();
+            ramp.WithPriority(priority);
             float time = 0.1f;
             int snippets = float2snippets(duration);
 
@@ -119,6 +123,7 @@ namespace OwoAdvancedSensationBuilder.builder
             List<SensationWithMuscles?> newSnippets = [.. newAdvanced.getSnippets()];
 
             AdvancedStreamingSensation mergedSensation = new AdvancedStreamingSensation();
+            mergedSensation.WithPriority(origAdvanced.Priority);
 
             int delaySnippets = float2snippets(mergeOptions.delaySeconds);
 
@@ -237,6 +242,7 @@ namespace OwoAdvancedSensationBuilder.builder
 
         public static AdvancedStreamingSensation cutSensation(AdvancedStreamingSensation origSensation, int from, int till) {
             AdvancedStreamingSensation cutSensation = new AdvancedStreamingSensation();
+            cutSensation.WithPriority(origSensation.Priority);
 
             for (int i = 0; i < origSensation.sensations.Count; i++) {
                 if (i >= from && i <= till) {
@@ -245,6 +251,18 @@ namespace OwoAdvancedSensationBuilder.builder
             }
 
             return cutSensation;
+        }
+
+        public static AdvancedStreamingSensation multiplyIntensityBy(AdvancedStreamingSensation origSensation, Multiplier howMuch) {
+            AdvancedStreamingSensation editedSensation = new AdvancedStreamingSensation();
+            editedSensation.WithPriority(origSensation.Priority);
+
+            foreach (SensationWithMuscles s in origSensation.getSnippets()) {
+                editedSensation.addSensation(
+                    AdvancedStreamingSensation.createByAdvancedMicro((SensationWithMuscles) s.MultiplyIntensityBy(howMuch)));
+            }
+            
+            return editedSensation;
         }
 
     }

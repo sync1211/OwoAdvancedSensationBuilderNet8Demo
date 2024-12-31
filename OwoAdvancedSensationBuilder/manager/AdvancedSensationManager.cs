@@ -182,18 +182,38 @@ namespace OwoAdvancedSensationBuilder.manager
             }
         }
 
+        /// <summary>
+        /// Shorter call for play() working only with basic Sensations.
+        /// Transforms Sensation into an advanced Sensation and adds it to the Manager.
+        /// The name of the Sensation will be used internally. If empty a random name will be generated.
+        /// Overrides Instances with the same Name and starts at the begining of the Sensation.
+        /// </summary>
         public void playOnce(Sensation sensation) {
             play(new AdvancedSensationStreamInstance(analyzeSensation(sensation).name, sensation));
         }
 
+        /// <summary>
+        /// Shorter call for play() working only with basic Sensations.
+        /// Transforms Sensation into an advanced Sensation and adds it looping to the Manager.
+        /// The name of the Sensation will be used internally. If empty a random name will be generated.
+        /// Overrides Instances with the same Name and starts at the begining of the Sensation.
+        /// </summary>
         public void playLoop(Sensation sensation) {
             play(new AdvancedSensationStreamInstance(analyzeSensation(sensation).name, sensation).setLoop(true));
         }
 
+        /// <summary>
+        /// Adds the AdvancedSensationStreamInstance of an advanced Sensation to the Manager.
+        /// Overrides Instances with the same Name and starts at the begining of the Sensation.
+        /// </summary>
         public void play(AdvancedSensationStreamInstance instance) {
             addSensationInstance(instance);
         }
 
+        /// <summary>
+        /// Changes the Sensation of a given AdvancedSensationStreamInstance, without starting it new, but continuing where it currently is.
+        /// If no name is provided the name of the Sensation will be used.
+        /// </summary>
         public void updateSensation(Sensation sensation, string? name = null) {
             if (name == null) {
                 name = analyzeSensation(sensation).name;
@@ -201,6 +221,9 @@ namespace OwoAdvancedSensationBuilder.manager
             processSensation[new AdvancedSensationStreamInstance(name, sensation)] = ProcessState.UPDATE;
         }
 
+        /// <summary>
+        /// Stops a Sensation with a given name.
+        /// </summary>
         public void stopSensation(string sensationInstanceName) {
             AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(sensationInstanceName, SensationsFactory.Create(0, 0, 0)); // Using an empty sensation as the instance is only used for removal. In this case, the sensation property will not be used
             instance.overwriteManagerProcessList = true;
@@ -226,6 +249,9 @@ namespace OwoAdvancedSensationBuilder.manager
             }
         }
 
+        /// <summary>
+        /// Stops all Sensation.
+        /// </summary>
         public void stopAll() {
             resetManagerState();
             playSensations.Clear();
@@ -239,6 +265,10 @@ namespace OwoAdvancedSensationBuilder.manager
             OWO.Send(SensationsFactory.Create(0, 0, 0, 0, 0, 1));
         }
 
+        /// <summary>
+        /// Returns a dictionary with the Names and the actual Instances in the Manager.
+        /// By default it also returns Entries that are not yet playing, but scheduled to be added in the next tick.
+        /// </summary>
         public Dictionary<string, AdvancedSensationStreamInstance> getPlayingSensationInstances(bool addPlanned = true) {
             Dictionary<string, AdvancedSensationStreamInstance> returnInstances = new Dictionary<string, AdvancedSensationStreamInstance>();
             foreach (var playInstance in playSensations) {

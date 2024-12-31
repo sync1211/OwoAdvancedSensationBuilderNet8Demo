@@ -8,6 +8,11 @@ namespace OwoAdvancedSensationBuilder.builder
         private AdvancedStreamingSensation advanced;
         private Muscle[]? muscles;
 
+        /// <summary>
+        /// Turns a Sensation into an AdvancedStreamingSensation to be further worked on.
+        /// The Muscle parameter would have priority over the Muscles in the Sensation.
+        /// Calling this with an AdvancedStreamingSensation as sensation wont copy the sensation, but edit it.
+        /// </summary>
         public AdvancedSensationBuilder(Sensation sensation, Muscle[]? muscles = null) {
             this.muscles = muscles;
 
@@ -23,8 +28,12 @@ namespace OwoAdvancedSensationBuilder.builder
             }
         }
 
-        public AdvancedSensationBuilder(List<int> intensities, Muscle[]? muscles = null) {
-            advanced = AdvancedSensationService.createSensationCurve(100, intensities, muscles);
+        /// <summary>
+        /// Creates an AdvancedStreamingSensation to be further worked on.
+        /// Each entry in intensities defines the intensity (in combination with the given Muscles) for this 0.1 second part.
+        /// </summary>
+        public AdvancedSensationBuilder(int frequency, List<int> intensities, Muscle[]? muscles = null) {
+            advanced = AdvancedSensationService.createSensationCurve(frequency, intensities, muscles);
         }
 
         private MicroSensation? analyzeSensation(Sensation sensation) {
@@ -59,8 +68,9 @@ namespace OwoAdvancedSensationBuilder.builder
         /// <para>IF POSSIBLE USE THE SENSATION MANAGER INSTEAD! </para>
         /// The method <c>getSensationForSend()</c> changes the way Sensations feel.
         /// Due to internal OWO logic, these Sensations feel about 10 Intensity stronger.
+        /// Returns an approximation of the AdvancedStreamingSensation to be sent by regular OWO logic.
         /// </summary>
-        public Sensation? getSensationForSend() {
+        public Sensation getSensationForSend() {
             Console.WriteLine("getSensationForSend() IS NOT WORKING CORRECTLY. " +
                 "Due to internal OWO logic, these Sensations feel about 10 Intensity stronger. " +
                 "Try to use the Manager instead.");
@@ -70,6 +80,10 @@ namespace OwoAdvancedSensationBuilder.builder
             return advanced.transformForSend();
         }
 
+        /// <summary>
+        /// Returns the AdvancedStreamingSensation to be sent by the Manager.
+        /// Flattening the Priorities sets the priority to 0 and usually isnt needed to be done manually.
+        /// </summary>
         public AdvancedStreamingSensation getSensationForStream(bool flattenPriority = false) {
             if (advanced == null) {
                 advanced = new AdvancedStreamingSensation();
@@ -83,6 +97,9 @@ namespace OwoAdvancedSensationBuilder.builder
             return advanced;
         }
 
+        /// <summary>
+        /// Merges a Sensation with the currently worked on AdvancedStreamingSensation.
+        /// </summary>
         public AdvancedSensationBuilder merge(Sensation s, AdvancedSensationBuilderMergeOptions mergeOptions) {
 
             AdvancedStreamingSensation newAdvanced = new AdvancedSensationBuilder(s).getSensationForStream();
@@ -94,6 +111,10 @@ namespace OwoAdvancedSensationBuilder.builder
             return this;
         }
 
+        /// <summary>
+        /// Appends the given Sensations at the end of the currently worked on AdvancedStreamingSensation.
+        /// Should multiple Sensations get passed in here, they are not appended after each other but merged and appended at the same time. 
+        /// </summary>
         public AdvancedSensationBuilder appendNow(params Sensation[] sensations) {
 
             AdvancedSensationBuilderMergeOptions? forMerge = null;
@@ -117,6 +138,9 @@ namespace OwoAdvancedSensationBuilder.builder
             return this;
         }
 
+        /// <summary>
+        /// Cuts the Sensation at a given point in time and discards the rest.
+        /// </summary>
         public AdvancedSensationBuilder cutAtTime(float cutAtSecond, bool keepFirstHalf) {
             int cutAt = AdvancedSensationService.float2snippets(cutAtSecond);
             if (keepFirstHalf) {
@@ -127,6 +151,9 @@ namespace OwoAdvancedSensationBuilder.builder
             return this;
         }
 
+        /// <summary>
+        /// Cuts the Sensation at a given point and discards the rest.
+        /// </summary>
         public AdvancedSensationBuilder cutAtPercent(int cutAtPercent, bool keepFirstHalf) {
             int cutAt = (int)Math.Round(((float)advanced.sensations.Count) / 100 * cutAtPercent);
             if (keepFirstHalf) {
@@ -137,6 +164,9 @@ namespace OwoAdvancedSensationBuilder.builder
             return this;
         }
 
+        /// <summary>
+        /// Cuts the Sensation at two given points in time and discards the outer parts.
+        /// </summary>
         public AdvancedSensationBuilder cutBetweenTime(float fromSecond, float tillSecond) {
             advanced = AdvancedSensationService.cutSensation(advanced,
                 AdvancedSensationService.float2snippets(fromSecond),
@@ -144,10 +174,21 @@ namespace OwoAdvancedSensationBuilder.builder
             return this;
         }
 
+        /// <summary>
+        /// Cuts the Sensation at two given points and discards the outer parts.
+        /// </summary>
         public AdvancedSensationBuilder cutBetweenPercent(int fromPercent, int tillPercent) {
             advanced = AdvancedSensationService.cutSensation(advanced,
                 (int)Math.Round(((float)advanced.sensations.Count) / 100 * fromPercent),
                 (int)Math.Round(((float)advanced.sensations.Count) / 100 * tillPercent));
+            return this;
+        }
+
+        /// <summary>
+        /// Changes the Muscle Intensities by the multiplier
+        /// </summary>
+        public AdvancedSensationBuilder multiplyIntensityBy(Multiplier howMuch) {
+            advanced = AdvancedSensationService.multiplyIntensityBy(advanced, howMuch);
             return this;
         }
     }

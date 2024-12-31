@@ -1,9 +1,13 @@
 ﻿using OwoAdvancedSensationBuilder.exceptions;
 using OWOGame;
+using System.Runtime.CompilerServices;
 
 namespace OwoAdvancedSensationBuilder.builder
 {
     public class AdvancedStreamingSensation : SensationsSequence {
+
+        // Each Snippet represents 0.1 sec.
+        public override float Duration => sensations.Sum((Sensation s) => 0.1f);
 
         public static AdvancedStreamingSensation createByAdvancedMicro(SensationWithMuscles advancedMicro) {
             if (advancedMicro.Duration > 0.3f) {
@@ -51,7 +55,7 @@ namespace OwoAdvancedSensationBuilder.builder
             return sensations.Count == 0;
         }
 
-        public Sensation? transformForSend() {
+        internal Sensation transformForSend() {
             List<SensationWithMuscles> snippets = new List<SensationWithMuscles>();
 
             foreach (Sensation sensation in sensations) {
@@ -70,13 +74,17 @@ namespace OwoAdvancedSensationBuilder.builder
                 foreach (MicroSensation micro in analyzeSensation(withMuscles)) {
                     Sensation current = SensationsFactory.Create(micro.frequency, 0.1f, micro.intensity, micro.rampUp, micro.rampDown, micro.exitDelay);
                     current = current.WithMuscles(withMuscles.muscles);
-                    
+
                     if (transformed == null) {
                         transformed = current;
                     } else {
                         transformed = transformed.Append(current);
                     }
                 }
+            }
+
+            if (transformed == null) {
+                transformed = SensationsFactory.Create(0, 0, 0, 0, 0, 0);
             }
             return transformed;
         }
@@ -98,5 +106,23 @@ namespace OwoAdvancedSensationBuilder.builder
             return list;
         }
 
+        // OVERRIDE ORIGINAL OWO EXTENSION METHODS
+
+        public Sensation Append(Sensation addSensation) {
+            return new AdvancedSensationBuilder(this).appendNow(addSensation).getSensationForStream();
+        }
+
+        public Sensation WithMuscles(params Muscle[] muscles) {
+            throw new NotImplementedException("Instead of Assigning Muscles now do so when calling new AdvancedSensationBuilder(), either by " +
+                "providing Muscles as parameter or by using a Sensation with Muscles.");
+        }
+
+        public Sensation Bake(int id, string name) {
+            throw new NotImplementedException("AdvancedStreamingSensation don't support baking. If you absolutely need to bake an advanced Sensation" +
+                "call getSensationForSend() on the AdvancedSensationBuilder instance.");
+        }
+        public override Sensation MultiplyIntensityBy(Multiplier howMuch) {
+            return new AdvancedSensationBuilder(this).multiplyIntensityBy(howMuch).getSensationForStream();
+        }
     }
 }

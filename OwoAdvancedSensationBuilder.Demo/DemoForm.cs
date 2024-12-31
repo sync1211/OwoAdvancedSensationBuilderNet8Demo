@@ -18,11 +18,9 @@ namespace OwoAdvancedSensationBuilder.Demo {
 
             initIntro();
             initFeatures();
-            flowBuilder.Controls.Clear();
+            initBuilder();
             initCompare();
-
-            flowExamples.Controls.Clear();
-            flowExamples.Controls.Add(new ExperienceSection());
+            initExamples();
         }
 
         private void initIntro() {
@@ -124,7 +122,7 @@ namespace OwoAdvancedSensationBuilder.Demo {
 
             flowFeatures.Controls.Add(new TextSection("Do keep in mind though, that OWO (currently) wont allow to load BakedSensations by Code and thus can't " +
                 "play those by the Manager. If your usecase requires BakedSensations the Manager may require heavy planning. Should OWO ever decide to make " +
-                "BakedSensations loadable by Code this wouldn't be a problem anymore."));
+                "BakedSensations loadable by Code this probably wouldn't be a problem anymore."));
 
             flowFeatures.Controls.Add(new HeaderSection("Play multiple Sensations at the same time"));
             flowFeatures.Controls.Add(new TextSection("Using the Manager lets you play multiple Sensations at the same Time."));
@@ -207,6 +205,8 @@ namespace OwoAdvancedSensationBuilder.Demo {
 
             flowFeatures.Controls.Add(new TextSection("If a Sensation should restrict other Sensations that would be seen as less priority by the Manager " +
                 "(meaning eg. same priority, but played earlier) thats possible to do too, by setting that on the AdvancedSensationStreamInstance."));
+            flowFeatures.Controls.Add(new TextSection("This is especially useful when there is a short high impact Sensation, with very different frequencies " +
+                "as the other running Sensations."));
             flowFeatures.Controls.Add(new SensationSection(this, flowFeatures, "With Blocking Priority",
                 new AdvancedSensationStreamInstance("Constant Chest (prio)", SensationsFactory.Create(100, 1.5f, 20, 0, 0, 0)
                         .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R).WithPriority(1)).setBlockLowerPrio(true),
@@ -227,7 +227,6 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "AdvancedSensationManager manager = AdvancedSensationManager.getInstance();\r\n" +
                 "manager.play(constant);\r\n" +
                 "manager.playOnce(rumbling);"));
-
 
             flowFeatures.Controls.Add(new HeaderSection("Working with the Manager"));
             flowFeatures.Controls.Add(new TextSection("The previous example made it so, that the Sensations with lower Priority wouldn't play while " +
@@ -304,15 +303,56 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "}"));
 
             flowFeatures.Controls.Add(new HeaderSection("Updating Sensations"));
-            flowFeatures.Controls.Add(new TextSection(" Update "));
+            flowFeatures.Controls.Add(new TextSection("By calling one of the play methods on the Manager we can replace a Sensation with a different one. " +
+                "When doing this, the new Sensation starts from the beginning though."));
+            flowFeatures.Controls.Add(new CodeSection(
+                "AdvancedSensationManager.getInstance().playOnce(sensation);\r\n" +
+                "AdvancedSensationManager.getInstance().playLoop(sensation);\r\n" +
+                "AdvancedSensationManager.getInstance().play(instance);"));
 
-            flowFeatures.Controls.Add(new TextSection(" Update different length "));
+            flowFeatures.Controls.Add(new TextSection("If we now have a Sensation thats tied to changing parameters, we dont always want to restart the Sensation " +
+                "or wait till the last loop is finished, but edit the running Sensation for immediate feedback. " +
+                "For these and other cases the manager provides the updateSensation() Method."));
+            flowFeatures.Controls.Add(new CodeSection(
+                "// TODO: DO SLIDER DEMO"));
+
+            flowFeatures.Controls.Add(new TextSection("Updating Sensations doesn't only have to be for a change of intensity though. Updating Sensations can also " +
+                "be used to eg. transition into a different Sensation or do a fade out. When used to fade out a looped Sensation, the loop has to be disabled manually."));
+            flowFeatures.Controls.Add(new TextSection("When doing this kind of update I reccomend, that the Sensation starts with the looped Sensation or one that " +
+                "feels very similar and then has the transitional / fading Sensation appended."));
+            flowFeatures.Controls.Add(new CodeSection(
+                "// TODO: DO FADE OUT DEMO"));
 
             flowFeatures.Controls.Add(new HeaderSection("Event handling"));
+            flowFeatures.Controls.Add(new TextSection("The Instance currently has two Events."));
+            flowFeatures.Controls.Add(new TextSection("AfterStateChanged is called after a Sensation is added, removed or updated. " +
+                "The \"Managed Sensations\" list you see on the right side for example is getting updated by this event on ADD and REMOVE."));
+            flowFeatures.Controls.Add(new TextSection("LastCalculationOfCycle is called right before the last part of the Sensation is played. For looping " +
+                "Sensations this gets called on every loop. It could for example trigger an update for randomized Sensations like rain. " +
+                "In case of looped Sensation it takes about 0.1 seconds before the loop starts from the beginning and calling an update or a remove wont affect " +
+                "this last Sensation part, but the next one to be played when it restarts."));
+            flowFeatures.Controls.Add(new CodeSection(
+                "public void prepareInstanceEvents(AdvancedSensationStreamInstance instance) {\r\n" +
+                "    instance.AfterStateChanged += Instance_AfterStateChanged;\r\n" +
+                "    instance.LastCalculationOfCycle += Instance_LastCalculationOfCycle;\r\n" +
+                "}\r\n" +
+                "\r\n" +
+                "private void Instance_AfterStateChanged(AdvancedSensationStreamInstance instance, AdvancedSensationManager.ProcessState state) {\r\n" +
+                "    // state is either ADD, REMOVE or UPDATE\r\n" +
+                "    throw new NotImplementedException();\r\n" +
+                "}\r\n" +
+                "\r\n" +
+                "private void Instance_LastCalculationOfCycle(AdvancedSensationStreamInstance instance) {\r\n" +
+                "    throw new NotImplementedException();\r\n" +
+                "}"));
 
             flowFeatures.Controls.Add(new HeaderSection("Building Advanced Sensations yourself"));
-
         }
+
+        private void initBuilder() {
+            flowBuilder.Controls.Clear();
+        }
+
         private void initCompare() {
             flowComparisson.Controls.Clear();
 
@@ -339,6 +379,11 @@ namespace OwoAdvancedSensationBuilder.Demo {
             flowComparisson.Controls.Add(new CompareSection(this, "hug", hugOrig, hugAdvanced));
             flowComparisson.Controls.Add(new CompareSection(this, "hug", hugOrig, hugAdvanced));
             flowComparisson.Controls.Add(new CompareSection(this, "hug", hugOrig, hugAdvanced));
+        }
+
+        private void initExamples() {
+            flowExamples.Controls.Clear();
+            flowExamples.Controls.Add(new ExperienceSection());
         }
 
         public void setupManagedSensation(AdvancedSensationStreamInstance instance) {
