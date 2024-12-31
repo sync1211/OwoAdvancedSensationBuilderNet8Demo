@@ -20,7 +20,6 @@ namespace OwoAdvancedSensationBuilder.Demo {
             initFeatures();
             flowBuilder.Controls.Clear();
             initCompare();
-            initReference();
 
             flowExamples.Controls.Clear();
             flowExamples.Controls.Add(new ExperienceSection());
@@ -107,6 +106,25 @@ namespace OwoAdvancedSensationBuilder.Demo {
 
         private void initFeatures() {
             flowFeatures.Controls.Clear();
+
+            flowFeatures.Controls.Add(new HeaderSection("Upgrading to advanced Sensations can be simple"));
+            flowFeatures.Controls.Add(new TextSection("Triggering a Sensation can be about as simple as it was regular OWO way. But simply switching out " +
+                "the calls to Send() and Stop() will allow you to play multiple Sensations at once. There are tons of other interesting features, " +
+                "but if this is all you want this is all you need."));
+            flowFeatures.Controls.Add(new CodeSection(
+                "Sensation sensation = SensationsFactory.Create(100, 1.0f, 20, 0.5f, 0.5f, 0).WithMuscles(Muscle.Pectoral_L);\r\n" +
+                "\r\n" +
+                "// Regular OWO\r\n" +
+                "OWO.Send(sensation);\r\n" +
+                "OWO.Stop();\r\n" +
+                "\r\n" +
+                "// Advanced\r\n" +
+                "AdvancedSensationManager.getInstance().playOnce(sensation);\r\n" +
+                "AdvancedSensationManager.getInstance().stopAll();"));
+
+            flowFeatures.Controls.Add(new TextSection("Do keep in mind though, that OWO (currently) wont allow to load BakedSensations by Code and thus can't " +
+                "play those by the Manager. If your usecase requires BakedSensations the Manager may require heavy planning. Should OWO ever decide to make " +
+                "BakedSensations loadable by Code this wouldn't be a problem anymore."));
 
             flowFeatures.Controls.Add(new HeaderSection("Play multiple Sensations at the same time"));
             flowFeatures.Controls.Add(new TextSection("Using the Manager lets you play multiple Sensations at the same Time."));
@@ -215,10 +233,10 @@ namespace OwoAdvancedSensationBuilder.Demo {
             flowFeatures.Controls.Add(new TextSection("The previous example made it so, that the Sensations with lower Priority wouldn't play while " +
                 "the higher Priority one plays, but it continued afterwards as it still was added."));
             flowFeatures.Controls.Add(new TextSection("Let's say that in the last example we also want to block adding new Sensations of lower Priority. " +
-                "This is currently not a feature and I can't possibly anticipate every other feature that one might need. But don't worry, because at least " +
-                "for a few usecases there are ways to implemented to manage these yourself."));
-            flowFeatures.Controls.Add(new TextSection("One such tool is to get every managed Sensation to simply check if there are Sensations that would block " +
-                "a potential new Sensation."));
+                "This is currently not a feature and I can't possibly anticipate every feature that one might need. But don't worry, because at least " +
+                "for the basic usecases there are ways to implemented and manage these yourself."));
+            flowFeatures.Controls.Add(new TextSection("This mainly gets down to getPlayingSensationInstances() to get every managed Sensation. " +
+                "The return value can be used to simply check if there are Sensations that affect the behaviour such as blocking a potential new Sensation. "));
             flowFeatures.Controls.Add(new SensationSection(this, flowFeatures, "With customAddSensation()",
                 new AdvancedSensationStreamInstance("Constant Chest (prio)", SensationsFactory.Create(100, 1.5f, 20, 0, 0, 0)
                         .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R).WithPriority(1)).setBlockLowerPrio(true)
@@ -244,7 +262,7 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "    }\r\n" +
                 "}"));
 
-            flowFeatures.Controls.Add(new TextSection("Now that we solved not adding new Sensations that we dont allow, what is with potentially long running " +
+            flowFeatures.Controls.Add(new TextSection("Now that we solved \"not adding new Sensations that we dont allow\", what is with potentially long running " +
                 "Sensations that already run? Well depending on the usecase we can stop all managed Sensations or use a similar Logic as above to just stop " +
                 "specific ones. "));
             flowFeatures.Controls.Add(new CodeSection(
@@ -254,11 +272,45 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "// To stop only specific Sensations call\r\n" +
                 "AdvancedSensationManager.getInstance().stopSensation(\"SensationInstanceName\");"));
 
-            flowFeatures.Controls.Add(new HeaderSection("Build in support for looping Sensations"));
-            flowFeatures.Controls.Add(new TextSection("The previous example made it so, that the Sensations with lower Priority wouldn't play while " +
-                "the higher Priority one plays, but it continued afterwards as it still was added."));
+            flowFeatures.Controls.Add(new TextSection("The Method getPlayingSensationInstances() returns the actual Instances in the Manager. Meaning that " +
+                "changes you do to the AdvancedSensationStreamInstance will reflect in the Manager."));
 
-            
+            flowFeatures.Controls.Add(new HeaderSection("Build in support for looping Sensations"));
+            flowFeatures.Controls.Add(new TextSection("The Manager was build up to support multiple Sensations at once. This gives more design freedom to " +
+                "eg. design looping Sensations that are always there, in addition to the impactful ones. These could be weather, vehicles or other " +
+                "environmental influences. Do keep in mind though, that the frequencies of different Sensations still can't be merged, so depending on " +
+                "how the frequencies were kept in mind when designing the Sensations it may be a good idea to exclude these Sensations on certain high impact " +
+                "Sensations."));
+            flowFeatures.Controls.Add(new TextSection("An important thing to keep in mind is, that looped Sensations play till they are stopped manually. " +
+                "So as long as you don't plan to always call stopAll() or plan to query the running Sensations it is reccomended that " +
+                "the AdvancedSensationStreamInstance has a name you defined. To assure that, you have to either call playLoop() with a named Sensation " +
+                "or call play() with the named Instance."));
+            flowFeatures.Controls.Add(new SensationSection(this, flowFeatures,
+                new AdvancedSensationStreamInstance("Loop Constant", 
+                    SensationsFactory.Create(100, 0.3f, 20, 0, 0, 0).WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R))
+                .setLoop(true)).withCode(
+                "// Start call\r\n" +
+                "Sensation loop = SensationsFactory.Create(100, 0.3f, 20, 0, 0, 0).WithName(\"Loop Constant\").WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R);\r\n" +
+                "AdvancedSensationManager.getInstance().playLoop(loop);\r\n" +
+                "\r\n" +
+                "// Stop call\r\n" +
+                "AdvancedSensationManager.getInstance().stopSensation(\"Loop Constant\");"));
+            flowFeatures.Controls.Add(new TextSection("Sometimes you have not so random patterns which you dont want to stop in the middle. In these cases you " +
+                "shouldn't call one of the stop Methods, but rather remove the looping property from the Instance, so it finishes its current loop and then stops."));
+            flowFeatures.Controls.Add(new CodeSection(
+                "// Stop call\r\n" +
+                "if (AdvancedSensationManager.getInstance().getPlayingSensationInstances().TryGetValue(\"Loop Complex\", out var loopingInstance)) {\r\n" +
+                "    loopingInstance.loop = false;\r\n" +
+                "}"));
+
+            flowFeatures.Controls.Add(new HeaderSection("Updating Sensations"));
+            flowFeatures.Controls.Add(new TextSection(" Update "));
+
+            flowFeatures.Controls.Add(new TextSection(" Update different length "));
+
+            flowFeatures.Controls.Add(new HeaderSection("Event handling"));
+
+            flowFeatures.Controls.Add(new HeaderSection("Building Advanced Sensations yourself"));
 
         }
         private void initCompare() {
@@ -287,22 +339,6 @@ namespace OwoAdvancedSensationBuilder.Demo {
             flowComparisson.Controls.Add(new CompareSection(this, "hug", hugOrig, hugAdvanced));
             flowComparisson.Controls.Add(new CompareSection(this, "hug", hugOrig, hugAdvanced));
             flowComparisson.Controls.Add(new CompareSection(this, "hug", hugOrig, hugAdvanced));
-        }
-        private void initReference() {
-            flowReference.Controls.Clear();
-
-            flowReference.Controls.Add(new HeaderSection("Using the Manager"));
-            flowReference.Controls.Add(new TextSection("Triggering a Sensation can be about as simple as it was with regular OWO."));
-            flowReference.Controls.Add(new CodeSection("" +
-                "Sensation sensation = SensationsFactory.Create(100, 1.0f, 20, 0.5f, 0.5f, 0).WithMuscles(Muscle.Pectoral_L);\r\n" +
-                "\r\n" +
-                "// Regular OWO\r\n" +
-                "OWO.Send(sensation);\r\n" +
-                "\r\n" +
-                "// Advanced\r\n" +
-                "AdvancedSensationManager.getInstance().playOnce(sensation);"));
-
-            flowReference.Controls.Add(new TextSection("Triggering a Sensation can be about as simple as it was with regular OWO."));
         }
 
         public void setupManagedSensation(AdvancedSensationStreamInstance instance) {
@@ -343,24 +379,10 @@ namespace OwoAdvancedSensationBuilder.Demo {
         }
 
         private void btnDebug_Click(object sender, EventArgs e) {
-            AdvancedSensationStreamInstance constant = new AdvancedSensationStreamInstance("Constant Chest (prio)",
-                SensationsFactory.Create(100, 1.5f, 20, 0, 0, 0).WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R).WithPriority(1))
-                .setBlockLowerPrio(true);
-
-            AdvancedSensationStreamInstance rumbling = new AdvancedSensationStreamInstance("Rumbling Stomach",
-                SensationsFactory.Create(20, 3f, 20, 0, 0, 0).WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R));
-
-            customAddSensation(constant);
-            customAddSensation(rumbling);
-        }
-
-        private void customAddSensation(AdvancedSensationStreamInstance instance) {
-            AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
-            Dictionary<string, AdvancedSensationStreamInstance> managedSensations = manager.getPlayingSensationInstances();
-            bool blocked = managedSensations.Values.Any(inst => inst.blockLowerPrio && inst.sensation.Priority > instance.sensation.Priority);
-            if (!blocked) {
-                manager.play(instance);
+            if (AdvancedSensationManager.getInstance().getPlayingSensationInstances().TryGetValue("Loop Constant", out var loopingInstance)) {
+                loopingInstance.loop = false;
             }
         }
+
     }
 }

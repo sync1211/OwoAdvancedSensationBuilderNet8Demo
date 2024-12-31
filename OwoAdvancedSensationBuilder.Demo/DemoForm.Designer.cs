@@ -36,9 +36,6 @@
             tabComparisson = new TabPage();
             flowComparisson = new FlowLayoutPanel();
             label2 = new Label();
-            tabReference = new TabPage();
-            flowReference = new FlowLayoutPanel();
-            label7 = new Label();
             tabExamples = new TabPage();
             flowExamples = new FlowLayoutPanel();
             label3 = new Label();
@@ -54,8 +51,6 @@
             flowBuilder.SuspendLayout();
             tabComparisson.SuspendLayout();
             flowComparisson.SuspendLayout();
-            tabReference.SuspendLayout();
-            flowReference.SuspendLayout();
             tabExamples.SuspendLayout();
             flowExamples.SuspendLayout();
             SuspendLayout();
@@ -67,7 +62,6 @@
             tabControl1.Controls.Add(tabFeature);
             tabControl1.Controls.Add(tabBuilder);
             tabControl1.Controls.Add(tabComparisson);
-            tabControl1.Controls.Add(tabReference);
             tabControl1.Controls.Add(tabExamples);
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
@@ -195,36 +189,6 @@
             label2.TabIndex = 0;
             label2.Text = "Content Filled At Runtime";
             // 
-            // tabReference
-            // 
-            tabReference.Controls.Add(flowReference);
-            tabReference.Location = new Point(4, 24);
-            tabReference.Name = "tabReference";
-            tabReference.Padding = new Padding(3);
-            tabReference.Size = new Size(822, 666);
-            tabReference.TabIndex = 5;
-            tabReference.Text = "Code Reference";
-            tabReference.UseVisualStyleBackColor = true;
-            // 
-            // flowReference
-            // 
-            flowReference.Anchor =  AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            flowReference.AutoScroll = true;
-            flowReference.Controls.Add(label7);
-            flowReference.Location = new Point(3, 6);
-            flowReference.Name = "flowReference";
-            flowReference.Size = new Size(816, 655);
-            flowReference.TabIndex = 7;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(3, 0);
-            label7.Name = "label7";
-            label7.Size = new Size(144, 15);
-            label7.TabIndex = 0;
-            label7.Text = "Content Filled At Runtime";
-            // 
             // tabExamples
             // 
             tabExamples.Controls.Add(flowExamples);
@@ -310,9 +274,6 @@
             tabComparisson.ResumeLayout(false);
             flowComparisson.ResumeLayout(false);
             flowComparisson.PerformLayout();
-            tabReference.ResumeLayout(false);
-            flowReference.ResumeLayout(false);
-            flowReference.PerformLayout();
             tabExamples.ResumeLayout(false);
             flowExamples.ResumeLayout(false);
             flowExamples.PerformLayout();
@@ -340,9 +301,6 @@
         private TabPage tabBuilder;
         private FlowLayoutPanel flowBuilder;
         private Label label6;
-        private TabPage tabReference;
-        private FlowLayoutPanel flowReference;
-        private Label label7;
         private Button btnDebug;
     }
 }

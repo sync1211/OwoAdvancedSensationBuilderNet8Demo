@@ -62,6 +62,8 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
             keywords.Add("float");
             keywords.Add("bool");
             keywords.Add("void");
+            keywords.Add("out");
+            keywords.Add("var");
             foreach (string keyword in keywords) {
                 e.ChangedRange.SetStyle(KeywordStyle, @"" + keyword , RegexOptions.Multiline);
             }
