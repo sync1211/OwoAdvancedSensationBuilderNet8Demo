@@ -108,7 +108,7 @@ namespace OwoAdvancedSensationBuilder.builder
             return ramp;
         }
 
-        public static int float2snippets(float seconds) {
+        internal static int float2snippets(float seconds) {
             return (int)Math.Round(seconds * 10);
         }
 
@@ -223,7 +223,7 @@ namespace OwoAdvancedSensationBuilder.builder
             return mergedMuscles.Values.ToArray();
         }
 
-        public static Muscle[] actualMuscleMergeOverride(Muscle[] newMuscles, Muscle[] origMuscles) {
+        private static Muscle[] actualMuscleMergeOverride(Muscle[] newMuscles, Muscle[] origMuscles) {
             Dictionary<int, Muscle> mergedMuscles = new();
             foreach (Muscle muscle in origMuscles) {
                 mergedMuscles.Add(muscle.id, muscle);
