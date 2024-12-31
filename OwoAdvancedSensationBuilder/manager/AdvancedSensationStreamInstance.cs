@@ -13,19 +13,23 @@ namespace OwoAdvancedSensationBuilder.manager {
 
         public string name { get; }
         internal int firstTick { get; set; }
-        public bool overwriteManagerProcessList { get; set; }
+        internal bool overwriteManagerProcessList { get; set; }
         public bool loop { get; set; }
         public bool blockLowerPrio { get; set; }
         public long timeStamp { get; internal set; }
 
         public AdvancedStreamingSensation sensation { get; private set; }
 
-        public AdvancedSensationStreamInstance(string name, Sensation sensation) {
-            this.name = name;
+        public AdvancedSensationStreamInstance(string name, Sensation sensation, bool overwriteManagerProcessList = false) {
+            if (String.IsNullOrWhiteSpace(name)) {
+                this.name = Guid.NewGuid().ToString();
+            } else {
+                this.name = name;
+            }
             loop = false;
             blockLowerPrio = false;
             firstTick = 0;
-            overwriteManagerProcessList = false;
+            this.overwriteManagerProcessList = overwriteManagerProcessList;
 
             this.sensation = new AdvancedSensationBuilder(sensation).getSensationForStream();
         }
