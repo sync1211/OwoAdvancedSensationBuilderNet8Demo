@@ -44,8 +44,6 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
         private void Tb_TextChanged(object? sender, TextChangedEventArgs e) {
             e.ChangedRange.SetStyle(CommentStyle, @"//.*$", RegexOptions.Multiline);
             e.ChangedRange.SetStyle(StringStyle, @""".*""", RegexOptions.Multiline);
-            e.ChangedRange.SetStyle(MethodStyle, @"( |(?<=\.))(\w*?)(?=\()", RegexOptions.Multiline);
-            e.ChangedRange.SetStyle(MethodStyle, @"(?<=\+\= )(\w*?)(?=;)", RegexOptions.Multiline);
             e.ChangedRange.SetStyle(StringStyle, @""".*""", RegexOptions.Multiline);
             e.ChangedRange.SetStyle(NumberStyle, @"[0-9]+(\.?[0-9]*)f?", RegexOptions.Multiline);
             e.ChangedRange.SetStyle(EnumConstantsStyle, @"(?<=\.)(\w*?)((_L)|(_R))", RegexOptions.Multiline);
@@ -78,6 +76,7 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
             classes.Add("Muscle");
             classes.Add("AdvancedSensationManager");
             classes.Add("AdvancedSensationStreamInstance");
+            classes.Add("AdvancedSensationBuilder");
             foreach (string clazz in classes) {
                 e.ChangedRange.SetStyle(ClassStyle, @"(^| |(?<=\())" + clazz , RegexOptions.Multiline);
             }
@@ -91,6 +90,9 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
             foreach (string logic in logics) {
                 e.ChangedRange.SetStyle(LogicStyle, @"" + logic, RegexOptions.Multiline);
             }
+
+            e.ChangedRange.SetStyle(MethodStyle, @"( |(?<=\.))(\w*?)(?=\()", RegexOptions.Multiline);
+            e.ChangedRange.SetStyle(MethodStyle, @"(?<=\+\= )(\w*?)(?=;)", RegexOptions.Multiline);
         }
 
     }

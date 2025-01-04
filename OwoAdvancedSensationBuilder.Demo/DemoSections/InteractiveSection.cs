@@ -17,8 +17,8 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
 
         public InteractiveSection addCode(DemoForm demo, FlowLayoutPanel flow, string code) {
 
-            CodeSection cs = demo.interactive_codePanel(code);
-            Button btn = demo.interactive_Button("Show Code", (sender, _) => demo.interaction_toggleCode((Button) sender, cs, flow));
+            CodeSection cs = demo.generateCodePanel(code);
+            Button btn = demo.generateButton("Show Code", (sender, _) => demo.interaction_toggleCode((Button) sender, cs, flow));
 
             flowControls.Controls.Add(btn);
             Controls.Add(cs);

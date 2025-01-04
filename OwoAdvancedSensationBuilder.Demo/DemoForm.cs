@@ -88,9 +88,9 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "There are multiple Triggers such as this Buttons here, often accompanied by a code example to recreate the effect."));
             flowIntro.Controls.Add(
                 new InteractiveSection("Something to feel")
-                    .addControl(interactive_Button("Feel", (_, _) =>
-                         interaction_playSensation(new AdvancedSensationStreamInstance("Tap on back", SensationsFactory.Create(100, 0.1f, 15, 0.1f, 0, 0.2f).WithMuscles(Muscle.Dorsal_R))))
-                    ).addCode(this, flowIntro, "" +
+                    .addControl(generateButton("Feel", (_, _) =>
+                         interaction_playSensation(new AdvancedSensationStreamInstance("Tap on back", SensationsFactory.Create(100, 0.1f, 15, 0.1f, 0, 0.2f).WithMuscles(Muscle.Dorsal_R)))))
+                    .addCode(this, flowIntro, "" +
                         "// You could create this Sensation like this\r\n" +
                         "Sensation tap = SensationsFactory.Create(100, 0.1f, 15, 0.1f, 0, 0.2f)\r\n" +
                         "    .WithName(\"Tap on back\")\r\n" +
@@ -134,11 +134,11 @@ namespace OwoAdvancedSensationBuilder.Demo {
             flowFeatures.Controls.Add(new TextSection("If the Sensation affects different muscles both Sensations just play."));
             flowFeatures.Controls.Add(
                 new InteractiveSection("Left and Right")
-                    .addControl(interactive_Button("Feel", (_, _) =>
+                    .addControl(generateButton("Feel", (_, _) =>
                         interaction_playSensation(
                             new AdvancedSensationStreamInstance("Left", SensationsFactory.Create(100, 1.0f, 20, 0.5f, 0.5f, 0).WithMuscles(Muscle.Pectoral_L)),
-                            new AdvancedSensationStreamInstance("Right", SensationsFactory.Create(100, 1.5f, 20, 0.5f, 0.5f, 0).WithMuscles(Muscle.Pectoral_R))))
-                    ).addCode(this, flowFeatures,
+                            new AdvancedSensationStreamInstance("Right", SensationsFactory.Create(100, 1.5f, 20, 0.5f, 0.5f, 0).WithMuscles(Muscle.Pectoral_R)))))
+                    .addCode(this, flowFeatures,
                         "Sensation left = SensationsFactory.Create(100, 1.0f, 20, 0.5f, 0.5f, 0)\r\n" +
                         "    .WithName(\"Left\")\r\n" +
                         "    .WithMuscles(Muscle.Pectoral_L);\r\n" +
@@ -155,13 +155,13 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "only the highest intensity per Muscle gets played."));
             flowFeatures.Controls.Add(
                 new InteractiveSection("Same Muscles")
-                    .addControl(interactive_Button("Feel", (_, _) =>
+                    .addControl(generateButton("Feel", (_, _) =>
                         interaction_playSensation(
                             new AdvancedSensationStreamInstance("Constant", SensationsFactory.Create(100, 2, 20, 0, 0, 0)
                                 .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R)),
                             new AdvancedSensationStreamInstance("Rising", SensationsFactory.Create(100, 2, 50, 2, 0, 0)
-                                .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R))))
-                    ).addCode(this, flowFeatures,
+                                .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R)))))
+                    .addCode(this, flowFeatures,
                         "Sensation constant = SensationsFactory.Create(100, 2, 20, 0, 0, 0)\r\n" +
                         "    .WithName(\"Constant\")\r\n" +
                         "    .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R);\r\n" +
@@ -178,13 +178,13 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "but once this Sensation is over the Frequency might change to that of an earlier Sensation. "));
             flowFeatures.Controls.Add(
                 new InteractiveSection("(!) Different Frequencies")
-                    .addControl(interactive_Button("Feel", (_, _) =>
+                    .addControl(generateButton("Feel", (_, _) =>
                         interaction_playSensation(
                             new AdvancedSensationStreamInstance("Constant Chest", SensationsFactory.Create(100, 3, 20, 0, 0, 0)
                                 .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R)),
                             new AdvancedSensationStreamInstance("Rumbling Stomach", SensationsFactory.Create(20, 1.5f, 20, 0, 0, 0)
-                                .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R))))
-                    ).addCode(this, flowFeatures,
+                                .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R)))))
+                    .addCode(this, flowFeatures,
                         "Sensation constant = SensationsFactory.Create(100, 3, 20, 0, 0, 0)\r\n" +
                         "    .WithName(\"Constant Chest\")\r\n" +
                         "    .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R);\r\n" +
@@ -201,13 +201,13 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "but rather controlls which frequency has priority."));
             flowFeatures.Controls.Add(
                 new InteractiveSection("With Priority")
-                    .addControl(interactive_Button("Feel", (_, _) =>
+                    .addControl(generateButton("Feel", (_, _) =>
                         interaction_playSensation(
                             new AdvancedSensationStreamInstance("Constant Chest (prio)", SensationsFactory.Create(100, 1.5f, 20, 0, 0, 0)
                                 .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R).WithPriority(1)),
                             new AdvancedSensationStreamInstance("Rumbling Stomach", SensationsFactory.Create(20, 3, 20, 0, 0, 0)
-                                .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R))))
-                    ).addCode(this, flowFeatures,
+                                .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R)))))
+                    .addCode(this, flowFeatures,
                         "Sensation constant = SensationsFactory.Create(100, 3, 20, 0, 0, 0)\r\n" +
                         "    .WithName(\"Constant Chest (prio)\")\r\n" +
                         "    .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R)\r\n" +
@@ -227,13 +227,13 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "as the other running Sensations."));
             flowFeatures.Controls.Add(
                 new InteractiveSection("With Blocking Priority")
-                    .addControl(interactive_Button("Feel", (_, _) =>
+                    .addControl(generateButton("Feel", (_, _) =>
                         interaction_playSensation(
                             new AdvancedSensationStreamInstance("Constant Chest (prio)", SensationsFactory.Create(100, 1.5f, 20, 0, 0, 0)
                                 .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R).WithPriority(1)).setBlockLowerPrio(true),
                             new AdvancedSensationStreamInstance("Rumbling Stomach", SensationsFactory.Create(20, 3, 30, 0, 0, 0)
-                                .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R))))
-                    ).addCode(this, flowFeatures,
+                                .WithMuscles(Muscle.Abdominal_L, Muscle.Abdominal_R)))))
+                    .addCode(this, flowFeatures,
                         "AdvancedSensationStreamInstance constant = \r\n" +
                         "    new AdvancedSensationStreamInstance(\"Constant Chest (prio)\", \r\n" +
                         "        SensationsFactory.Create(100, 1.5f, 20, 0, 0, 0)\r\n" +
@@ -259,11 +259,11 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "The return value can be used to simply check if there are Sensations that affect the behaviour such as blocking a potential new Sensation. "));
             flowFeatures.Controls.Add(
                 new InteractiveSection("With Blocking Priority")
-                    .addControl(interactive_Button("Feel", (_, _) =>
+                    .addControl(generateButton("Feel", (_, _) =>
                         interaction_playSensation(
                             new AdvancedSensationStreamInstance("Constant Chest (prio)", SensationsFactory.Create(100, 1.5f, 20, 0, 0, 0)
-                                .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R).WithPriority(1)).setBlockLowerPrio(true)))
-                    ).addCode(this, flowFeatures,
+                                .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R).WithPriority(1)).setBlockLowerPrio(true))))
+                    .addCode(this, flowFeatures,
                         "public void sendTestSensations() {\r\n" +
                         "    AdvancedSensationStreamInstance constant = new AdvancedSensationStreamInstance(\"Constant Chest (prio)\",\r\n" +
                         "        SensationsFactory.Create(100, 1.5f, 20, 0, 0, 0).WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R).WithPriority(1))\r\n" +
@@ -310,12 +310,12 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "or call play() with the named Instance."));
             flowFeatures.Controls.Add(
                 new InteractiveSection("Loop Constant")
-                    .addControl(interactive_Button("Feel (toggle)", (_, _) =>
+                    .addControl(generateButton("Feel (toggle)", (_, _) =>
                         interaction_toggleSensation(
                             new AdvancedSensationStreamInstance("Loop Constant",
                                 SensationsFactory.Create(100, 0.3f, 20, 0, 0, 0).WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R))
-                            .setLoop(true)))
-                    ).addCode(this, flowFeatures,
+                            .setLoop(true))))
+                    .addCode(this, flowFeatures,
                         "// Start call\r\n" +
                         "Sensation loop = SensationsFactory.Create(100, 0.3f, 20, 0, 0, 0).WithName(\"Loop Constant\").WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R);\r\n" +
                         "AdvancedSensationManager.getInstance().playLoop(loop);\r\n" +
@@ -328,14 +328,14 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "shouldn't call one of the stop Methods, but rather remove the looping property from the Instance, so it finishes its current loop and then stops."));
             flowFeatures.Controls.Add(
                 new InteractiveSection("Loop Pulse")
-                    .addControl(interactive_Button("Feel (toggle)", (_, _) =>
+                    .addControl(generateButton("Feel (toggle)", (_, _) =>
                         interaction_toggleSensationLoopFinish(
                             new AdvancedSensationStreamInstance("Loop Pulse",
-                                SensationsFactory.Create(100, 1, 20, 0.3f, 0.3f, 0).WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R))
-                            .setLoop(true)))
-                    ).addCode(this, flowFeatures,
+                                SensationsFactory.Create(100, 1, 20, 0.3f, 0.3f, 0.2f).WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R))
+                            .setLoop(true))))
+                    .addCode(this, flowFeatures,
                         "// Start call\r\n" +
-                        "Sensation loop = SensationsFactory.Create(100, 1, 20, 0.3f, 0.3f, 0).WithName(\"Loop Pulse\").WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R);\r\n" +
+                        "Sensation loop = SensationsFactory.Create(100, 1, 20, 0.3f, 0.3f, 0.2f).WithName(\"Loop Pulse\").WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R);\r\n" +
                         "AdvancedSensationManager.getInstance().playLoop(loop);\r\n" +
                         "\r\n" +
                         "// Stop call\r\n" +
@@ -354,8 +354,24 @@ namespace OwoAdvancedSensationBuilder.Demo {
             flowFeatures.Controls.Add(new TextSection("If we now have a Sensation thats tied to changing parameters, we dont always want to restart the Sensation " +
                 "or wait till the last loop is finished, but edit the running Sensation for immediate feedback. " +
                 "For these and other cases the manager provides the updateSensation() Method."));
-            flowFeatures.Controls.Add(new CodeSection(
-                "// TODO: DO SLIDER DEMO"));
+
+            TrackBar slider = generateSlider(0, 200, 100, 10, (sender, _) => interaction_sliderUpdate((TrackBar) sender,
+                        new AdvancedSensationStreamInstance("Slider Pulse", SensationsFactory.Create(100, 1, 20, 0.3f, 0.3f, 0.2f)
+                            .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R))
+                            .setLoop(true)));
+            flowFeatures.Controls.Add(
+                new InteractiveSection("Loop Pulse (slider)")
+                    .addControl(generateButton("Feel (toggle)", (_, _) => interaction_toggleSensationSliderLoop(
+                        SensationsFactory.Create(100, 1, 20, 0.3f, 0.3f, 0.2f)
+                            .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R), "Slider Pulse", slider)))
+                    .addControl(slider)
+                    .addCode(this, flowFeatures,
+                        "private void sliderUpdate(TrackBar sender, AdvancedSensationStreamInstance origInstance) {\r\n" +
+                        "    // sender.Value in this example is an int between 0 and 200 where 100 is the original intensity, 200 is double and 0 is off.\r\n" +
+                        "    AdvancedSensationBuilder builder = new AdvancedSensationBuilder(origInstance.sensation)\r\n" +
+                        "        .multiplyIntensityBy(sender.Value);\r\n" +
+                        "    AdvancedSensationManager.getInstance().updateSensation(builder.getSensationForStream(), origInstance.name);\r\n" +
+                        "}"));
 
             flowFeatures.Controls.Add(new TextSection("Updating Sensations doesn't only have to be for a change of intensity though. Updating Sensations can also " +
                 "be used to eg. transition into a different Sensation or do a fade out. When used to fade out a looped Sensation, the loop has to be disabled manually."));
@@ -430,13 +446,10 @@ namespace OwoAdvancedSensationBuilder.Demo {
 
 
 
-        public Button interactive_Button(string name, EventHandler handler) {
+        public Button generateButton(string name, EventHandler handler) {
             Button btn = new Button();
             btn.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            //btn.Location = new Point(324, 1);
-            //btn.Name = "btnFeel";
             btn.Size = new Size(136, 40);
-            //btn.TabIndex = 3;
             btn.Text = name;
             btn.UseVisualStyleBackColor = true;
             btn.Click += handler;
@@ -444,12 +457,23 @@ namespace OwoAdvancedSensationBuilder.Demo {
             return btn;
         }
 
-        public CodeSection interactive_codePanel(string code) {
+        public CodeSection generateCodePanel(string code) {
             CodeSection cs = new CodeSection(code);
             cs.Hide();
             cs.Location = new Point(0, 50);
 
             return cs;
+        }
+        public TrackBar generateSlider(int min, int max, int val, int interval, EventHandler handler) {
+            TrackBar slider = new TrackBar();
+            slider.Size = new Size(136, 40);
+            slider.Minimum = min;
+            slider.Maximum = max;
+            slider.TickFrequency = interval;
+            slider.Value = val;
+            slider.ValueChanged += handler;
+
+            return slider;
         }
 
         private void interaction_playSensation(params AdvancedSensationStreamInstance[] instances) {
@@ -497,6 +521,7 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 interaction_playSensation(instance);
             }
         }
+
         private void interaction_toggleSensationLoopFinish(AdvancedSensationStreamInstance instance) {
             if (AdvancedSensationManager.getInstance().getPlayingSensationInstances(true).ContainsKey(instance.name)) {
                 interaction_stopLooping(instance.name);
@@ -504,6 +529,26 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 interaction_playSensation(instance);
             }
         }
+
+        private void interaction_toggleSensationSliderLoop(Sensation sensation, string name, TrackBar slider) {
+            if (AdvancedSensationManager.getInstance().getPlayingSensationInstances(true).ContainsKey(name)) {
+                interaction_stopLooping(name);
+            } else {
+                AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(name, sensation)
+                    .setLoop(true);
+                interaction_playSensation(instance);
+            }
+        }
+
+        private void interaction_sliderUpdate(TrackBar sender, AdvancedSensationStreamInstance origInstance) {
+            AdvancedSensationBuilder builder = new AdvancedSensationBuilder(origInstance.sensation)
+                .multiplyIntensityBy(sender.Value);
+            AdvancedSensationManager.getInstance().updateSensation(builder.getSensationForStream(), origInstance.name);
+        }
+
+
+
+
 
         private void lbManager_MouseDoubleClick(object sender, MouseEventArgs e) {
             int index = lbManager.IndexFromPoint(e.Location);
