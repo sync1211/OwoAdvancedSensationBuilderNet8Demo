@@ -1,4 +1,5 @@
 ﻿using OwoAdvancedSensationBuilder.builder;
+using OwoAdvancedSensationBuilder.exceptions;
 using OWOGame;
 
 namespace OwoAdvancedSensationBuilder.manager {
@@ -39,7 +40,7 @@ namespace OwoAdvancedSensationBuilder.manager {
             this.sensation = new AdvancedSensationBuilder(sensation).getSensationForStream();
         }
 
-        internal Sensation? getSensationAtTick(int tick) {
+        internal SensationWithMuscles? getSensationAtTick(int tick) {
             if (sensation.isEmpty()) {
                 return null;
             }
@@ -50,8 +51,11 @@ namespace OwoAdvancedSensationBuilder.manager {
                 // trigger events for the last calculation
                 LastCalculationOfCycle?.Invoke(this);
             }
-
-            return sensation.sensations[playedSensation];
+            Sensation s = sensation.sensations[playedSensation];
+            if (s is SensationWithMuscles sm) {
+                return sm;
+            }
+            throw new AdvancedSensationException("If this ever is not a SensationWithMuscles, someone has manually manupulated the sensation list.");
         }
 
         internal bool isLastTickOfCycle(int tick) {

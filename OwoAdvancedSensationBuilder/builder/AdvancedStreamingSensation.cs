@@ -1,6 +1,5 @@
 ﻿using OwoAdvancedSensationBuilder.exceptions;
 using OWOGame;
-using System.Runtime.CompilerServices;
 
 namespace OwoAdvancedSensationBuilder.builder
 {
@@ -25,8 +24,15 @@ namespace OwoAdvancedSensationBuilder.builder
 
         public AdvancedStreamingSensation(params Sensation[] sensations) : base() {
             foreach (Sensation s in sensations) {
-                List<SensationWithMuscles> snippets = new AdvancedSensationBuilder(s).getSensationForStream().getSnippets();
-                this.sensations.AddRange(snippets);
+                if (s is AdvancedStreamingSensation adv) {
+                    this.sensations.AddRange(adv.getSnippets());
+                } else {
+                    List<SensationWithMuscles> snippets = new AdvancedSensationBuilder(s).getSensationForStream().getSnippets();
+                    this.sensations.AddRange(snippets);
+                }
+                if (sensations.Length == 1) {
+                    Priority = s.Priority;
+                }
             }
         }
 

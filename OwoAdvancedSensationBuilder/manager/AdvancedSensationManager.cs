@@ -159,15 +159,15 @@ namespace OwoAdvancedSensationBuilder.manager
             foreach (var entry in snapshot) {
                 AdvancedSensationStreamInstance sensationInstance = entry.Value;
 
-                Sensation? sensationTick = sensationInstance.getSensationAtTick(calcTick);
+                SensationWithMuscles? sensationTick = sensationInstance.getSensationAtTick(calcTick);
                 if (sensationTick == null) {
                     continue;
                 }
 
                 if (builder == null) {
-                    builder = new AdvancedSensationBuilder(sensationTick);
+                    builder = new AdvancedSensationBuilder(AdvancedStreamingSensation.createByAdvancedMicro(sensationTick));
                 } else if (!blockFurtherSensations) {
-                    builder.merge(sensationTick, mergeOptions);
+                    builder.merge(AdvancedStreamingSensation.createByAdvancedMicro(sensationTick), mergeOptions);
                 }
 
                 blockFurtherSensations |= sensationInstance.blockLowerPrio;

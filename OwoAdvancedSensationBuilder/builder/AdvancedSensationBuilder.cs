@@ -11,7 +11,7 @@ namespace OwoAdvancedSensationBuilder.builder
         /// <summary>
         /// Turns a Sensation into an AdvancedStreamingSensation to be further worked on.
         /// The Muscle parameter would have priority over the Muscles in the Sensation.
-        /// Calling this with an AdvancedStreamingSensation as sensation wont copy the sensation, but edit it.
+        /// Calling this with an AdvancedStreamingSensation as sensation will copy the sensation.
         /// Also Muscles wont get applied in that case.
         /// </summary>
         public AdvancedSensationBuilder(Sensation sensation, Muscle[]? muscles = null) {
@@ -39,7 +39,7 @@ namespace OwoAdvancedSensationBuilder.builder
 
         private MicroSensation? analyzeSensation(Sensation sensation) {
             if (sensation is AdvancedStreamingSensation advSensation) {
-                advanced = advSensation;
+                advanced = new AdvancedStreamingSensation(advSensation);
                 return null;
             } else if (sensation is MicroSensation microSensation) {
                 return microSensation;
