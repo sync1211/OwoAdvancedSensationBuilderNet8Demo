@@ -1,15 +1,20 @@
 ﻿using OwoAdvancedSensationBuilder.builder;
 using OWOGame;
-using static OwoAdvancedSensationBuilder.manager.AdvancedSensationManager;
 
 namespace OwoAdvancedSensationBuilder.manager {
     public class AdvancedSensationStreamInstance {
 
         public delegate void SensationStreamInstanceEvent(AdvancedSensationStreamInstance instance);
-        public delegate void SensationStreamInstanceStateEvent(AdvancedSensationStreamInstance instance, ProcessState state);
+        public delegate void SensationStreamInstanceAddEvent(AdvancedSensationStreamInstance instance, AddInfo info);
+        public delegate void SensationStreamInstanceRemoveEvent(AdvancedSensationStreamInstance instance, RemoveInfo info);
+
+        public enum AddInfo { NEW, REPLACE }
+        public enum RemoveInfo { MANUAL, FINISHED, REPLACED }
 
         public event SensationStreamInstanceEvent? LastCalculationOfCycle;
-        public event SensationStreamInstanceStateEvent? AfterStateChanged;
+        public event SensationStreamInstanceAddEvent? AfterAdd;
+        public event SensationStreamInstanceEvent? AfterUpdate;
+        public event SensationStreamInstanceRemoveEvent? AfterRemove;
 
         public string name { get; }
         internal int firstTick { get; set; }
@@ -58,11 +63,15 @@ namespace OwoAdvancedSensationBuilder.manager {
             // Update the internal first tick value to the "latest first tick", so it is compatible with the new Sensation.
             firstTick = tick - ((tick - firstTick) % sensation.sensations.Count);
             sensation = new AdvancedSensationBuilder(newSensation).getSensationForStream();
-            triggerStateChangeEvent(ProcessState.UPDATE);
+            AfterUpdate?.Invoke(this);
         }
 
-        internal void triggerStateChangeEvent(ProcessState state) {
-            AfterStateChanged?.Invoke(this, state);
+        internal void triggerAddEvent(AddInfo info) {
+            AfterAdd?.Invoke(this, info);
+        }
+
+        internal void triggerRemoveEvent(RemoveInfo info) {
+            AfterRemove?.Invoke(this, info);
         }
 
         public AdvancedSensationStreamInstance setLoop(bool loop) {

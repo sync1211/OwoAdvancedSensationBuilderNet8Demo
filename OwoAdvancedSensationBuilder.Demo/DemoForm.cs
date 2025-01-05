@@ -3,8 +3,7 @@ using OwoAdvancedSensationBuilder.Demo.DemoSections;
 using OwoAdvancedSensationBuilder.manager;
 using OWOGame;
 using System.Collections.Specialized;
-using System.Xml.Linq;
-using static System.Collections.Specialized.BitVector32;
+using static OwoAdvancedSensationBuilder.manager.AdvancedSensationStreamInstance;
 
 namespace OwoAdvancedSensationBuilder.Demo {
     public partial class DemoForm : Form {
@@ -378,7 +377,8 @@ namespace OwoAdvancedSensationBuilder.Demo {
             flowFeatures.Controls.Add(new TextSection("When doing this kind of update I reccomend, that the Sensation starts with the looped Sensation or one that " +
                 "feels very similar and then has the transitional / fading Sensation appended."));
             flowFeatures.Controls.Add(new CodeSection(
-                "// TODO: DO FADE OUT DEMO"));
+                "// TODO: DO FADE OUT DEMO\r\n" +
+                "https://stackoverflow.com/questions/20717654/c-sharp-remove-event-handler-after-is-called-or-call-it-just-once"));
 
             flowFeatures.Controls.Add(new HeaderSection("Event handling"));
             flowFeatures.Controls.Add(new TextSection("The Instance currently has two Events."));
@@ -390,16 +390,23 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "this last Sensation part, but the next one to be played when it restarts."));
             flowFeatures.Controls.Add(new CodeSection(
                 "public void prepareInstanceEvents(AdvancedSensationStreamInstance instance) {\r\n" +
-                "    instance.AfterStateChanged += Instance_AfterStateChanged;\r\n" +
+                "    instance.AfterAdd += Instance_AfterAdd;\r\n" +
+                "    instance.AfterUpdate += Instance_AfterUpdate;\r\n" +
+                "    instance.AfterRemove += Instance_AfterRemove;\r\n" +
                 "    instance.LastCalculationOfCycle += Instance_LastCalculationOfCycle;\r\n" +
                 "}\r\n" +
                 "\r\n" +
-                "private void Instance_AfterStateChanged(AdvancedSensationStreamInstance instance, AdvancedSensationManager.ProcessState state) {\r\n" +
-                "    // state is either ADD, REMOVE or UPDATE\r\n" +
+                "private void Instance_AfterAdd(AdvancedSensationStreamInstance instance, AddInfo info) {\r\n" +
+                "    // AddInfo can bei either NEW or REPLACE\r\n" +
                 "    throw new NotImplementedException();\r\n" +
                 "}\r\n" +
                 "\r\n" +
-                "private void Instance_LastCalculationOfCycle(AdvancedSensationStreamInstance instance) {\r\n" +
+                "private void Instance_AfterUpdate(AdvancedSensationStreamInstance instance) {\r\n" +
+                "    throw new NotImplementedException();\r\n" +
+                "}\r\n" +
+                "\r\n" +
+                "private void Instance_AfterRemove(AdvancedSensationStreamInstance instance, RemoveInfo info) {\r\n" +
+                "    // RemoveInfo can bei either MANUAL, FINISHED or REPLACED\r\n" +
                 "    throw new NotImplementedException();\r\n" +
                 "}"));
 
@@ -478,24 +485,30 @@ namespace OwoAdvancedSensationBuilder.Demo {
 
         private void interaction_playSensation(params AdvancedSensationStreamInstance[] instances) {
             foreach (AdvancedSensationStreamInstance instance in instances) {
-                instance.AfterStateChanged += Instance_AfterStateChanged;
+                instance.AfterAdd += Instance_AfterAdd;
+                instance.AfterRemove += Instance_AfterRemove;
                 AdvancedSensationManager.getInstance().play(instance);
             }
         }
 
-        private void Instance_AfterStateChanged(AdvancedSensationStreamInstance instance, AdvancedSensationManager.ProcessState state) {
-
+        private void Instance_AfterAdd(AdvancedSensationStreamInstance instance, AddInfo info) {
             if (lbManager.InvokeRequired) {
-                Action doInvoke = delegate { Instance_AfterStateChanged(instance, state); };
+                Action doInvoke = delegate { Instance_AfterAdd(instance, info); };
                 lbManager.Invoke(doInvoke);
                 return;
             }
 
-            if (state == AdvancedSensationManager.ProcessState.ADD) {
-                lbManager.Items.Add(instance.name);
-            } else if (state == AdvancedSensationManager.ProcessState.REMOVE) {
-                lbManager.Items.Remove(instance.name);
+            lbManager.Items.Add(instance.name);
+        }
+
+        private void Instance_AfterRemove(AdvancedSensationStreamInstance instance, RemoveInfo info) {
+            if (lbManager.InvokeRequired) {
+                Action doInvoke = delegate { Instance_AfterRemove(instance, info); };
+                lbManager.Invoke(doInvoke);
+                return;
             }
+
+            lbManager.Items.Remove(instance.name);
         }
 
         private void interaction_stopLooping(string name) {

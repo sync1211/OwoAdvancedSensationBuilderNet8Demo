@@ -4,6 +4,7 @@ using System.Timers;
 using OWOGame;
 using static OwoAdvancedSensationBuilder.builder.AdvancedSensationBuilderMergeOptions;
 using OwoAdvancedSensationBuilder.exceptions;
+using static OwoAdvancedSensationBuilder.manager.AdvancedSensationStreamInstance;
 
 namespace OwoAdvancedSensationBuilder.manager
 {
@@ -97,14 +98,16 @@ namespace OwoAdvancedSensationBuilder.manager
                 AdvancedSensationStreamInstance instance = process.Key;
                 instance.firstTick = tick;
 
+                AddInfo info = AddInfo.NEW;
                 if (playSensations.ContainsKey(instance.name)) {
                     AdvancedSensationStreamInstance oldInstance = playSensations[instance.name];
                     playSensations.Remove(instance.name);
-                    oldInstance.triggerStateChangeEvent(ProcessState.REMOVE);
+                    oldInstance.triggerRemoveEvent(RemoveInfo.REPLACED);
+                    info = AddInfo.REPLACE;
                 }
 
                 playSensations[instance.name] = instance;
-                instance.triggerStateChangeEvent(ProcessState.ADD);
+                instance.triggerAddEvent(info);
 
                 processSensation.Remove(process.Key);
             }
@@ -117,7 +120,7 @@ namespace OwoAdvancedSensationBuilder.manager
                 if (playSensations.ContainsKey(instance.name)) {
                     AdvancedSensationStreamInstance oldInstance = playSensations[instance.name];
                     playSensations.Remove(instance.name);
-                    oldInstance.triggerStateChangeEvent(ProcessState.REMOVE);
+                    oldInstance.triggerRemoveEvent(RemoveInfo.MANUAL);
                 }
 
                 processSensation.Remove(process.Key);
@@ -172,7 +175,7 @@ namespace OwoAdvancedSensationBuilder.manager
                 if (sensationInstance.isLastTickOfCycle(calcTick) && !sensationInstance.loop) {
                     AdvancedSensationStreamInstance oldInstance = playSensations[entry.Key];
                     playSensations.Remove(entry.Key);
-                    oldInstance.triggerStateChangeEvent(ProcessState.REMOVE);
+                    oldInstance.triggerRemoveEvent(RemoveInfo.FINISHED);
                 }
             }
 

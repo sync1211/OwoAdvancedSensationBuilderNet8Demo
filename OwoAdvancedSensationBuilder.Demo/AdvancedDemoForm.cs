@@ -98,7 +98,8 @@ namespace OwoAdvancedSensationBuilder {
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
             AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance("Rain Snippet", getRandomRainSensation()).setLoop(true);
             instance.LastCalculationOfCycle += Instance_LastCalculationOfCycle;
-            instance.AfterStateChanged += updateViewAfterStateChange;
+            instance.AfterAdd += (_, _) => updateVisualisationManager();
+            instance.AfterRemove += (_, _) => updateVisualisationManager();
 
             manager.play(instance);
         }
@@ -320,7 +321,8 @@ namespace OwoAdvancedSensationBuilder {
 
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
             AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(selected, s);
-            instance.AfterStateChanged += updateViewAfterStateChange;
+            instance.AfterAdd += (_, _) => updateVisualisationManager();
+            instance.AfterRemove += (_, _) => updateVisualisationManager();
             manager.play(instance);
         }
 
@@ -330,7 +332,8 @@ namespace OwoAdvancedSensationBuilder {
 
             AdvancedSensationManager manager = AdvancedSensationManager.getInstance();
             AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(selected, s).setLoop(true);
-            instance.AfterStateChanged += updateViewAfterStateChange;
+            instance.AfterAdd += (_, _) => updateVisualisationManager();
+            instance.AfterRemove += (_, _) => updateVisualisationManager();
             manager.play(instance);
         }
 
@@ -348,12 +351,6 @@ namespace OwoAdvancedSensationBuilder {
             Dictionary<string, AdvancedSensationStreamInstance> instances = manager.getPlayingSensationInstances();
             if (selected != null && instances.ContainsKey(selected)) {
                 instances[selected].loop = false;
-            }
-        }
-
-        private void updateViewAfterStateChange(AdvancedSensationStreamInstance instance, ProcessState state) {
-            if (state == ProcessState.REMOVE || state == ProcessState.ADD) {
-                updateVisualisationManager();
             }
         }
 
