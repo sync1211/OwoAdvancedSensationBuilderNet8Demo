@@ -1,11 +1,14 @@
 ﻿using OWOGame;
-using static OwoAdvancedSensationBuilder.builder.AdvancedSensationBuilderMergeOptions;
+using static OwoAdvancedSensationBuilder.builder.AdvancedSensationMergeOptions;
 
 namespace OwoAdvancedSensationBuilder.builder
 {
     public static class AdvancedSensationService {
 
-        public static AdvancedStreamingSensation splitSensation(MicroSensation micro, Muscle[]? muscles) {
+        /// <summary>
+        /// Transforms the OWO sensation into an advanced Sensation.
+        /// </summary>
+        public static AdvancedStreamingSensation owoToAdvanced(MicroSensation micro, Muscle[]? muscles) {
 
             AdvancedStreamingSensation advanced = new AdvancedStreamingSensation();
             advanced.WithPriority(micro.Priority);
@@ -34,6 +37,9 @@ namespace OwoAdvancedSensationBuilder.builder
             return advanced;
         }
 
+        /// <summary>
+        /// Basic function to do Liniear Interpolation
+        /// </summary>
         public static int lerp(float firstFloat, float secondFloat, float by) {
             return (int)(firstFloat * (1 - by) + secondFloat * by);
         }
@@ -65,6 +71,10 @@ namespace OwoAdvancedSensationBuilder.builder
             return AdvancedStreamingSensation.createByAdvancedMicro((SensationWithMuscles) new SensationWithMuscles(s, modifiedMuscle).WithPriority(priority));
         }
 
+        /// <summary>
+        /// Creates an AdvancedStreamingSensation.
+        /// Each entry in intensities defines the intensity (in combination with the given Muscles) for a 0.1 second part.
+        /// </summary>
         public static AdvancedStreamingSensation createSensationCurve(int frequency, List<int> intensities, Muscle[]? muscles = null, int priority = 0) {
             AdvancedStreamingSensation curve = new AdvancedStreamingSensation();
             curve.WithPriority(priority);
@@ -76,10 +86,14 @@ namespace OwoAdvancedSensationBuilder.builder
                 curve.addSensation(createAdvancedMicro(frequency, intensity, false, priority, muscles));
             }
 
-
             return curve;
         }
 
+        /// <summary>
+        /// Creates an AdvancedStreamingSensation.
+        /// Each entry in frequencies defines the frequency for a 0.1 second part.
+        /// This Method is best used with a low intensity to then merge new intensities on.
+        /// </summary>
         public static AdvancedStreamingSensation createSensationCurve(List<int> frequencies, int intensity, Muscle[]? muscles = null, int priority = 0) {
             AdvancedStreamingSensation curve = new AdvancedStreamingSensation();
             curve.WithPriority(priority);
@@ -94,6 +108,11 @@ namespace OwoAdvancedSensationBuilder.builder
             return curve;
         }
 
+        /// <summary>
+        /// Creates an AdvancedStreamingSensation.
+        /// Transitions from one set of frequency and intensity to another.
+        /// Intensity doen't have to start or end at 0 and neither is there the limit of 2.5 seconds.
+        /// </summary>
         public static AdvancedStreamingSensation createSensationRamp(int frequencyStart, int frequencyEnd, int intensityStart, int intensityEnd,
                 float duration, Muscle[]? muscles = null, int priority = 0) {
 
@@ -116,14 +135,23 @@ namespace OwoAdvancedSensationBuilder.builder
             return (int)Math.Round(seconds * 10);
         }
 
+        /// <summary>
+        /// Creates an AdvancedStreamingSensation.
+        /// Merges the Sensations as defined in the mergeOptions.
+        /// By default it keeps the priority and frequency of the original Sensation and uses the higher intensity per 0.1 Second tick of the two.
+        /// Callable on AdvancedSensationBuilder for easier use.
+        /// </summary>
         public static AdvancedStreamingSensation actualMerge(AdvancedStreamingSensation origAdvanced, AdvancedStreamingSensation newAdvanced,
-            AdvancedSensationBuilderMergeOptions mergeOptions) {
+            AdvancedSensationMergeOptions mergeOptions) {
 
             List<SensationWithMuscles> origSnippets = origAdvanced.getSnippets();
             List<SensationWithMuscles?> newSnippets = [.. newAdvanced.getSnippets()];
 
             AdvancedStreamingSensation mergedSensation = new AdvancedStreamingSensation();
             mergedSensation.WithPriority(origAdvanced.Priority);
+            if (mergeOptions.overwriteBaseSensation) {
+                mergedSensation.WithPriority(newAdvanced.Priority);
+            }
 
             int delaySnippets = float2snippets(mergeOptions.delaySeconds);
 
@@ -240,6 +268,11 @@ namespace OwoAdvancedSensationBuilder.builder
             return mergedMuscles.Values.ToArray();
         }
 
+        /// <summary>
+        /// Creates an AdvancedStreamingSensation.
+        /// It keeps the Sensations of the 0.1 second ticks between or equal to from and till.
+        /// Callable on AdvancedSensationBuilder for easier use.
+        /// </summary>
         public static AdvancedStreamingSensation cutSensation(AdvancedStreamingSensation origSensation, int from, int till) {
             AdvancedStreamingSensation cutSensation = new AdvancedStreamingSensation();
             cutSensation.WithPriority(origSensation.Priority);
@@ -253,6 +286,11 @@ namespace OwoAdvancedSensationBuilder.builder
             return cutSensation;
         }
 
+        /// <summary>
+        /// Creates an AdvancedStreamingSensation.
+        /// Applies the given Multiplier to each tick.
+        /// Callable on AdvancedSensationBuilder for easier use.
+        /// </summary>
         public static AdvancedStreamingSensation multiplyIntensityBy(AdvancedStreamingSensation origSensation, Multiplier howMuch) {
             AdvancedStreamingSensation editedSensation = new AdvancedStreamingSensation();
             editedSensation.WithPriority(origSensation.Priority);

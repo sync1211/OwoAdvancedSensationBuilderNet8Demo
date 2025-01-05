@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Timers;
 using OWOGame;
-using static OwoAdvancedSensationBuilder.builder.AdvancedSensationBuilderMergeOptions;
+using static OwoAdvancedSensationBuilder.builder.AdvancedSensationMergeOptions;
 using OwoAdvancedSensationBuilder.exceptions;
 using static OwoAdvancedSensationBuilder.manager.AdvancedSensationStreamInstance;
 
@@ -141,7 +141,7 @@ namespace OwoAdvancedSensationBuilder.manager
             int calcTick = tick;
             AdvancedSensationBuilder? builder = null;
 
-            AdvancedSensationBuilderMergeOptions mergeOptions = new AdvancedSensationBuilderMergeOptions();
+            AdvancedSensationMergeOptions mergeOptions = new AdvancedSensationMergeOptions();
             mergeOptions.mode = MuscleMergeMode.MAX;
 
             var snapshot = playSensations.ToList();

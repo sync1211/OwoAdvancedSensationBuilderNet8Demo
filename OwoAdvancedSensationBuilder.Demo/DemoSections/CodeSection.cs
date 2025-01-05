@@ -46,7 +46,15 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
             e.ChangedRange.SetStyle(StringStyle, @""".*""", RegexOptions.Multiline);
             e.ChangedRange.SetStyle(StringStyle, @""".*""", RegexOptions.Multiline);
             e.ChangedRange.SetStyle(NumberStyle, @"[0-9]+(\.?[0-9]*)f?", RegexOptions.Multiline);
-            e.ChangedRange.SetStyle(EnumConstantsStyle, @"(?<=\.)(\w*?)((_L)|(_R))", RegexOptions.Multiline);
+
+            List<string> enums = new List<string>();
+            enums.Add("Muscle");
+            enums.Add("AddInfo");
+            enums.Add("RemoveInfo");
+            enums.Add("MuscleMergeMode");
+            foreach (string enu in enums) {
+                e.ChangedRange.SetStyle(EnumConstantsStyle, @"(?<=" + enu + @"\.)(\w+)", RegexOptions.Multiline);
+            }
 
             List<string> keywords = new List<string>();
             keywords.Add("public");
@@ -70,6 +78,8 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
 
             List<string> classes = new List<string>();
             classes.Add("Dictionary");
+            classes.Add("TrackBar");
+            classes.Add("NotImplementedException");
             classes.Add("OWO");
             classes.Add("SensationsFactory");
             classes.Add("Sensation");
@@ -77,6 +87,9 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
             classes.Add("AdvancedSensationManager");
             classes.Add("AdvancedSensationStreamInstance");
             classes.Add("AdvancedSensationBuilder");
+            classes.Add("AdvancedSensationMergeOptions");
+            classes.Add("AddInfo");
+            classes.Add("RemoveInfo");
             foreach (string clazz in classes) {
                 e.ChangedRange.SetStyle(ClassStyle, @"(^| |(?<=\())" + clazz , RegexOptions.Multiline);
             }
@@ -92,7 +105,7 @@ namespace OwoAdvancedSensationBuilder.Demo.DemoSections {
             }
 
             e.ChangedRange.SetStyle(MethodStyle, @"( |(?<=\.))(\w*?)(?=\()", RegexOptions.Multiline);
-            e.ChangedRange.SetStyle(MethodStyle, @"(?<=\+\= )(\w*?)(?=;)", RegexOptions.Multiline);
+            e.ChangedRange.SetStyle(MethodStyle, @"((?<=\+\= )|(?<=\-\= ))(\w*?)(?=;)", RegexOptions.Multiline);
         }
 
     }

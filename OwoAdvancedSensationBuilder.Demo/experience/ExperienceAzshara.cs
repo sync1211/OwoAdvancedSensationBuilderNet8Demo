@@ -37,7 +37,7 @@ namespace OwoAdvancedSensationBuilder.Demo.experience {
 
             Sensation windConstant6 = SensationsFactory.Create(70, 5, 47, 0, 0, 0).WithMuscles(Muscle.All);
 
-            AdvancedSensationBuilderMergeOptions options = new AdvancedSensationBuilderMergeOptions();
+            AdvancedSensationMergeOptions options = new AdvancedSensationMergeOptions();
             Sensation windBaseline = new AdvancedSensationBuilder(windRising1)  // 10
                 .appendNow(windRising2, windConstant2)                          // 14.5
                 .appendNow(windRising3, windConstant3)                          // 17

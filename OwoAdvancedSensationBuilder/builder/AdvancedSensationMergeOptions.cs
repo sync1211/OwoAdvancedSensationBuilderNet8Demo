@@ -1,7 +1,7 @@
 ﻿using OWOGame;
 
 namespace OwoAdvancedSensationBuilder.builder {
-    public class AdvancedSensationBuilderMergeOptions {
+    public class AdvancedSensationMergeOptions {
         public enum MuscleMergeMode { MAX, KEEP, OVERRIDE, MIN };
 
         public MuscleMergeMode mode { get; set; }
@@ -9,41 +9,41 @@ namespace OwoAdvancedSensationBuilder.builder {
         public Multiplier intensityScale { get; set; }
         public bool overwriteBaseSensation { get; set; }
 
-        public AdvancedSensationBuilderMergeOptions() {
+        public AdvancedSensationMergeOptions() {
             mode = MuscleMergeMode.MAX;
             delaySeconds = 0.0f;
             intensityScale = 100;
             overwriteBaseSensation = false;
         }
 
-        public AdvancedSensationBuilderMergeOptions copy() {
-            AdvancedSensationBuilderMergeOptions copy = new AdvancedSensationBuilderMergeOptions();
+        public AdvancedSensationMergeOptions copy() {
+            AdvancedSensationMergeOptions copy = new AdvancedSensationMergeOptions();
             copy.mode = mode;
             copy.delaySeconds = delaySeconds;
             return copy;
         }
 
-        public AdvancedSensationBuilderMergeOptions withMode(MuscleMergeMode mode) {
+        public AdvancedSensationMergeOptions withMode(MuscleMergeMode mode) {
             this.mode = mode;
             return this;
         }
 
-        public AdvancedSensationBuilderMergeOptions afterDelay(float delay) {
+        public AdvancedSensationMergeOptions afterDelay(float delay) {
             delaySeconds = delaySeconds + delay;
             return this;
         }
 
-        public AdvancedSensationBuilderMergeOptions withDelay(float delaySeconds) {
+        public AdvancedSensationMergeOptions withDelay(float delaySeconds) {
             this.delaySeconds = delaySeconds;
             return this;
         }
 
-        public AdvancedSensationBuilderMergeOptions withIntensityScale(Multiplier intensityScale) {
+        public AdvancedSensationMergeOptions withIntensityScale(Multiplier intensityScale) {
             this.intensityScale = intensityScale;
             return this;
         }
 
-        public AdvancedSensationBuilderMergeOptions withOverwriteBaseSensation(bool overwriteBaseSensation) {
+        public AdvancedSensationMergeOptions withOverwriteBaseSensation(bool overwriteBaseSensation) {
             this.overwriteBaseSensation = overwriteBaseSensation;
             return this;
         }

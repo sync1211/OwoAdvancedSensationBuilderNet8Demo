@@ -12,6 +12,7 @@ namespace OwoAdvancedSensationBuilder.builder
         /// Turns a Sensation into an AdvancedStreamingSensation to be further worked on.
         /// The Muscle parameter would have priority over the Muscles in the Sensation.
         /// Calling this with an AdvancedStreamingSensation as sensation wont copy the sensation, but edit it.
+        /// Also Muscles wont get applied in that case.
         /// </summary>
         public AdvancedSensationBuilder(Sensation sensation, Muscle[]? muscles = null) {
             this.muscles = muscles;
@@ -22,7 +23,7 @@ namespace OwoAdvancedSensationBuilder.builder
             // In other cases micro should always be set
             if (advanced == null && micro != null) {
                 micro.WithPriority(sensation.Priority);
-                advanced = AdvancedSensationService.splitSensation(micro, this.muscles);
+                advanced = AdvancedSensationService.owoToAdvanced(micro, this.muscles);
             } else if (advanced == null) {
                 throw new AdvancedSensationException("Sensation could not be analyzed successfully");
             }
@@ -100,7 +101,7 @@ namespace OwoAdvancedSensationBuilder.builder
         /// <summary>
         /// Merges a Sensation with the currently worked on AdvancedStreamingSensation.
         /// </summary>
-        public AdvancedSensationBuilder merge(Sensation s, AdvancedSensationBuilderMergeOptions mergeOptions) {
+        public AdvancedSensationBuilder merge(Sensation s, AdvancedSensationMergeOptions mergeOptions) {
 
             AdvancedStreamingSensation newAdvanced = new AdvancedSensationBuilder(s).getSensationForStream();
             if (newAdvanced == null || newAdvanced.isEmpty()) {
@@ -117,7 +118,7 @@ namespace OwoAdvancedSensationBuilder.builder
         /// </summary>
         public AdvancedSensationBuilder appendNow(params Sensation[] sensations) {
 
-            AdvancedSensationBuilderMergeOptions? forMerge = null;
+            AdvancedSensationMergeOptions? forMerge = null;
 
             foreach (Sensation s in sensations) {
                 AdvancedStreamingSensation newAdvanced = new AdvancedSensationBuilder(s).getSensationForStream();
@@ -128,7 +129,7 @@ namespace OwoAdvancedSensationBuilder.builder
                 if (forMerge == null) {
                     float delay = (float)Math.Round(advanced.getSnippets().Count * 0.1f, 2);
                     advanced.addSensation(newAdvanced);
-                    forMerge = new AdvancedSensationBuilderMergeOptions();
+                    forMerge = new AdvancedSensationMergeOptions();
                     forMerge.withDelay(delay);
                 } else {
                     advanced = AdvancedSensationService.actualMerge(advanced, newAdvanced, forMerge);

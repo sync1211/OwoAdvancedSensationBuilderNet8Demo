@@ -114,7 +114,8 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "the calls to Send() and Stop() will allow you to play multiple Sensations at once. There are tons of other interesting features, " +
                 "but if this is all you want this is all you need."));
             flowFeatures.Controls.Add(new CodeSection(
-                "Sensation sensation = SensationsFactory.Create(100, 1.0f, 20, 0.5f, 0.5f, 0).WithMuscles(Muscle.Pectoral_L);\r\n" +
+                "Sensation sensation = SensationsFactory.Create(100, 1.0f, 20, 0.5f, 0.5f, 0)\r\n" +
+                "    .WithMuscles(Muscle.Pectoral_L);\r\n" +
                 "\r\n" +
                 "// Regular OWO\r\n" +
                 "OWO.Send(sensation);\r\n" +
@@ -338,7 +339,7 @@ namespace OwoAdvancedSensationBuilder.Demo {
                         "AdvancedSensationManager.getInstance().playLoop(loop);\r\n" +
                         "\r\n" +
                         "// Stop call\r\n" +
-                        "if (AdvancedSensationManager.getInstance().getPlayingSensationInstances().TryGetValue(\"Loop Complex\", out var loopingInstance)) {\r\n" +
+                        "if (AdvancedSensationManager.getInstance().getPlayingSensationInstances().TryGetValue(\"Loop Pulse\", out var loopingInstance)) {\r\n" +
                         "    loopingInstance.loop = false;\r\n" +
                         "}"));
 
@@ -365,25 +366,29 @@ namespace OwoAdvancedSensationBuilder.Demo {
                             .WithMuscles(Muscle.Pectoral_L, Muscle.Pectoral_R), "Slider Pulse", slider)))
                     .addControl(slider)
                     .addCode(this, flowFeatures,
-                        "private void sliderUpdate(TrackBar sender, AdvancedSensationStreamInstance origInstance) {\r\n" +
+                        "private void sliderUpdate(TrackBar sender, Sensation origSensation, string name) {\r\n" +
                         "    // sender.Value in this example is an int between 0 and 200 where 100 is the original intensity, 200 is double and 0 is off.\r\n" +
-                        "    AdvancedSensationBuilder builder = new AdvancedSensationBuilder(origInstance.sensation)\r\n" +
-                        "        .multiplyIntensityBy(sender.Value);\r\n" +
-                        "    AdvancedSensationManager.getInstance().updateSensation(builder.getSensationForStream(), origInstance.name);\r\n" +
+                        "    Sensation updated = origSensation.MultiplyIntensityBy(sender.Value);\r\n" +
+                        "    AdvancedSensationManager.getInstance().updateSensation(updated, name);\r\n" +
                         "}"));
 
             flowFeatures.Controls.Add(new TextSection("Updating Sensations doesn't only have to be for a change of intensity though. Updating Sensations can also " +
                 "be used to eg. transition into a different Sensation or do a fade out. When used to fade out a looped Sensation, the loop has to be disabled manually."));
             flowFeatures.Controls.Add(new TextSection("When doing this kind of update I reccomend, that the Sensation starts with the looped Sensation or one that " +
                 "feels very similar and then has the transitional / fading Sensation appended."));
-            flowFeatures.Controls.Add(new CodeSection(
-                "// TODO: DO FADE OUT DEMO\r\n" +
-                "https://stackoverflow.com/questions/20717654/c-sharp-remove-event-handler-after-is-called-or-call-it-just-once"));
+            flowFeatures.Controls.Add(new TextSection("But I am getting a little ahead of myself. To more easily achieve these effects I would like to " +
+                "introduce a few more features first."));
 
             flowFeatures.Controls.Add(new HeaderSection("Event handling"));
-            flowFeatures.Controls.Add(new TextSection("The Instance currently has two Events."));
-            flowFeatures.Controls.Add(new TextSection("AfterStateChanged is called after a Sensation is added, removed or updated. " +
-                "The \"Managed Sensations\" list you see on the right side for example is getting updated by this event on ADD and REMOVE."));
+            flowFeatures.Controls.Add(new TextSection("The Instance offeres multiple Events, which can eg. help to modify the Sensation or Sync up the Sensations " +
+                "with external Code more easily."));
+            flowFeatures.Controls.Add(new TextSection("AfterAdd is called after a Sensation is added. If the manager is already running it could take up to 0.1 " +
+                "Seconds. If you add multiple Instances with the same name at once it could happen that you wont get the same count of events as play calls, " +
+                "as you can't add multiple Sensations of the same name in the same manager tick. Following Instances will either get ignored or overwrite the " +
+                "queued Instance. AddInfo contains information of if the Instance got newly added or replaced an existing Instance."));
+            flowFeatures.Controls.Add(new TextSection("AfterUpdate is called after a Sensation is updated."));
+            flowFeatures.Controls.Add(new TextSection("AfterRemove is called after a Sensation is removed. RemoveInfo contains information of if the Instance " +
+                "got removed manually, finished playing or if it got replaced by a new play call"));
             flowFeatures.Controls.Add(new TextSection("LastCalculationOfCycle is called right before the last part of the Sensation is played. For looping " +
                 "Sensations this gets called on every loop. It could for example trigger an update for randomized Sensations like rain. " +
                 "In case of looped Sensation it takes about 0.1 seconds before the loop starts from the beginning and calling an update or a remove wont affect " +
@@ -407,6 +412,23 @@ namespace OwoAdvancedSensationBuilder.Demo {
                 "\r\n" +
                 "private void Instance_AfterRemove(AdvancedSensationStreamInstance instance, RemoveInfo info) {\r\n" +
                 "    // RemoveInfo can bei either MANUAL, FINISHED or REPLACED\r\n" +
+                "    throw new NotImplementedException();\r\n" +
+                "}\r\n" +
+                "\r\n" +
+                "private void Instance_LastCalculationOfCycle(AdvancedSensationStreamInstance instance) {\r\n" +
+                "    throw new NotImplementedException();\r\n" +
+                "}"));
+
+            flowFeatures.Controls.Add(new TextSection("Events can help you to schedule changes in the Sensation. In these cases it is likley that you don't " +
+                "want these events to keep occuring, but only get called once. To do that you can simply unsubscribe the event when its called, as all " +
+                "events provide the instance."));
+            flowFeatures.Controls.Add(new CodeSection(
+                "public void prepareLoopedInstance(AdvancedSensationStreamInstance loopedInstance) {\r\n" +
+                "    loopedInstance.LastCalculationOfCycle += doStuffOnce;\r\n" +
+                "}\r\n" +
+                "\r\n" +
+                "private void doStuffOnce(AdvancedSensationStreamInstance loopedInstance) {\r\n" +
+                "    loopedInstance.LastCalculationOfCycle -= doStuffOnce;\r\n" +
                 "    throw new NotImplementedException();\r\n" +
                 "}"));
 
@@ -571,10 +593,24 @@ namespace OwoAdvancedSensationBuilder.Demo {
         }
 
         private void btnDebug_Click(object sender, EventArgs e) {
-            if (AdvancedSensationManager.getInstance().getPlayingSensationInstances().TryGetValue("Loop Constant", out var loopingInstance)) {
-                loopingInstance.loop = false;
+            if (AdvancedSensationManager.getInstance().getPlayingSensationInstances().TryGetValue("Update Check", out var loopingInstance)) {
+                AdvancedSensationManager.getInstance().updateSensation(SensationsFactory.Create(1, 1, 1, 1, 1, 1), "Update Check");
+            } else {
+                AdvancedSensationStreamInstance inst = new AdvancedSensationStreamInstance("Update Check", SensationsFactory.Create(1, 1, 1, 1, 1, 1));
+                inst.loop = true;
+                inst.AfterUpdate += Inst_AfterUpdate;
+                interaction_playSensation(inst);
             }
         }
 
+        private void Inst_AfterUpdate(AdvancedSensationStreamInstance instance) {
+            if (lbManager.InvokeRequired) {
+                Action doInvoke = delegate { Inst_AfterUpdate(instance); };
+                lbManager.Invoke(doInvoke);
+                return;
+            }
+            instance.AfterUpdate -= Inst_AfterUpdate;
+            lbManager.Items.Add("Update");
+        }
     }
 }

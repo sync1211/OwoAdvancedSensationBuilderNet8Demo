@@ -54,7 +54,7 @@ namespace OwoAdvancedSensationBuilder {
             Sensation windRising4 = SensationsFactory.Create(70, 3.5f, 35, 2, 0, 0).WithMuscles(Muscle.All);
             Sensation boomingWave = SensationsFactory.Create(45, 3, 50, 0.2f, 0, 0).WithMuscles(Muscle.All);
 
-            AdvancedSensationBuilderMergeOptions options = new AdvancedSensationBuilderMergeOptions();
+            AdvancedSensationMergeOptions options = new AdvancedSensationMergeOptions();
             Sensation windBaseline = new AdvancedSensationBuilder(none)
                 .appendNow(windRising1)
                 .appendNow(windRising2, windConstant2)
@@ -254,16 +254,16 @@ namespace OwoAdvancedSensationBuilder {
         }
 
         private void btnMerge_Click(object sender, EventArgs e) {
-            AdvancedSensationBuilderMergeOptions mergeOptions = new AdvancedSensationBuilderMergeOptions();
-            mergeOptions.mode = AdvancedSensationBuilderMergeOptions.MuscleMergeMode.MAX;
+            AdvancedSensationMergeOptions mergeOptions = new AdvancedSensationMergeOptions();
+            mergeOptions.mode = AdvancedSensationMergeOptions.MuscleMergeMode.MAX;
 
             advancedSensation = new AdvancedSensationBuilder(basicSensation).merge(basicSensation2, mergeOptions).getSensationForSend();
             updateVisualisation();
         }
 
         private void btnMergeDelayed_Click(object sender, EventArgs e) {
-            AdvancedSensationBuilderMergeOptions mergeOptions = new AdvancedSensationBuilderMergeOptions();
-            mergeOptions.mode = AdvancedSensationBuilderMergeOptions.MuscleMergeMode.MAX;
+            AdvancedSensationMergeOptions mergeOptions = new AdvancedSensationMergeOptions();
+            mergeOptions.mode = AdvancedSensationMergeOptions.MuscleMergeMode.MAX;
             mergeOptions.delaySeconds = 1.5f;
 
             advancedSensation = new AdvancedSensationBuilder(basicSensation).merge(basicSensation2, mergeOptions).getSensationForSend();

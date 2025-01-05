@@ -41,8 +41,8 @@ namespace OwoAdvancedSensationBuilder.Test.builder {
                 Muscle.Lumbar_L.WithIntensity(20)     // ID = 9
             ];
 
-            AdvancedSensationBuilderMergeOptions mergeOptions = new AdvancedSensationBuilderMergeOptions();
-            mergeOptions.withMode(AdvancedSensationBuilderMergeOptions.MuscleMergeMode.MAX);
+            AdvancedSensationMergeOptions mergeOptions = new AdvancedSensationMergeOptions();
+            mergeOptions.withMode(AdvancedSensationMergeOptions.MuscleMergeMode.MAX);
             testMuscleMerge(oldMuscles, newMuscles, expectedMuscles, mergeOptions);
         }
 
@@ -71,8 +71,8 @@ namespace OwoAdvancedSensationBuilder.Test.builder {
                 Muscle.Lumbar_L.WithIntensity(20)
             ];
 
-            AdvancedSensationBuilderMergeOptions mergeOptions = new AdvancedSensationBuilderMergeOptions();
-            mergeOptions.withMode(AdvancedSensationBuilderMergeOptions.MuscleMergeMode.MIN);
+            AdvancedSensationMergeOptions mergeOptions = new AdvancedSensationMergeOptions();
+            mergeOptions.withMode(AdvancedSensationMergeOptions.MuscleMergeMode.MIN);
             testMuscleMerge(oldMuscles, newMuscles, expectedMuscles, mergeOptions);
         }
 
@@ -102,8 +102,8 @@ namespace OwoAdvancedSensationBuilder.Test.builder {
             ];
 
 
-            AdvancedSensationBuilderMergeOptions mergeOptions = new AdvancedSensationBuilderMergeOptions();
-            mergeOptions.withMode(AdvancedSensationBuilderMergeOptions.MuscleMergeMode.OVERRIDE);
+            AdvancedSensationMergeOptions mergeOptions = new AdvancedSensationMergeOptions();
+            mergeOptions.withMode(AdvancedSensationMergeOptions.MuscleMergeMode.OVERRIDE);
             testMuscleMerge(oldMuscles, newMuscles, expectedMuscles, mergeOptions);
         }
 
@@ -132,12 +132,12 @@ namespace OwoAdvancedSensationBuilder.Test.builder {
                 Muscle.Lumbar_L.WithIntensity(20)
             ];
 
-            AdvancedSensationBuilderMergeOptions mergeOptions = new AdvancedSensationBuilderMergeOptions();
-            mergeOptions.withMode(AdvancedSensationBuilderMergeOptions.MuscleMergeMode.KEEP);
+            AdvancedSensationMergeOptions mergeOptions = new AdvancedSensationMergeOptions();
+            mergeOptions.withMode(AdvancedSensationMergeOptions.MuscleMergeMode.KEEP);
             testMuscleMerge(oldMuscles, newMuscles, expectedMuscles, mergeOptions);
         }
 
-        private void testMuscleMerge(Muscle[] oldMuscles, Muscle[] newMuscles, Muscle[] expectedMuscles, AdvancedSensationBuilderMergeOptions mergeOptions) {
+        private void testMuscleMerge(Muscle[] oldMuscles, Muscle[] newMuscles, Muscle[] expectedMuscles, AdvancedSensationMergeOptions mergeOptions) {
             Sensation baseSensation = SensationsFactory.Create(100, 0.1f, 100, 0, 0, 0);
             AdvancedStreamingSensation advanced1 = new AdvancedSensationBuilder(baseSensation, oldMuscles).getSensationForStream();
             AdvancedStreamingSensation advanced2 = new AdvancedSensationBuilder(baseSensation, newMuscles).getSensationForStream();
