@@ -2,9 +2,10 @@
 using System.Diagnostics;
 using System.Timers;
 using OWOGame;
-using static OwoAdvancedSensationBuilder.builder.AdvancedSensationMergeOptions;
 using OwoAdvancedSensationBuilder.exceptions;
 using System.Collections.Concurrent;
+using static OwoAdvancedSensationBuilder.manager.AdvancedSensationStreamInstance;
+using static OwoAdvancedSensationBuilder.builder.AdvancedSensationMergeOptions;
 
 namespace OwoAdvancedSensationBuilder.manager
 {
@@ -122,7 +123,7 @@ namespace OwoAdvancedSensationBuilder.manager
             }
         }
 
-        private void processRemove(bool endOfCylce) {
+        private void processRemove() {
             foreach (var process in processSensation.Where(entry => entry.Value == ProcessState.REMOVE)) {
                 AdvancedSensationStreamInstance instance = process.Key;
 
