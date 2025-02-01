@@ -27,7 +27,6 @@ namespace OwoAdvancedSensationBuilder.manager
 
         private AdvancedSensationManager() {
             timer = new System.Timers.Timer(100);
-            timer.Elapsed += streamSensation;
             timer.Elapsed += calcManagerTick;
             timer.AutoReset = true;
             timer.Enabled = false;
@@ -43,23 +42,34 @@ namespace OwoAdvancedSensationBuilder.manager
             return managerInstance;
         }
 
-        private void streamSensation(object? source, ElapsedEventArgs e) {
+        private void streamSensation() {
+            if (calculatedSensation == null) {
+                return;
+            }
             OWO.Send(calculatedSensation);
             tick++;
-            Debug.WriteLine($"{tick} / {watch.ElapsedMilliseconds}");
+            Debug.WriteLine(System.DateTime.Now.Millisecond + " - streamSensation " + $"{tick} / {watch.ElapsedMilliseconds}");
         }
 
         private void calcManagerTick(object? source, EventArgs e) {
+            Debug.WriteLine(System.DateTime.Now.Millisecond + " - calcManagerTick");
             if (calculating) {
+                streamSensation();
                 return;
             }
             try {
                 calculating = true;
-                processRemove(false);
+                processRemove();
                 processUpdate();
                 processAdd();
+
+                if (playSensations.Count == 0) {
+                    resetManagerState();
+                    return;
+                }
+
                 calcSensation();
-                processRemove(true);
+                streamSensation();
             } finally {
                 calculating = false;
             }
@@ -113,7 +123,7 @@ namespace OwoAdvancedSensationBuilder.manager
             }
         }
 
-        private void processRemove(bool endOfCylce) {
+        private void processRemove() {
             foreach (var process in processSensation.ToArray().Where(entry => entry.Value == ProcessState.REMOVE)) {
                 AdvancedSensationStreamInstance instance = process.Key;
 
@@ -124,16 +134,6 @@ namespace OwoAdvancedSensationBuilder.manager
                 }
 
                 processSensation.Remove(process.Key);
-            }
-
-            if (playSensations.Count == 0 && endOfCylce) {
-                // Only allow to stop manager at end of cycle.
-                // Else race time conditions might stop manager while something to add just got inserted.
-                bool toAdd = processSensation.Any(entry => entry.Value == ProcessState.ADD);
-
-                if (!toAdd) {
-                    resetManagerState();
-                }
             }
         }
 
@@ -246,7 +246,6 @@ namespace OwoAdvancedSensationBuilder.manager
             }
 
             if (!timer.Enabled) {
-                calcManagerTick(null, EventArgs.Empty);
                 watch = Stopwatch.StartNew();
                 timer.Start();
             }
@@ -262,6 +261,7 @@ namespace OwoAdvancedSensationBuilder.manager
         }
 
         private void resetManagerState() {
+            Debug.WriteLine(System.DateTime.Now.Millisecond + " - resetManagerState");
             timer.Stop();
             tick = 0;
             // cancel the last sensation
