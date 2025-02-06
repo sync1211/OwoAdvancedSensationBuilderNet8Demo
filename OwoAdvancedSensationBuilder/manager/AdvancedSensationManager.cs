@@ -164,7 +164,6 @@ namespace OwoAdvancedSensationBuilder.manager
         /// </summary>
         public void stopSensation(string sensationInstanceName) {
             AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(sensationInstanceName, SensationsFactory.Create(0, 0, 0)); // Using an empty sensation as the instance is only used for removal. In this case, the sensation property will not be used
-            instance.overwriteManagerProcessList = true;
             RemoveInstanceFromManager(instance);
         }
 
@@ -173,7 +172,6 @@ namespace OwoAdvancedSensationBuilder.manager
                 return;
             }
 
-            //TODO: Implement OverwriteProcessList
             playSensations.TryRemove(instance.name, out AdvancedSensationStreamInstance? removedInstance);
 
             if (removedInstance != null) {
@@ -184,9 +182,12 @@ namespace OwoAdvancedSensationBuilder.manager
         private void addSensationInstance(AdvancedSensationStreamInstance instance) {
             instance.firstTick = tick;
 
-            //TODO: Implement overwriteManagerProcessList
             AddInfo info = AddInfo.NEW;
             if (playSensations.TryGetValue(instance.name, out AdvancedSensationStreamInstance? oldInstance) && oldInstance != null) {
+                if (!instance.replaceRunning) {
+                    return;
+                }
+
                 //playSensations.TryRemove(oldInstance); // Already removed by AddOrUpdate later
                 oldInstance.triggerRemoveEvent(RemoveInfo.REPLACED);
                 info = AddInfo.REPLACE;

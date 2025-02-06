@@ -19,14 +19,14 @@ namespace OwoAdvancedSensationBuilder.manager {
 
         public string name { get; }
         internal int firstTick { get; set; }
-        internal bool overwriteManagerProcessList { get; set; }
+        internal bool replaceRunning { get; set; }
         public bool loop { get; set; }
         public bool blockLowerPrio { get; set; }
         public long timeStamp { get; internal set; }
 
         public AdvancedStreamingSensation sensation { get; private set; }
 
-        public AdvancedSensationStreamInstance(string name, Sensation sensation, bool overwriteManagerProcessList = false) {
+        public AdvancedSensationStreamInstance(string name, Sensation sensation, bool replaceRunning = true) {
             if (String.IsNullOrWhiteSpace(name)) {
                 this.name = Guid.NewGuid().ToString();
             } else {
@@ -35,7 +35,7 @@ namespace OwoAdvancedSensationBuilder.manager {
             loop = false;
             blockLowerPrio = false;
             firstTick = 0;
-            this.overwriteManagerProcessList = overwriteManagerProcessList;
+            this.replaceRunning = replaceRunning;
 
             this.sensation = new AdvancedSensationBuilder(sensation).getSensationForStream();
         }
