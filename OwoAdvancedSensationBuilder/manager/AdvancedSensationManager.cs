@@ -55,13 +55,14 @@ namespace OwoAdvancedSensationBuilder.manager
                 streamSensation();
                 return;
             }
+
+            if (playSensations.IsEmpty) {
+                resetManagerState();
+                return;
+            }
+
             try {
                 calculating = true;
-
-                if (playSensations.Count == 0) {
-                    resetManagerState();
-                    return;
-                }
 
                 calcSensation();
                 streamSensation();
