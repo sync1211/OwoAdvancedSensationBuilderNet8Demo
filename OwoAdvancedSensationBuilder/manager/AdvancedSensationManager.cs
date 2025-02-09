@@ -206,8 +206,8 @@ namespace OwoAdvancedSensationBuilder.manager
         /// Stops all Sensation.
         /// </summary>
         public void stopAll() {
-            resetManagerState();
             playSensations.Clear();
+            resetManagerState();
         }
 
         private void resetManagerState() {
