@@ -215,8 +215,9 @@ namespace OwoAdvancedSensationBuilder.manager
             Debug.WriteLine(System.DateTime.Now.Millisecond + " - resetManagerState");
             timer.Stop();
             tick = 0;
-            // cancel the last sensation
-            OWO.Send(SensationsFactory.Create(0, 0, 0, 0, 0, 1));
+
+            // Cancel all sensations
+            OWO.Stop();
         }
 
         /// <summary>
