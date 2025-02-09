@@ -14,9 +14,9 @@ namespace OwoAdvancedSensationBuilder.manager
 
         private static AdvancedSensationManager? managerInstance;
 
-        private System.Timers.Timer timer;
+        private readonly System.Timers.Timer timer;
 
-        private ConcurrentDictionary<string, AdvancedSensationStreamInstance> playSensations;
+        private readonly ConcurrentDictionary<string, AdvancedSensationStreamInstance> playSensations;
 
         private int tick;
         private bool calculating;
@@ -246,6 +246,5 @@ namespace OwoAdvancedSensationBuilder.manager
             string typeName = sensation.GetType().Name;
             throw new AdvancedSensationException($"Unsupported Sensation type: {typeName}");
         }
-
     }
 }
