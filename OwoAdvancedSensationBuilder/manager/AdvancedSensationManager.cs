@@ -181,7 +181,6 @@ namespace OwoAdvancedSensationBuilder.manager
         private void addSensationInstance(AdvancedSensationStreamInstance instance) {
             instance.firstTick = tick;
 
-            AddInfo info = AddInfo.NEW;
             if (playSensations.TryGetValue(instance.name, out AdvancedSensationStreamInstance? oldInstance) && oldInstance != null) {
                 if (!instance.replaceRunning) {
                     return;
