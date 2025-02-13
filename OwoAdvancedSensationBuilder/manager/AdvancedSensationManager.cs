@@ -188,7 +188,6 @@ namespace OwoAdvancedSensationBuilder.manager
 
                 //playSensations.TryRemove(oldInstance); // Already removed by AddOrUpdate later
                 oldInstance.triggerRemoveEvent(RemoveInfo.REPLACED);
-                info = AddInfo.REPLACE;
             }
 
             playSensations.AddOrUpdate(instance.name, instance, (key, oldValue) => instance);
