@@ -13,7 +13,6 @@ namespace OwoAdvancedSensationBuilder.manager {
         public enum RemoveInfo { MANUAL, FINISHED, REPLACED }
 
         public event SensationStreamInstanceEvent? LastCalculationOfCycle;
-        public event SensationStreamInstanceAddEvent? AfterAdd;
         public event SensationStreamInstanceEvent? AfterUpdate;
         public event SensationStreamInstanceRemoveEvent? AfterRemove;
 
@@ -68,10 +67,6 @@ namespace OwoAdvancedSensationBuilder.manager {
             firstTick = tick - ((tick - firstTick) % sensation.sensations.Count);
             sensation = new AdvancedSensationBuilder(newSensation).getSensationForStream();
             AfterUpdate?.Invoke(this);
-        }
-
-        internal void triggerAddEvent(AddInfo info) {
-            AfterAdd?.Invoke(this, info);
         }
 
         internal void triggerRemoveEvent(RemoveInfo info) {

@@ -507,9 +507,9 @@ namespace OwoAdvancedSensationBuilder.Demo {
 
         private void interaction_playSensation(params AdvancedSensationStreamInstance[] instances) {
             foreach (AdvancedSensationStreamInstance instance in instances) {
-                instance.AfterAdd += Instance_AfterAdd;
                 instance.AfterRemove += Instance_AfterRemove;
                 AdvancedSensationManager.getInstance().play(instance);
+                Instance_AfterAdd(instance, AddInfo.NEW);
             }
         }
 

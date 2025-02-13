@@ -10,8 +10,6 @@ namespace OwoAdvancedSensationBuilder.manager
 {
     public class AdvancedSensationManager {
 
-        public enum ProcessState { ADD, REMOVE, UPDATE }
-
         private static AdvancedSensationManager? managerInstance;
 
         private readonly System.Timers.Timer timer;
@@ -195,7 +193,6 @@ namespace OwoAdvancedSensationBuilder.manager
             }
 
             playSensations.AddOrUpdate(instance.name, instance, (key, oldValue) => instance);
-            instance.triggerAddEvent(info);
 
             if (!timer.Enabled) {
                 watch = Stopwatch.StartNew();
