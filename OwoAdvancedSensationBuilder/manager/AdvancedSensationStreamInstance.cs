@@ -6,7 +6,7 @@ namespace OwoAdvancedSensationBuilder.manager {
     public class AdvancedSensationStreamInstance {
 
         public delegate void SensationStreamInstanceEvent(AdvancedSensationStreamInstance instance);
-        public delegate void SensationStreamInstanceFirstCycleEvent(AdvancedSensationStreamInstance instance);
+        public delegate void SensationStreamInstanceSensationTickEvent(AdvancedSensationStreamInstance instance, bool firstCycle);
         public delegate void SensationStreamInstanceRemoveEvent(AdvancedSensationStreamInstance instance, RemoveInfo info);
 
         public enum RemoveInfo { MANUAL, FINISHED, REPLACED }
@@ -14,7 +14,7 @@ namespace OwoAdvancedSensationBuilder.manager {
         public event SensationStreamInstanceEvent? LastCalculationOfCycle;
         public event SensationStreamInstanceEvent? AfterUpdate;
         public event SensationStreamInstanceRemoveEvent? AfterRemove;
-        public event SensationStreamInstanceFirstCycleEvent? OnFirstCycle;
+        public event SensationStreamInstanceSensationTickEvent? OnFirstSensationTick;
 
         public string name { get; }
         internal int firstTick { get; set; }
@@ -46,14 +46,13 @@ namespace OwoAdvancedSensationBuilder.manager {
                 return null;
             }
 
-            if (isFirstCalculationCycle)
-            {
+            int playedSensation = (tick - firstTick) % sensation.sensations.Count;
+
+            if (playedSensation == 0) {
+                OnFirstSensationTick?.Invoke(this, isFirstCalculationCycle);
                 isFirstCalculationCycle = false;
-                OnFirstCycle?.Invoke(this);
             }
 
-            int playedSensation = (tick - firstTick) % sensation.sensations.Count;
-            
             if (isLastTickOfCycle(tick)) {
                 // trigger events for the last calculation
                 LastCalculationOfCycle?.Invoke(this);
