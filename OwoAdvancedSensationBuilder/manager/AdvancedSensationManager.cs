@@ -105,7 +105,7 @@ namespace OwoAdvancedSensationBuilder.manager
                 blockFurtherSensations |= sensationInstance.blockLowerPrio;
 
                 if (sensationInstance.isLastTickOfCycle(calcTick) && !sensationInstance.loop) {
-                    RemoveInstanceFromManager(sensationInstance);
+                    removeInstanceFromManager(sensationInstance);
                 }
             }
 
@@ -152,10 +152,9 @@ namespace OwoAdvancedSensationBuilder.manager
                 name = analyzeSensation(sensation).name;
             }
 
-            if (!playSensations.TryGetValue(name, out AdvancedSensationStreamInstance? existingInstance)) {
-                return;
+            if (playSensations.TryGetValue(name, out AdvancedSensationStreamInstance? existingInstance)) {
+                existingInstance?.updateSensation(sensation, tick);
             }
-            existingInstance?.updateSensation(sensation, tick);
         }
 
         /// <summary>
@@ -163,17 +162,15 @@ namespace OwoAdvancedSensationBuilder.manager
         /// </summary>
         public void stopSensation(string sensationInstanceName) {
             AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(sensationInstanceName, SensationsFactory.Create(0, 0, 0)); // Using an empty sensation as the instance is only used for removal. In this case, the sensation property will not be used
-            RemoveInstanceFromManager(instance);
+            removeInstanceFromManager(instance);
         }
 
-        private void RemoveInstanceFromManager(AdvancedSensationStreamInstance instance) {
+        private void removeInstanceFromManager(AdvancedSensationStreamInstance instance) {
             if (instance.name == null) {
                 return;
             }
 
-            playSensations.TryRemove(instance.name, out AdvancedSensationStreamInstance? removedInstance);
-
-            if (removedInstance != null) {
+            if (playSensations.TryRemove(instance.name, out AdvancedSensationStreamInstance? removedInstance)) {
                 removedInstance.triggerRemoveEvent(RemoveInfo.MANUAL);
             }
         }
