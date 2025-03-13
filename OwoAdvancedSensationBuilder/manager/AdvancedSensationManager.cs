@@ -105,7 +105,7 @@ namespace OwoAdvancedSensationBuilder.manager
                 blockFurtherSensations |= sensationInstance.blockLowerPrio;
 
                 if (sensationInstance.isLastTickOfCycle(calcTick) && !sensationInstance.loop) {
-                    removeInstanceFromManager(sensationInstance);
+                    removeInstanceFromManager(sensationInstance, RemoveInfo.FINISHED);
                 }
             }
 
@@ -162,16 +162,16 @@ namespace OwoAdvancedSensationBuilder.manager
         /// </summary>
         public void stopSensation(string sensationInstanceName) {
             AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(sensationInstanceName, SensationsFactory.Create(0, 0, 0)); // Using an empty sensation as the instance is only used for removal. In this case, the sensation property will not be used
-            removeInstanceFromManager(instance);
+            removeInstanceFromManager(instance, RemoveInfo.MANUAL);
         }
 
-        private void removeInstanceFromManager(AdvancedSensationStreamInstance instance) {
+        private void removeInstanceFromManager(AdvancedSensationStreamInstance instance, RemoveInfo removeInfo) {
             if (instance.name == null) {
                 return;
             }
 
             if (playSensations.TryRemove(instance.name, out AdvancedSensationStreamInstance? removedInstance)) {
-                removedInstance.triggerRemoveEvent(RemoveInfo.MANUAL);
+                removedInstance.triggerRemoveEvent(removeInfo);
             }
         }
 
