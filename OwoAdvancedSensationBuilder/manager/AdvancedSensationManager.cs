@@ -121,8 +121,8 @@ namespace OwoAdvancedSensationBuilder.manager
         /// The name of the Sensation will be used internally. If empty a random name will be generated.
         /// Overrides Instances with the same Name and starts at the begining of the Sensation.
         /// </summary>
-        public void playOnce(Sensation sensation) {
-            play(new AdvancedSensationStreamInstance(analyzeSensation(sensation).name, sensation));
+        public bool playOnce(Sensation sensation) {
+            return play(new AdvancedSensationStreamInstance(analyzeSensation(sensation).name, sensation));
         }
 
         /// <summary>
@@ -131,56 +131,61 @@ namespace OwoAdvancedSensationBuilder.manager
         /// The name of the Sensation will be used internally. If empty a random name will be generated.
         /// Overrides Instances with the same Name and starts at the begining of the Sensation.
         /// </summary>
-        public void playLoop(Sensation sensation) {
-            play(new AdvancedSensationStreamInstance(analyzeSensation(sensation).name, sensation).setLoop(true));
+        public bool playLoop(Sensation sensation) {
+            return play(new AdvancedSensationStreamInstance(analyzeSensation(sensation).name, sensation).setLoop(true));
         }
 
         /// <summary>
         /// Adds the AdvancedSensationStreamInstance of an advanced Sensation to the Manager.
         /// Overrides Instances with the same Name and starts at the begining of the Sensation.
         /// </summary>
-        public void play(AdvancedSensationStreamInstance instance) {
-            addSensationInstance(instance);
+        public bool play(AdvancedSensationStreamInstance instance) {
+            return addSensationInstance(instance);
         }
 
         /// <summary>
         /// Changes the Sensation of a given AdvancedSensationStreamInstance, without starting it new, but continuing where it currently is.
         /// If no name is provided the name of the Sensation will be used.
         /// </summary>
-        public void updateSensation(Sensation sensation, string? name = null) {
+        public bool updateSensation(Sensation sensation, string? name = null) {
             if (name == null) {
                 name = analyzeSensation(sensation).name;
             }
 
             if (playSensations.TryGetValue(name, out AdvancedSensationStreamInstance? existingInstance)) {
                 existingInstance?.updateSensation(sensation, tick);
+                return true;
             }
+
+            return false;
         }
 
         /// <summary>
         /// Stops a Sensation with a given name.
         /// </summary>
-        public void stopSensation(string sensationInstanceName) {
+        public bool stopSensation(string sensationInstanceName) {
             AdvancedSensationStreamInstance instance = new AdvancedSensationStreamInstance(sensationInstanceName, SensationsFactory.Create(0, 0, 0)); // Using an empty sensation as the instance is only used for removal. In this case, the sensation property will not be used
-            removeInstanceFromManager(instance, RemoveInfo.MANUAL);
+            return removeInstanceFromManager(instance, RemoveInfo.MANUAL);
         }
 
-        private void removeInstanceFromManager(AdvancedSensationStreamInstance instance, RemoveInfo removeInfo) {
+        private bool removeInstanceFromManager(AdvancedSensationStreamInstance instance, RemoveInfo removeInfo) {
             if (instance.name == null) {
-                return;
+                return false;
             }
 
             if (playSensations.TryRemove(instance.name, out AdvancedSensationStreamInstance? removedInstance)) {
                 removedInstance.triggerRemoveEvent(removeInfo);
+                return true;
             }
+            return false;
         }
 
-        private void addSensationInstance(AdvancedSensationStreamInstance instance) {
+        private bool addSensationInstance(AdvancedSensationStreamInstance instance) {
             instance.firstTick = tick;
 
             if (playSensations.TryGetValue(instance.name, out AdvancedSensationStreamInstance? oldInstance) && oldInstance != null) {
                 if (!instance.replaceRunning) {
-                    return;
+                    return false;
                 }
 
                 //playSensations.TryRemove(oldInstance); // Already removed by AddOrUpdate later
@@ -193,6 +198,7 @@ namespace OwoAdvancedSensationBuilder.manager
                 watch = Stopwatch.StartNew();
                 timer.Start();
             }
+            return true;
         }
 
         /// <summary>
