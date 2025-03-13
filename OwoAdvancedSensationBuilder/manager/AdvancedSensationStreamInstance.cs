@@ -6,18 +6,19 @@ namespace OwoAdvancedSensationBuilder.manager {
     public class AdvancedSensationStreamInstance {
 
         public delegate void SensationStreamInstanceEvent(AdvancedSensationStreamInstance instance);
-        public delegate void SensationStreamInstanceAddEvent(AdvancedSensationStreamInstance instance, AddInfo info);
+        public delegate void SensationStreamInstanceFirstCycleEvent(AdvancedSensationStreamInstance instance);
         public delegate void SensationStreamInstanceRemoveEvent(AdvancedSensationStreamInstance instance, RemoveInfo info);
 
-        public enum AddInfo { NEW, REPLACE }
         public enum RemoveInfo { MANUAL, FINISHED, REPLACED }
 
         public event SensationStreamInstanceEvent? LastCalculationOfCycle;
         public event SensationStreamInstanceEvent? AfterUpdate;
         public event SensationStreamInstanceRemoveEvent? AfterRemove;
+        public event SensationStreamInstanceFirstCycleEvent? OnFirstCycle;
 
         public string name { get; }
         internal int firstTick { get; set; }
+        internal bool isFirstCalculationCycle { get; set; }
         internal bool replaceRunning { get; set; }
         public bool loop { get; set; }
         public bool blockLowerPrio { get; set; }
@@ -34,6 +35,7 @@ namespace OwoAdvancedSensationBuilder.manager {
             loop = false;
             blockLowerPrio = false;
             firstTick = 0;
+            isFirstCalculationCycle = true;
             this.replaceRunning = replaceRunning;
 
             this.sensation = new AdvancedSensationBuilder(sensation).getSensationForStream();
@@ -42,6 +44,12 @@ namespace OwoAdvancedSensationBuilder.manager {
         internal SensationWithMuscles? getSensationAtTick(int tick) {
             if (sensation.isEmpty()) {
                 return null;
+            }
+
+            if (isFirstCalculationCycle)
+            {
+                isFirstCalculationCycle = false;
+                OnFirstCycle?.Invoke(this);
             }
 
             int playedSensation = (tick - firstTick) % sensation.sensations.Count;
