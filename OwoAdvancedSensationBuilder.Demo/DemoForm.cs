@@ -509,13 +509,13 @@ namespace OwoAdvancedSensationBuilder.Demo {
             foreach (AdvancedSensationStreamInstance instance in instances) {
                 instance.AfterRemove += Instance_AfterRemove;
                 AdvancedSensationManager.getInstance().play(instance);
-                Instance_AfterAdd(instance, AddInfo.NEW);
+                Instance_AfterAdd(instance);
             }
         }
 
-        private void Instance_AfterAdd(AdvancedSensationStreamInstance instance, AddInfo info) {
+        private void Instance_AfterAdd(AdvancedSensationStreamInstance instance) {
             if (lbManager.InvokeRequired) {
-                Action doInvoke = delegate { Instance_AfterAdd(instance, info); };
+                Action doInvoke = delegate { Instance_AfterAdd(instance); };
                 lbManager.Invoke(doInvoke);
                 return;
             }
